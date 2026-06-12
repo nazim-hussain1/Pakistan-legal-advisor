@@ -37,7 +37,7 @@ OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 if not OPENROUTER_API_KEY:
     raise ValueError("OPENROUTER_API_KEY not found in .env file")
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='Templates')
 
 @app.route('/favicon.png')
 def favicon():
