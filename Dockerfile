@@ -9,8 +9,8 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements and install
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY Requirements.txt .
+RUN pip install --no-cache-dir -r Requirements.txt
 
 # Copy all project files
 COPY . .
