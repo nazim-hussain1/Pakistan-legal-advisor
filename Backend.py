@@ -596,7 +596,10 @@ def rag_query(query: str) -> tuple:
 # ── Routes ───────────────────────────────────────────────
 @app.route("/")
 def home():
-    return render_template("Frontend.html")
+    try:
+        return render_template("Frontend.html")
+    except Exception as e:
+        return f"<h1>App is running!</h1><p>Template error: {str(e)}</p>", 200
 
 @app.route("/chat", methods=["POST"])
 def chat():
@@ -628,18 +631,14 @@ def health():
 
 # ── Main ─────────────────────────────────────────────────
 if __name__ == "__main__":
-    print("\n" + "="*55)
-    print("  Pakistan Legal RAG — Roman Urdu + English + Urdu")
-    print("="*55)
-    print(f"  Chunks   : {len(chunks)}")
-    print(f"  BM25     : {USE_BM25}")
-    print(f"  Reranker : {USE_RERANKER}")
-    print(f"  Languages: English | Roman Urdu | Urdu Script")
-    print("="*55 + "\n")
+    import logging
+    log = logging.getLogger('werkzeug')
+    log.setLevel(logging.ERROR)
+    print("[READY] Flask is starting on port 7860...")
     app.run(
-    host="0.0.0.0",
-    port=7860,
-    debug=False,
-    use_reloader=False,
-    threaded=True
-)
+        host="0.0.0.0",
+        port=7860,
+        debug=False,
+        use_reloader=False,
+        threaded=True
+    )
