@@ -612,6 +612,10 @@ def chat():
         print(f"[ERROR] Chat route:\n{traceback.format_exc()}")
         return jsonify({"error": f"Server error: {str(e)}"}), 500
 
+@app.route("/ping")
+def ping():
+    return "ok", 200
+
 @app.route("/health")
 def health():
     return jsonify({
