@@ -591,12 +591,6 @@ def rag_query(query: str) -> tuple:
 
 
 # ── Routes ───────────────────────────────────────────────
-@app.route("/")
-def home():
-    try:
-        return render_template("Frontend.html")
-    except Exception as e:
-        return f"<h1>App is running!</h1><p>Template error: {str(e)}</p>", 200
 
 @app.route("/chat", methods=["POST"])
 def chat():
