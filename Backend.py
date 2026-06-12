@@ -37,14 +37,23 @@ OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 if not OPENROUTER_API_KEY:
     raise ValueError("OPENROUTER_API_KEY not found in .env file")
 
-app = Flask(__name__, template_folder='Templates')
+import os
+app = Flask(__name__)
 
-@app.route('/favicon.png')
-def favicon():
-    import pathlib
-    path = pathlib.Path(__file__).parent / 'templates' / 'favicon.png'
-    print(f"[FAVICON] Looking at: {path} | exists: {path.exists()}")
-    return send_from_directory(str(path.parent), path.name, mimetype='image/png')
+# Debug: print where Flask is looking for templates
+print(f"[DEBUG] Template folder: {app.template_folder}")
+print(f"[DEBUG] Current directory: {os.getcwd()}")
+print(f"[DEBUG] Files here: {os.listdir('.')}")
+
+@app.route("/")
+def home():
+    # Try both casing options
+    for folder in ['templates', 'Templates']:
+        path = os.path.join(folder, 'Frontend.html')
+        if os.path.exists(path):
+            print(f"[DEBUG] Found template at: {path}")
+            return send_from_directory(folder, 'Frontend.html')
+    return "Template not found!", 404
 
 # ── Config ───────────────────────────────────────────────
 file_path   = file_path = "fyp_cleaned_dataset.csv"
