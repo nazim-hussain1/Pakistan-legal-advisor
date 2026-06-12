@@ -622,9 +622,13 @@ def health():
 
 # ── Main ─────────────────────────────────────────────────
 if __name__ == "__main__":
-    import logging
-    log = logging.getLogger('werkzeug')
-    log.setLevel(logging.ERROR)
+    print("\n" + "="*55)
+    print("  Pakistan Legal RAG — Roman Urdu + English + Urdu")
+    print("="*55)
+    print(f"  Chunks   : {len(chunks)}")
+    print(f"  BM25     : {USE_BM25}")
+    print(f"  Reranker : {USE_RERANKER}")
+    print("="*55 + "\n")
     print("[READY] Flask is starting on port 7860...")
     app.run(
         host="0.0.0.0",
