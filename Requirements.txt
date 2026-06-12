@@ -1,0 +1,32 @@
+# ════════════════════════════════════════════════════════════
+#  Pakistan Legal Advisor Chatbot — Python Dependencies
+#  Project  : Final Year Project, BS Artificial Intelligence
+#  Backend  : Backend.py (Flask RAG Server)
+# ════════════════════════════════════════════════════════════
+
+# Web Framework
+flask                    # Web server & REST API routing
+
+# Environment & Configuration 
+python-dotenv            # Load secrets from .env (OPENROUTER_API_KEY)
+
+# Data Handling
+pandas                   # CSV dataset loading & DataFrame operations
+numpy                  # Numerical arrays; FAISS embedding storage
+
+# Vector Search & Indexing
+faiss-cpu                # Facebook AI Similarity Search (vector store)
+
+# Embedding & Reranking Model
+sentence-transformers    # multi-qa-mpnet embeddings + CrossEncoder reranker
+
+# Text Splitting
+langchain-text-splitters # RecursiveCharacterTextSplitter for legal chunks
+
+# Language Detection
+langdetect               # Detect English / Urdu script language
+rank-bm25               # BM25Okapi sparse retrieval (hybrid RAG)
+
+# LLM API Client
+openai                  # OpenAI-compatible client for OpenRouter API
+                        # Model used: gpt-oss-120b via OpenRouter

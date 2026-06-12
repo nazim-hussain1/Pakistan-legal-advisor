@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pakistan Legal Advisor Chatbot</title>
+<link rel="icon" type="image/png" href="/favicon.png"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@100..900&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "surface":                  "#f6fbee",
+        "on-surface":               "#181d15",
+        "surface-variant":          "#dfe4d8",
+        "on-surface-variant":       "#404a3b",
+        "surface-container-lowest": "#ffffff",
+        "surface-container-low":    "#f0f5e9",
+        "surface-container":        "#eaf0e3",
+        "surface-container-high":   "#e5eadd",
+        "surface-container-highest":"#dfe4d8",
+        "background":               "#f6fbee",
+        "on-background":            "#181d15",
+        "primary":                  "#004b00",
+        "on-primary":               "#ffffff",
+        "primary-container":        "#006600",
+        "on-primary-container":     "#88e274",
+        "primary-fixed":            "#9cf987",
+        "primary-fixed-dim":        "#81db6e",
+        "on-primary-fixed":         "#002200",
+        "inverse-primary":          "#81db6e",
+        "secondary":                "#5d5e61",
+        "on-secondary":             "#ffffff",
+        "secondary-container":      "#e2e2e5",
+        "on-secondary-container":   "#636467",
+        "tertiary":                 "#7b0d4c",
+        "on-tertiary":              "#ffffff",
+        "on-tertiary-container":    "#ffb9d4",
+        "outline":                  "#707a6a",
+        "outline-variant":          "#bfcab7",
+        "error":                    "#ba1a1a",
+        "on-error":                 "#ffffff",
+        "error-container":          "#ffdad6",
+        "on-error-container":       "#93000a",
+        "surface-tint":             "#106e09",
+        "d-surface":                "#10140f",
+        "d-on-surface":             "#e2e3de",
+        "d-surface-container-low":  "#1c211a",
+        "d-surface-container":      "#21261f",
+        "d-surface-container-high": "#272c25",
+        "d-surface-container-highest":"#333b32",
+        "d-outline-variant":        "#404a3b",
+        "d-primary":                "#81db6e",
+        "d-on-primary":             "#003a00",
+        "d-primary-container":      "#005300",
+        "d-on-primary-container":   "#9cf987",
+        "d-on-surface-variant":     "#c3ccbc",
+        "d-secondary-container":    "#454749",
+        "d-on-secondary-container": "#e2e2e5",
+      },
+      borderRadius: {
+        DEFAULT:"0.125rem", lg:"0.25rem", xl:"0.5rem", full:"0.75rem"
+      },
+      spacing: {
+        xs:"4px", sm:"8px", md:"16px", lg:"24px", xl:"32px",
+        base:"8px", gutter:"24px"
+      },
+      fontFamily: {
+        "body-md":  ["Public Sans"],
+        "legal-md": ["Source Serif 4"],
+        "label-sm": ["Public Sans"],
+        "title-md": ["Public Sans"],
+      },
+      fontSize: {
+        "label-sm": ["12px",{ lineHeight:"16px", fontWeight:"600" }],
+        "body-md":  ["16px",{ lineHeight:"24px", fontWeight:"400" }],
+        "title-md": ["18px",{ lineHeight:"24px", fontWeight:"600" }],
+        "legal-md": ["16px",{ lineHeight:"26px", fontWeight:"400" }],
+      }
+    }
+  }
+}
+</script>
+
+<style>
+  /* ── Base ── */
+  body { font-family:'Public Sans',sans-serif; }
+  .material-symbols-outlined {
+    font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
+  }
+
+  /* ── CSS Variables: Light ── */
+  :root {
+    --bg:         #f6fbee;
+    --bg-sidebar: #f6fbee;
+    --bg-topbar:  #f6fbee;
+    --surface-low:#f0f5e9;
+    --surface:    #eaf0e3;
+    --surface-hi: #e5eadd;
+    --surface-hst:#dfe4d8;
+    --border:     #bfcab7;
+    --text:       #181d15;
+    --text-sub:   #404a3b;
+    --text-muted: #707a6a;
+    --primary:    #004b00;
+    --primary-bg: #006600;
+    --primary-fg: #88e274;
+    --chip-bg:    #eaf0e3;
+    --input-bg:   #ffffff;
+    --scrollbar:  #bfcab7;
+    --msg-user-bg:#006600;
+    --msg-user-fg:#88e274;
+    --msg-ai-bg:  #f0f5e9;
+    --msg-ai-brd: #bfcab7;
+    --sec-cont:   #e2e2e5;
+    --sec-fg:     #636467;
+    --verified-bg:#dfe4d8;
+    --verified-fg:#81db6e;
+    --table-head: #eaf0e3;
+    --row-hover:  #f0f5e9;
+    --badge-ok-bg:#006600;
+    --badge-ok-fg:#9cf987;
+    --badge-err-bg:#ffdad6;
+    --badge-err-fg:#93000a;
+    --stat-2:     #5d5e61;
+    --stat-3:     #7b0d4c;
+    --code-bg:    #e5eadd;
+    --blockquote-bg: #f0f5e9;
+  }
+
+  /* ── CSS Variables: Dark ── */
+  html.dark {
+    --bg:         #10140f;
+    --bg-sidebar: #13180f;
+    --bg-topbar:  #13180f;
+    --surface-low:#1c211a;
+    --surface:    #21261f;
+    --surface-hi: #272c25;
+    --surface-hst:#333b32;
+    --border:     #404a3b;
+    --text:       #e2e3de;
+    --text-sub:   #c3ccbc;
+    --text-muted: #8a9382;
+    --primary:    #81db6e;
+    --primary-bg: #005300;
+    --primary-fg: #9cf987;
+    --chip-bg:    #21261f;
+    --input-bg:   #1c211a;
+    --scrollbar:  #404a3b;
+    --msg-user-bg:#005300;
+    --msg-user-fg:#9cf987;
+    --msg-ai-bg:  #1c211a;
+    --msg-ai-brd: #404a3b;
+    --sec-cont:   #454749;
+    --sec-fg:     #e2e2e5;
+    --verified-bg:#333b32;
+    --verified-fg:#81db6e;
+    --table-head: #21261f;
+    --row-hover:  #272c25;
+    --badge-ok-bg:#005300;
+    --badge-ok-fg:#9cf987;
+    --badge-err-bg:#93000a;
+    --badge-err-fg:#ffdad6;
+    --stat-2:     #c6c6c9;
+    --stat-3:     #ffb0cf;
+    --code-bg:    #272c25;
+    --blockquote-bg: #1c211a;
+  }
+
+  /* ── Apply vars ── */
+  body                { background:var(--bg); color:var(--text); }
+  #sidebar            { background:var(--bg-sidebar); border-color:var(--border); }
+  #top-bar            { background:var(--bg-topbar);  border-color:var(--border); }
+  .chip               { background:var(--chip-bg);    border-color:var(--border); color:var(--text-sub); }
+  .chip:hover         { background:var(--surface-hi); color:var(--text); }
+  #input-wrap         { background:var(--input-bg);   border-color:var(--border); }
+  .nav-item           { color:var(--text-sub); }
+  .nav-item.active    { background:var(--sec-cont); color:var(--sec-fg); font-weight:700; }
+  .nav-item:not(.active):hover { background:var(--surface-hi); }
+  .page-content       { background:var(--bg); }
+  .stat-card          { background:var(--input-bg); border-color:var(--border); }
+  .tbl-wrap           { background:var(--input-bg); border-color:var(--border); }
+  .tbl-head           { background:var(--table-head); color:var(--text-muted); border-color:var(--border); }
+  .tbl-row:hover      { background:var(--row-hover); }
+  .tbl-divider        { border-color:var(--border); }
+  .tbl-footer         { background:var(--surface-low); border-color:var(--border); }
+  .about-card         { background:var(--surface); border-color:var(--border); }
+  .about-blockquote   { background:var(--input-bg); border-color:var(--primary); }
+  .tech-pill          { background:var(--surface); border-color:var(--border); }
+  .date-pill          { background:var(--surface-hi); color:var(--text-muted); }
+  .bubble-user        { background:var(--msg-user-bg); color:var(--msg-user-fg); border-radius:12px 12px 2px 12px; }
+  .bubble-ai          { background:var(--msg-ai-bg); border:1px solid var(--msg-ai-brd); border-radius:12px 12px 12px 2px; }
+  .avatar-ai          { background:var(--primary-bg); border-color:var(--border); }
+  .avatar-user        { background:var(--sec-cont); }
+  .avatar-ai span,
+  .avatar-user span   { color:var(--primary-fg); }
+  .badge-verified     { background:var(--verified-bg); color:var(--verified-fg); border-color:var(--border); }
+  .msg-name           { color:var(--primary); }
+  .msg-time           { color:var(--text-muted); }
+  .badge-ok           { background:var(--badge-ok-bg); color:var(--badge-ok-fg); }
+  .badge-err          { background:var(--badge-err-bg); color:var(--badge-err-fg); }
+  .stat-primary       { color:var(--primary); }
+  .stat-secondary     { color:var(--stat-2); }
+  .stat-tertiary      { color:var(--stat-3); }
+  .stat-label         { color:var(--text-sub); }
+  .hist-count         { color:var(--text-sub); }
+  .re-ask-btn:hover   { background:var(--primary-bg); color:var(--primary-fg); }
+  .send-btn           { background:var(--primary); color:#fff; }
+  .input-icon         { color:var(--text-muted); }
+  .topbar-icon:hover  { color:var(--primary); }
+  .divider            { border-color:var(--border); }
+  .page-title         { color:var(--primary); }
+  .sec-text           { color:var(--text-sub); }
+  .primary-text       { color:var(--primary); }
+  .on-surface-text    { color:var(--text); }
+  .hist-empty         { color:var(--text-sub); }
+  .tbl-id             { color:var(--primary); font-weight:700; }
+  .input-text         { color:var(--text); }
+
+  /* ── Copy button ── */
+  .copy-btn {
+    background: var(--surface-hi);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .copy-btn:hover {
+    background: var(--primary-bg);
+    color: var(--primary-fg);
+    border-color: var(--primary-bg);
+  }
+
+  /* ── Markdown rendering inside bot bubbles ── */
+  .prose-legal { color: var(--text); line-height: 1.75; font-size: 14px; }
+
+  .prose-legal p            { margin-bottom: 10px; }
+  .prose-legal p:last-child { margin-bottom: 0; }
+
+  .prose-legal strong {
+    font-weight: 700;
+    color: var(--primary);
+  }
+  .prose-legal em {
+    font-style: italic;
+    color: var(--text-sub);
+  }
+
+  .prose-legal h1,
+  .prose-legal h2,
+  .prose-legal h3 {
+    font-weight: 700;
+    color: var(--primary);
+    margin: 16px 0 6px;
+    line-height: 1.3;
+  }
+  .prose-legal h1 { font-size: 17px; }
+  .prose-legal h2 { font-size: 15px; }
+  .prose-legal h3 { font-size: 14px; }
+
+  .prose-legal ul {
+    list-style: disc;
+    padding-left: 20px;
+    margin-bottom: 10px;
+  }
+  .prose-legal ol {
+    list-style: decimal;
+    padding-left: 20px;
+    margin-bottom: 10px;
+  }
+  .prose-legal li { margin-bottom: 5px; }
+
+  .prose-legal blockquote {
+    border-left: 3px solid var(--primary);
+    background: var(--blockquote-bg);
+    padding: 10px 14px;
+    margin: 10px 0;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: var(--text-sub);
+    font-size: 13px;
+  }
+
+  .prose-legal code {
+    background: var(--code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: 'Courier New', monospace;
+    color: var(--primary);
+  }
+
+  .prose-legal pre {
+    background: var(--code-bg);
+    padding: 12px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 10px 0;
+  }
+  .prose-legal pre code {
+    background: none;
+    padding: 0;
+    font-size: 12px;
+  }
+
+  .prose-legal hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 14px 0;
+  }
+
+  .prose-legal a {
+    color: var(--primary);
+    text-decoration: underline;
+  }
+
+  /* ── Sidebar / content transitions ── */
+  .sidebar-transition { transition:width .3s cubic-bezier(.4,0,.2,1); }
+  .content-transition { transition:margin-left .3s cubic-bezier(.4,0,.2,1),
+                                   width .3s cubic-bezier(.4,0,.2,1); }
+
+  /* ── Typing dots ── */
+  @keyframes tdot {
+    0%,80%,100% { transform:translateY(0);   opacity:.4; }
+    40%         { transform:translateY(-5px); opacity:1;  }
+  }
+  .tdot { width:7px; height:7px; border-radius:50%; display:inline-block;
+          background:var(--primary); animation:tdot 1.1s infinite; }
+  .tdot:nth-child(2){ animation-delay:.18s; }
+  .tdot:nth-child(3){ animation-delay:.36s; }
+
+  /* ── Message fade-in ── */
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(8px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  .msg-in { animation:fadeUp .22s ease; }
+
+  /* ── Scrollbars ── */
+  ::-webkit-scrollbar       { width:5px; }
+  ::-webkit-scrollbar-track { background:transparent; }
+  ::-webkit-scrollbar-thumb { background:var(--scrollbar); border-radius:10px; }
+  .no-scrollbar::-webkit-scrollbar { display:none; }
+  .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+
+  /* ── Page switching ── */
+  .page { display:none; }
+  .page.active { display:flex; flex-direction:column; }
+
+  /* ── Chat page layout ── */
+  #page-chat { height:calc(100vh - 4rem); }
+  #chatArea  { flex:1; overflow-y:auto; }
+
+  /* ── Hero layout ── */
+  #heroArea {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 0 16px 48px;
+  }
+  #heroArea.hidden { display: none; }
+
+  .hero-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 32px;
+  }
+
+  .hero-input {
+    width: 100%;
+    max-width: 640px;
+  }
+
+  /* ── Sidebar fully hidden when collapsed ── */
+  #sidebar.collapsed {
+    width: 0 !important;
+    padding: 0 !important;
+    border-right: none !important;
+    overflow: hidden;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ══════════════════════════════
+     SIDEBAR
+══════════════════════════════ -->
+<aside id="sidebar"
+  class="sidebar-transition h-screen w-64 fixed left-0 top-0 z-50 flex flex-col pt-md px-md pb-md overflow-hidden border-r">
+
+  <div style="height:48px;"></div>
+
+  <nav class="flex-1 space-y-xs overflow-y-auto">
+    <button id="nav-chat"
+      class="nav-item active w-full flex items-center gap-md p-md rounded-lg transition-all active:scale-95"
+      onclick="showPage('chat')">
+      <span class="material-symbols-outlined">chat</span>
+      <span class="nav-text whitespace-nowrap">New Chat</span>
+    </button>
+    <button id="nav-history"
+      class="nav-item w-full flex items-center gap-md p-md rounded-lg transition-all active:scale-95"
+      onclick="showPage('history')">
+      <span class="material-symbols-outlined">history</span>
+      <span class="nav-text whitespace-nowrap">Chat History</span>
+    </button>
+    <button id="nav-about"
+      class="nav-item w-full flex items-center gap-md p-md rounded-lg transition-all active:scale-95"
+      onclick="showPage('about')">
+      <span class="material-symbols-outlined">info</span>
+      <span class="nav-text whitespace-nowrap">About</span>
+    </button>
+  </nav>
+
+</aside>
+
+
+<!-- ══════════════════════════════
+     TOP APP BAR
+══════════════════════════════ -->
+<header id="top-bar"
+  class="content-transition fixed top-0 right-0 h-16 flex items-center justify-between px-md z-40 border-b"
+  style="width:calc(100% - 16rem);">
+
+  <div class="flex items-center gap-sm">
+    <button id="sidebar-toggle-btn"
+      onclick="toggleSidebar()"
+      title="Toggle sidebar"
+      class="flex items-center justify-center w-9 h-9 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95"
+      style="background:var(--surface-hi);border:1px solid var(--border);">
+      <span id="toggle-icon" class="material-symbols-outlined" style="font-size:20px;color:var(--text-sub);">left_panel_close</span>
+    </button>
+    <div class="flex items-center gap-sm">
+      <span class="material-symbols-outlined primary-text" style="font-size:22px;font-variation-settings:'FILL' 1;">balance</span>
+      <span class="font-bold primary-text" style="font-size:17px;letter-spacing:-.01em;">Pakistan Legal Advisor Chatbot</span>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-sm">
+    <span id="page-title" class="sec-text text-[13px] font-semibold mr-sm"></span>
+
+    <button id="newChatTopBtn"
+      onclick="startNewChat()"
+      title="New Chat"
+      class="flex items-center gap-xs px-sm py-1.5 rounded-xl text-[13px] font-bold transition-all duration-150 hover:opacity-90 active:scale-95 shadow-sm"
+      style="background:var(--primary);color:#fff;">
+      <span class="material-symbols-outlined" style="font-size:18px;">add</span>
+      <span>New Chat</span>
+    </button>
+
+    <button id="themeToggle"
+      class="flex items-center justify-center w-9 h-9 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95"
+      style="background:var(--surface-hi);border:1px solid var(--border);"
+      title="Toggle theme">
+      <span class="material-symbols-outlined" id="themeIcon" style="font-size:18px;color:var(--text-sub);">dark_mode</span>
+    </button>
+
+    <div class="w-9 h-9 rounded-full flex items-center justify-center border"
+         style="background:var(--surface-hi);border-color:var(--border);">
+      <span class="material-symbols-outlined" style="font-size:20px;color:var(--text-sub);">account_circle</span>
+    </div>
+  </div>
+</header>
+
+
+<!-- ══════════════════════════════════════════
+     MAIN CONTENT
+══════════════════════════════════════════ -->
+<main id="main-content"
+  class="content-transition ml-64 pt-16 page-content"
+  style="min-height:100vh;">
+
+
+  <!-- ─────────────────────────
+       PAGE: CHAT
+  ───────────────────────────── -->
+  <div id="page-chat" class="page active">
+
+    <!-- Hero -->
+    <div id="heroArea">
+      <div class="hero-center">
+        <span class="material-symbols-outlined primary-text" style="font-size:56px;font-variation-settings:'FILL' 1;">gavel</span>
+        <h2 class="font-bold primary-text text-center" style="font-size:24px;margin-top:8px;">How can I help you today?</h2>
+        <p class="sec-text text-center text-[14px]" style="margin-top:4px;">Ask any question about Pakistani law in English or Urdu.</p>
+      </div>
+
+      <div class="hero-input">
+        <div id="input-wrap-hero"
+          class="flex items-center gap-xs border rounded-full px-sm py-xs shadow-sm transition-all"
+          style="background:var(--input-bg);border-color:var(--border);"
+          onclick="document.getElementById('messageInput').focus()">
+          <span class="material-symbols-outlined input-icon text-[18px] ml-xs shrink-0"
+                style="font-variation-settings:'FILL' 1;">edit_note</span>
+          <textarea id="messageInput"
+            class="flex-1 bg-transparent border-none focus:ring-0 text-[14px] input-text resize-none py-1.5 min-h-[24px] max-h-28 leading-snug"
+            style="outline:none;"
+            placeholder="Ask anything…" rows="1"></textarea>
+          <button id="sendBtn"
+            class="send-btn shrink-0 w-8 h-8 rounded-full hover:opacity-90 active:scale-90 transition-all flex items-center justify-center shadow disabled:opacity-40 disabled:cursor-not-allowed">
+            <span class="material-symbols-outlined text-[16px]"
+                  style="font-variation-settings:'FILL' 1;">arrow_upward</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Message thread -->
+    <div id="chatArea" class="hidden px-md py-lg">
+      <div id="msgThread" class="max-w-[720px] mx-auto space-y-xl">
+        <div class="flex justify-center">
+          <span id="dateStamp" class="date-pill px-sm py-xs rounded-full text-[10px] font-semibold uppercase tracking-widest"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom input bar -->
+    <div id="bottomBar"
+      class="hidden border-t px-md pt-md pb-lg"
+      style="background:var(--bg-topbar);border-color:var(--border);">
+      <div class="max-w-[720px] mx-auto">
+        <div id="input-wrap"
+          class="flex items-center gap-xs border rounded-full px-sm py-xs shadow-sm transition-all cursor-text"
+          style="background:var(--input-bg);border-color:var(--border);"
+          onclick="document.getElementById('messageInputBottom').focus()">
+          <span class="material-symbols-outlined input-icon text-[18px] ml-xs shrink-0"
+                style="font-variation-settings:'FILL' 1;">edit_note</span>
+          <textarea id="messageInputBottom"
+            class="flex-1 bg-transparent border-none focus:ring-0 text-[14px] input-text resize-none py-1.5 min-h-[24px] max-h-28 leading-snug"
+            style="outline:none;"
+            placeholder="Ask anything…" rows="1"></textarea>
+          <button id="sendBtnBottom"
+            class="send-btn shrink-0 w-8 h-8 rounded-full hover:opacity-90 active:scale-90 transition-all flex items-center justify-center shadow disabled:opacity-40 disabled:cursor-not-allowed">
+            <span class="material-symbols-outlined text-[16px]"
+                  style="font-variation-settings:'FILL' 1;">arrow_upward</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /page-chat -->
+
+
+  <!-- ─────────────────────────
+       PAGE: CHAT HISTORY
+  ───────────────────────────── -->
+  <div id="page-history" class="page px-lg pb-xl pt-lg overflow-y-auto" style="min-height:calc(100vh - 4rem);">
+    <div class="max-w-5xl mx-auto space-y-lg w-full">
+
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-md">
+        <div>
+          <h2 class="font-bold on-surface-text" style="font-size:24px;">Chat History</h2>
+          <p class="text-[14px] sec-text">Review and re-ask your previous legal queries.</p>
+        </div>
+        <button id="clearHistBtn"
+          class="flex items-center gap-xs px-md py-sm rounded-lg border transition-colors sec-text"
+          style="border-color:var(--border);">
+          <span class="material-symbols-outlined text-[18px]">delete_sweep</span>
+          <span class="text-[12px] font-semibold">Clear All</span>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-md">
+        <div class="stat-card border rounded-xl p-md flex flex-col gap-xs">
+          <span class="text-[11px] font-semibold stat-label uppercase">Total Queries</span>
+          <span id="statTotal" class="text-[32px] font-bold leading-none stat-primary">00</span>
+          <span class="text-[11px] stat-label">Questions answered</span>
+        </div>
+        <div class="stat-card border rounded-xl p-md flex flex-col gap-xs">
+          <span class="text-[11px] font-semibold stat-label uppercase">Sessions</span>
+          <span id="statSessions" class="text-[32px] font-bold leading-none stat-secondary">00</span>
+          <span class="text-[11px] stat-label">Consultations started</span>
+        </div>
+        <div class="stat-card border rounded-xl p-md flex flex-col gap-xs">
+          <span class="text-[11px] font-semibold stat-label uppercase">Errors</span>
+          <span id="statErrors" class="text-[32px] font-bold leading-none stat-tertiary">00</span>
+          <span class="text-[11px] stat-label">Failed responses</span>
+        </div>
+      </div>
+
+      <div class="tbl-wrap border rounded-xl overflow-hidden">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="tbl-head border-b">
+              <th class="p-md text-[11px] font-semibold uppercase tracking-wider">Ref ID</th>
+              <th class="p-md text-[11px] font-semibold uppercase tracking-wider">Query</th>
+              <th class="p-md text-[11px] font-semibold uppercase tracking-wider">Time</th>
+              <th class="p-md text-[11px] font-semibold uppercase tracking-wider">Status</th>
+              <th class="p-md text-[11px] font-semibold uppercase tracking-wider text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody id="historyTableBody" class="tbl-divider divide-y">
+            <tr>
+              <td colspan="5" class="p-xl text-center text-[13px] hist-empty">
+                No history yet — ask your first question to see it here.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="tbl-footer p-md border-t">
+          <span id="histCount" class="text-[11px] hist-count">Showing 0 records</span>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /page-history -->
+
+
+  <!-- ─────────────────────────
+       PAGE: ABOUT
+  ───────────────────────────── -->
+  <!-- ─────────────────────────
+     PAGE: ABOUT (Updated)
+──────────────────────────── -->
+<div id="page-about" class="page px-lg pb-xl pt-lg overflow-y-auto" style="min-height:calc(100vh - 4rem);">
+  <div class="max-w-3xl mx-auto space-y-xl w-full">
+
+    <div class="text-center space-y-sm py-lg">
+      <span class="material-symbols-outlined primary-text"
+            style="font-size:56px;font-variation-settings:'FILL' 1;">gavel</span>
+      <h2 class="font-bold primary-text" style="font-size:34px;line-height:42px;letter-spacing:-.02em;">
+        Pakistan Legal Advisor Chatbot
+      </h2>
+      <p class="sec-text font-semibold" style="font-size:17px;">Multilingual &amp; RAG-Powered</p>
+      <p class="text-[13px] text-gray-500">Final Year Project • BS Artificial Intelligence • 2026</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+      <!-- Mission -->
+      <div class="about-card border rounded-xl p-xl space-y-md">
+        <h3 class="font-bold primary-text flex items-center gap-sm text-[16px]">
+          <span class="material-symbols-outlined">rocket_launch</span> Our Mission
+        </h3>
+        <p class="font-legal-md on-surface-text text-[15px] leading-relaxed">
+          To democratize legal access across Pakistan by providing instantly accessible, 
+          AI-driven legal guidance in both English and Urdu. We bridge the gap between 
+          complex legal statutes and everyday citizens through a robust Retrieval-Augmented 
+          Generation (RAG) system.
+        </p>
+      </div>
+
+      <!-- AI Innovation -->
+      <div class="about-card border rounded-xl p-xl space-y-md">
+        <h3 class="font-bold primary-text flex items-center gap-sm text-[16px]">
+          <span class="material-symbols-outlined">psychology</span> AI Innovation
+        </h3>
+        <p class="font-legal-md on-surface-text text-[15px] leading-relaxed">
+          A hybrid RAG pipeline using FAISS vector database, multilingual embeddings, 
+          BM25, and Cross-Encoder reranking. Powered by OpenRouter's <strong>gpt-oss-120b</strong> 
+          model with strict context-grounded generation for accurate Pakistani legal advice.
+        </p>
+      </div>
+    </div>
+
+    <!-- Commitment -->
+    <div class="about-blockquote border-l-4 p-xl rounded-r-xl space-y-sm">
+      <h3 class="font-bold primary-text text-[16px]">Commitment to Duty</h3>
+      <p class="font-legal-md sec-text text-[15px] leading-relaxed">
+        Developed as a Final Year Project at Quaid-e-Awam University of Engineering, 
+        Science &amp; Technology, Nawabshah. This system empowers students, citizens, 
+        and legal professionals by making key Pakistani legal ordinances accessible 
+        in their preferred language.
+      </p>
+    </div>
+
+    <!-- Technology Stack -->
+    <div class="stat-card border rounded-xl p-xl space-y-md">
+      <h3 class="font-bold primary-text flex items-center gap-sm text-[16px]">
+        <span class="material-symbols-outlined">settings_suggest</span> Technology Stack
+      </h3>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-sm">
+        <div class="tech-pill flex items-center gap-sm p-sm border rounded-lg">
+          <span class="material-symbols-outlined primary-text text-[17px]">storage</span>
+          <span class="text-[12px] font-semibold on-surface-text">FAISS Vector DB</span>
+        </div>
+        <div class="tech-pill flex items-center gap-sm p-sm border rounded-lg">
+          <span class="material-symbols-outlined primary-text text-[17px]">hub</span>
+          <span class="text-[12px] font-semibold on-surface-text">gpt-oss-120b (OpenRouter)</span>
+        </div>
+        <div class="tech-pill flex items-center gap-sm p-sm border rounded-lg">
+          <span class="material-symbols-outlined primary-text text-[17px]">translate</span>
+          <span class="text-[12px] font-semibold on-surface-text">Multi-QA MPNet Embeddings</span>
+        </div>
+        <div class="tech-pill flex items-center gap-sm p-sm border rounded-lg">
+          <span class="material-symbols-outlined primary-text text-[17px]">code</span>
+          <span class="text-[12px] font-semibold on-surface-text">Flask Backend</span>
+        </div>
+        <div class="tech-pill flex items-center gap-sm p-sm border rounded-lg">
+          <span class="material-symbols-outlined primary-text text-[17px]">dataset</span>
+          <span class="text-[12px] font-semibold on-surface-text">Kaggle Legal Ordinances</span>
+        </div>
+        <div class="tech-pill flex items-center gap-sm p-sm border rounded-lg">
+          <span class="material-symbols-outlined primary-text text-[17px]">language</span>
+          <span class="text-[12px] font-semibold on-surface-text">English + Urdu</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════ -->
+<script>
+
+/* ── Configure marked.js for legal text ── */
+marked.setOptions({
+  breaks: true,   // single line breaks → <br>
+  gfm:    true,   // GitHub-flavoured markdown (tables, strikethrough, etc.)
+});
+
+/* ── State ── */
+const state = {
+  isSending:        false,
+  controller:       null,
+  totalQueries:     0,
+  totalErrors:      0,
+  totalSessions:    1,
+  history:          [],
+  refCounter:       9921,
+  isDark:           false,
+  sidebarCollapsed: false,
+  hasMessages:      false,
+};
+
+/* ── Elements ── */
+const htmlEl       = document.documentElement;
+const sidebarEl    = document.getElementById('sidebar');
+const topBar       = document.getElementById('top-bar');
+const mainContent  = document.getElementById('main-content');
+const navTexts     = document.querySelectorAll('.nav-text');
+const themeToggle  = document.getElementById('themeToggle');
+const themeIcon    = document.getElementById('themeIcon');
+
+const heroArea     = document.getElementById('heroArea');
+const chatArea     = document.getElementById('chatArea');
+const msgThread    = document.getElementById('msgThread');
+const bottomBar    = document.getElementById('bottomBar');
+
+const inputHero    = document.getElementById('messageInput');
+const inputBottom  = document.getElementById('messageInputBottom');
+const sendHero     = document.getElementById('sendBtn');
+const sendBottom   = document.getElementById('sendBtnBottom');
+
+const historyTableBody = document.getElementById('historyTableBody');
+const histCount    = document.getElementById('histCount');
+const statTotal    = document.getElementById('statTotal');
+const statSessions = document.getElementById('statSessions');
+const statErrors   = document.getElementById('statErrors');
+const clearHistBtn = document.getElementById('clearHistBtn');
+
+/* ── Init ── */
+document.getElementById('dateStamp').textContent =
+  new Date().toLocaleDateString('en-PK',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+updateStats();
+inputHero.focus();
+
+/* ── Theme ── */
+const savedTheme = localStorage.getItem('tea_theme');
+if (savedTheme === 'dark') applyDark(true);
+
+themeToggle.addEventListener('click', () => {
+  applyDark(!state.isDark);
+  localStorage.setItem('tea_theme', state.isDark ? 'dark' : 'light');
+});
+
+function applyDark(on) {
+  state.isDark = on;
+  htmlEl.classList.toggle('dark', on);
+  themeIcon.textContent = on ? 'light_mode' : 'dark_mode';
+}
+
+/* ── Sidebar collapse ── */
+function toggleSidebar() {
+  state.sidebarCollapsed = !state.sidebarCollapsed;
+  const c = state.sidebarCollapsed;
+
+  if (c) {
+    sidebarEl.classList.add('collapsed');
+    mainContent.style.marginLeft = '0px';
+    topBar.style.width           = '100%';
+  } else {
+    sidebarEl.classList.remove('collapsed');
+    mainContent.style.marginLeft = '256px';
+    topBar.style.width           = 'calc(100% - 16rem)';
+  }
+
+  document.getElementById('toggle-icon').textContent =
+    c ? 'left_panel_open' : 'left_panel_close';
+  document.getElementById('sidebar-toggle-btn').title =
+    c ? 'Open sidebar' : 'Close sidebar';
+  navTexts.forEach(t => t.style.display = c ? 'none' : 'inline');
+}
+
+/* ── Page switching ── */
+const pageIds    = { chat:'page-chat', history:'page-history', about:'page-about' };
+const navIds     = { chat:'nav-chat',  history:'nav-history',  about:'nav-about'  };
+const pageTitles = { chat:'', history:'Chat History', about:'About' };
+
+function showPage(name) {
+  Object.keys(pageIds).forEach(k => {
+    document.getElementById(pageIds[k]).classList.toggle('active', k === name);
+    document.getElementById(navIds[k]).classList.toggle('active', k === name);
+  });
+  document.getElementById('page-title').textContent = pageTitles[name];
+  if (name === 'history') renderHistoryTable();
+  if (name === 'chat') {
+    if (state.hasMessages) {
+      chatArea.scrollTop = chatArea.scrollHeight;
+      inputBottom.focus();
+    } else {
+      inputHero.focus();
+    }
+  }
+}
+
+/* ── New Chat ── */
+function startNewChat() {
+  state.controller?.abort();
+  state.hasMessages = false;
+  state.isSending   = false;
+
+  msgThread.innerHTML = `<div class="flex justify-center">
+    <span id="dateStamp" class="date-pill px-sm py-xs rounded-full text-[10px] font-semibold uppercase tracking-widest"></span>
+  </div>`;
+  document.getElementById('dateStamp').textContent =
+    new Date().toLocaleDateString('en-PK',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+  heroArea.classList.remove('hidden');
+  chatArea.classList.add('hidden');
+  bottomBar.classList.add('hidden');
+
+  inputHero.value          = '';
+  inputBottom.value        = '';
+  inputHero.style.height   = 'auto';
+  inputBottom.style.height = 'auto';
+  sendHero.disabled        = false;
+  sendBottom.disabled      = false;
+  inputHero.disabled       = false;
+  inputBottom.disabled     = false;
+
+  showPage('chat');
+  inputHero.focus();
+  state.totalSessions++;
+  updateStats();
+}
+
+/* ── Activate bottom bar after first message ── */
+function activateBottomBar() {
+  if (state.hasMessages) return;
+  state.hasMessages = true;
+  heroArea.classList.add('hidden');
+  chatArea.classList.remove('hidden');
+  bottomBar.classList.remove('hidden');
+  inputBottom.focus();
+}
+
+/* ── Utilities ── */
+function getTime() {
+  return new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+}
+function esc(s) {
+  return String(s)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+function pad2(n) { return String(n).padStart(2,'0'); }
+function scrollBottom() {
+  chatArea.scrollTo({top:chatArea.scrollHeight, behavior:'smooth'});
+}
+function setLoading(on) {
+  state.isSending      = on;
+  sendHero.disabled    = on;
+  sendBottom.disabled  = on;
+  inputHero.disabled   = on;
+  inputBottom.disabled = on;
+}
+function updateStats() {
+  statTotal.textContent    = pad2(state.totalQueries);
+  statSessions.textContent = pad2(state.totalSessions);
+  statErrors.textContent   = pad2(state.totalErrors);
+}
+
+/* ── Copy button handler ── */
+function copyMsg(btn) {
+  const bubble = btn.closest('.flex.flex-col').querySelector('.bubble-ai');
+  const plainText = bubble.innerText;
+  navigator.clipboard.writeText(plainText).then(() => {
+    btn.innerHTML = `<span class="material-symbols-outlined" style="font-size:13px;">check</span> Copied`;
+    btn.style.background = 'var(--primary-bg)';
+    btn.style.color      = 'var(--primary-fg)';
+    setTimeout(() => {
+      btn.innerHTML = `<span class="material-symbols-outlined" style="font-size:13px;">content_copy</span> Copy`;
+      btn.style.background = '';
+      btn.style.color      = '';
+    }, 2000);
+  }).catch(() => {
+    btn.innerHTML = `<span class="material-symbols-outlined" style="font-size:13px;">error</span> Failed`;
+    setTimeout(() => {
+      btn.innerHTML = `<span class="material-symbols-outlined" style="font-size:13px;">content_copy</span> Copy`;
+    }, 2000);
+  });
+}
+
+/* ── Message rendering ── */
+function appendUserMsg(text) {
+  activateBottomBar();
+  const div = document.createElement('div');
+  div.className = 'flex flex-row-reverse gap-md msg-in';
+  div.innerHTML = `
+    <div class="avatar-user w-10 h-10 rounded-lg flex items-center justify-center shrink-0">
+      <span class="material-symbols-outlined" style="color:var(--sec-fg);">person</span>
+    </div>
+    <div class="flex flex-col items-end gap-xs max-w-[85%]">
+      <div class="bubble-user p-md shadow-sm">
+        <p class="text-[14px] leading-relaxed">${esc(text)}</p>
+      </div>
+      <span class="msg-time text-[11px] mr-xs">${getTime()}</span>
+    </div>`;
+  msgThread.appendChild(div);
+  scrollBottom();
+}
+
+function appendBotMsg(text, lang) {
+  const label = lang === 'ur' ? 'The Expert Advocate · اردو' : 'The Expert Advocate';
+
+  // Parse markdown → HTML (safe: no user-controlled HTML injection here,
+  // text comes from our own Flask backend)
+  const renderedHTML = marked.parse(text);
+
+  const div = document.createElement('div');
+  div.className = 'flex gap-md msg-in';
+  div.innerHTML = `
+    <div class="avatar-ai w-10 h-10 rounded-lg flex items-center justify-center shrink-0 shadow-sm border">
+      <span class="material-symbols-outlined text-[20px]"
+            style="font-variation-settings:'FILL' 1;color:var(--primary-fg);">gavel</span>
+    </div>
+    <div class="flex flex-col gap-xs max-w-[85%]">
+      <div class="flex items-center gap-sm flex-wrap">
+        <span class="font-bold msg-name text-[14px]">${esc(label)}</span>
+        <span class="badge-verified flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border">
+          <span class="material-symbols-outlined text-[11px]"
+                style="font-variation-settings:'FILL' 1;">verified</span> Verified Law
+        </span>
+      </div>
+      <div class="bubble-ai p-md shadow-sm prose-legal">
+        ${renderedHTML}
+      </div>
+      <div class="flex items-center gap-sm mt-xs">
+        <span class="msg-time text-[11px] ml-xs">${getTime()}</span>
+        <button class="copy-btn" onclick="copyMsg(this)" title="Copy response">
+          <span class="material-symbols-outlined" style="font-size:13px;">content_copy</span>
+          Copy
+        </button>
+      </div>
+    </div>`;
+  msgThread.appendChild(div);
+  scrollBottom();
+}
+
+function showTyping() {
+  removeTyping();
+  const div = document.createElement('div');
+  div.id        = 'typingRow';
+  div.className = 'flex gap-md';
+  div.innerHTML = `
+    <div class="avatar-ai w-10 h-10 rounded-lg flex items-center justify-center shrink-0 border">
+      <span class="material-symbols-outlined text-[20px]"
+            style="font-variation-settings:'FILL' 1;color:var(--primary-fg);">gavel</span>
+    </div>
+    <div class="bubble-ai p-md shadow-sm flex items-center gap-xs">
+      <span class="tdot"></span><span class="tdot"></span><span class="tdot"></span>
+    </div>`;
+  msgThread.appendChild(div);
+  scrollBottom();
+}
+function removeTyping() { document.getElementById('typingRow')?.remove(); }
+
+/* ── History table ── */
+function renderHistoryTable() {
+  if (state.history.length === 0) {
+    historyTableBody.innerHTML = `
+      <tr><td colspan="5" class="p-xl text-center text-[13px] hist-empty">
+        No history yet — ask your first question to see it here.
+      </td></tr>`;
+    histCount.textContent = 'Showing 0 records';
+    return;
+  }
+  historyTableBody.innerHTML = state.history.slice().reverse().map(item => {
+    const badge = item.status === 'Resolved'
+      ? 'badge-ok px-md py-1 rounded-full text-[11px] font-bold'
+      : 'badge-err px-md py-1 rounded-full text-[11px] font-bold';
+    return `
+      <tr class="tbl-row transition-colors">
+        <td class="p-md tbl-id">${esc(item.id)}</td>
+        <td class="p-md" style="max-width:260px;">
+          <span class="on-surface-text text-[13px] block truncate font-semibold">${esc(item.query)}</span>
+        </td>
+        <td class="p-md sec-text text-[13px]">${esc(item.time)}</td>
+        <td class="p-md"><span class="${badge}">${esc(item.status)}</span></td>
+        <td class="p-md text-right">
+          <button class="re-ask-btn p-sm rounded-lg transition-all"
+                  data-q="${esc(item.query)}" title="Re-ask">
+            <span class="material-symbols-outlined text-[18px] primary-text">replay</span>
+          </button>
+        </td>
+      </tr>`;
+  }).join('');
+  histCount.textContent =
+    `Showing ${state.history.length} record${state.history.length !== 1 ? 's' : ''}`;
+
+  historyTableBody.querySelectorAll('.re-ask-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const q = btn.dataset.q;
+      inputHero.value   = q;
+      inputBottom.value = q;
+      showPage('chat');
+      sendMessage();
+    });
+  });
+}
+
+clearHistBtn.addEventListener('click', () => {
+  state.history      = [];
+  state.totalQueries = 0;
+  state.totalErrors  = 0;
+  updateStats();
+  renderHistoryTable();
+});
+
+/* ── Send → Flask /chat ── */
+async function sendMessage() {
+  const activeInput = state.hasMessages ? inputBottom : inputHero;
+  const text = activeInput.value.trim();
+  if (!text || state.isSending) return;
+
+  appendUserMsg(text);
+  inputHero.value          = '';
+  inputBottom.value        = '';
+  inputHero.style.height   = 'auto';
+  inputBottom.style.height = 'auto';
+  setLoading(true);
+  showTyping();
+  state.totalQueries++;
+  updateStats();
+
+  state.controller = new AbortController();
+  const timeout = setTimeout(() => state.controller.abort(), 120_000);
+
+  let botReply = '', lang = 'en', status = 'Resolved';
+
+  try {
+    const res = await fetch('/chat', {
+      method:  'POST',
+      headers: {'Content-Type':'application/json'},
+      body:    JSON.stringify({message: text}),
+      signal:  state.controller.signal,
+    });
+    clearTimeout(timeout);
+    const data = await res.json();
+    removeTyping();
+    if (!res.ok) {
+      botReply = data.error || 'Server error occurred.';
+      status   = 'Flagged';
+    } else {
+      botReply = data.reply;
+      lang     = data.language || 'en';
+    }
+  } catch(err) {
+    clearTimeout(timeout);
+    removeTyping();
+    botReply = err.name === 'AbortError'
+      ? 'Request timed out. The model may be processing a large response.'
+      : 'Unable to connect to Flask server. Please ensure App.py is running on port 5000.';
+    status = 'Flagged';
+  }
+
+  if (status === 'Flagged') state.totalErrors++;
+  appendBotMsg(botReply, lang);
+  updateStats();
+
+  state.refCounter++;
+  state.history.push({
+    id:     `#PLA-${state.refCounter}`,
+    query:  text,
+    time:   getTime(),
+    status
+  });
+
+  setLoading(false);
+  inputBottom.focus();
+  state.controller = null;
+}
+
+/* ── Input events: hero textarea ── */
+sendHero.addEventListener('click', sendMessage);
+inputHero.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+inputHero.addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 128) + 'px';
+});
+
+/* ── Input events: bottom textarea ── */
+sendBottom.addEventListener('click', sendMessage);
+inputBottom.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+});
+inputBottom.addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 128) + 'px';
+});
+
+/* ── Health check ── */
+(async () => {
+  try {
+    const r = await fetch('/health');
+    if (!r.ok) throw new Error();
+  } catch {
+    activateBottomBar();
+    appendBotMsg(
+      '⚠️ **Flask backend is not responding.**\n\nEnsure `App.py` is running on port 5000.',
+      'en'
+    );
+  }
+})();
+
+</script>
+</body>
+</html>
