@@ -90,7 +90,8 @@ tailwind.config = {
 
 <style>
   /* ── Base ── */
-  body { font-family:'Public Sans',sans-serif; }
+  * { box-sizing: border-box; }
+  body { font-family:'Public Sans',sans-serif; margin:0; padding:0; }
   .material-symbols-outlined {
     font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;
   }
@@ -132,6 +133,7 @@ tailwind.config = {
     --stat-3:     #7b0d4c;
     --code-bg:    #e5eadd;
     --blockquote-bg: #f0f5e9;
+    --overlay:    rgba(0,0,0,0.45);
   }
 
   /* ── CSS Variables: Dark ── */
@@ -171,6 +173,7 @@ tailwind.config = {
     --stat-3:     #ffb0cf;
     --code-bg:    #272c25;
     --blockquote-bg: #1c211a;
+    --overlay:    rgba(0,0,0,0.6);
   }
 
   /* ── Apply vars ── */
@@ -179,7 +182,7 @@ tailwind.config = {
   #top-bar            { background:var(--bg-topbar);  border-color:var(--border); }
   .chip               { background:var(--chip-bg);    border-color:var(--border); color:var(--text-sub); }
   .chip:hover         { background:var(--surface-hi); color:var(--text); }
-  #input-wrap         { background:var(--input-bg);   border-color:var(--border); }
+  #input-wrap, #input-wrap-hero { background:var(--input-bg); border-color:var(--border); }
   .nav-item           { color:var(--text-sub); }
   .nav-item.active    { background:var(--sec-cont); color:var(--sec-fg); font-weight:700; }
   .nav-item:not(.active):hover { background:var(--surface-hi); }
@@ -245,91 +248,155 @@ tailwind.config = {
 
   /* ── Markdown rendering inside bot bubbles ── */
   .prose-legal { color: var(--text); line-height: 1.75; font-size: 14px; }
-
   .prose-legal p            { margin-bottom: 10px; }
   .prose-legal p:last-child { margin-bottom: 0; }
-
-  .prose-legal strong {
-    font-weight: 700;
-    color: var(--primary);
-  }
-  .prose-legal em {
-    font-style: italic;
-    color: var(--text-sub);
-  }
-
-  .prose-legal h1,
-  .prose-legal h2,
-  .prose-legal h3 {
-    font-weight: 700;
-    color: var(--primary);
-    margin: 16px 0 6px;
-    line-height: 1.3;
+  .prose-legal strong { font-weight: 700; color: var(--primary); }
+  .prose-legal em { font-style: italic; color: var(--text-sub); }
+  .prose-legal h1,.prose-legal h2,.prose-legal h3 {
+    font-weight: 700; color: var(--primary); margin: 16px 0 6px; line-height: 1.3;
   }
   .prose-legal h1 { font-size: 17px; }
   .prose-legal h2 { font-size: 15px; }
   .prose-legal h3 { font-size: 14px; }
-
-  .prose-legal ul {
-    list-style: disc;
-    padding-left: 20px;
-    margin-bottom: 10px;
-  }
-  .prose-legal ol {
-    list-style: decimal;
-    padding-left: 20px;
-    margin-bottom: 10px;
-  }
+  .prose-legal ul { list-style: disc; padding-left: 20px; margin-bottom: 10px; }
+  .prose-legal ol { list-style: decimal; padding-left: 20px; margin-bottom: 10px; }
   .prose-legal li { margin-bottom: 5px; }
-
   .prose-legal blockquote {
     border-left: 3px solid var(--primary);
     background: var(--blockquote-bg);
-    padding: 10px 14px;
-    margin: 10px 0;
+    padding: 10px 14px; margin: 10px 0;
     border-radius: 0 8px 8px 0;
-    font-style: italic;
-    color: var(--text-sub);
-    font-size: 13px;
+    font-style: italic; color: var(--text-sub); font-size: 13px;
   }
-
   .prose-legal code {
-    background: var(--code-bg);
-    padding: 1px 6px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-family: 'Courier New', monospace;
-    color: var(--primary);
+    background: var(--code-bg); padding: 1px 6px; border-radius: 4px;
+    font-size: 12px; font-family: 'Courier New', monospace; color: var(--primary);
+  }
+  .prose-legal pre { background: var(--code-bg); padding: 12px; border-radius: 8px; overflow-x: auto; margin: 10px 0; }
+  .prose-legal pre code { background: none; padding: 0; font-size: 12px; }
+  .prose-legal hr { border: none; border-top: 1px solid var(--border); margin: 14px 0; }
+  .prose-legal a { color: var(--primary); text-decoration: underline; }
+
+  /* ══════════════════════════════════════
+     LAYOUT: DESKTOP (≥768px)
+  ══════════════════════════════════════ */
+
+  /* Sidebar: fixed, full-height */
+  #sidebar {
+    position: fixed;
+    left: 0; top: 0;
+    height: 100vh;
+    width: 256px;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    border-right: 1px solid var(--border);
+    transition: transform 0.3s cubic-bezier(.4,0,.2,1), width 0.3s cubic-bezier(.4,0,.2,1);
+    overflow: hidden;
   }
 
-  .prose-legal pre {
-    background: var(--code-bg);
-    padding: 12px;
-    border-radius: 8px;
-    overflow-x: auto;
-    margin: 10px 0;
-  }
-  .prose-legal pre code {
-    background: none;
-    padding: 0;
-    font-size: 12px;
-  }
-
-  .prose-legal hr {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 14px 0;
+  /* Top bar */
+  #top-bar {
+    position: fixed;
+    top: 0; right: 0;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    z-index: 40;
+    border-bottom: 1px solid var(--border);
+    width: calc(100% - 256px);
+    transition: width 0.3s cubic-bezier(.4,0,.2,1), left 0.3s cubic-bezier(.4,0,.2,1);
   }
 
-  .prose-legal a {
-    color: var(--primary);
-    text-decoration: underline;
+  /* Main content */
+  #main-content {
+    margin-left: 256px;
+    padding-top: 64px;
+    min-height: 100vh;
+    transition: margin-left 0.3s cubic-bezier(.4,0,.2,1);
   }
 
-  /* ── Sidebar / content transitions ── */
-  .sidebar-transition { transition:width .3s cubic-bezier(.4,0,.2,1); }
-  .content-transition { transition:margin-left .3s cubic-bezier(.4,0,.2,1),
-                                   width .3s cubic-bezier(.4,0,.2,1); }
+  /* Sidebar collapsed (desktop) */
+  #sidebar.collapsed {
+    width: 0 !important;
+    padding: 0 !important;
+    border-right: none !important;
+    overflow: hidden;
+  }
+  #sidebar.collapsed + * #top-bar,
+  body.sidebar-collapsed #top-bar { width: 100%; }
+  body.sidebar-collapsed #main-content { margin-left: 0; }
+
+  /* ══════════════════════════════════════
+     LAYOUT: MOBILE (<768px)
+  ══════════════════════════════════════ */
+  @media (max-width: 767px) {
+    /* Sidebar slides in as drawer */
+    #sidebar {
+      width: 240px !important;
+      transform: translateX(-100%);
+      box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+    }
+    #sidebar.mobile-open {
+      transform: translateX(0);
+    }
+    /* Full-width top bar on mobile */
+    #top-bar {
+      width: 100% !important;
+      left: 0;
+    }
+    /* No left margin on mobile */
+    #main-content {
+      margin-left: 0 !important;
+    }
+    /* Hide brand name on very small screens */
+    #brand-name {
+      display: none;
+    }
+    /* Smaller hero */
+    #heroArea {
+      padding: 0 12px 64px;
+    }
+    .hero-center span[style*="56px"] {
+      font-size: 40px !important;
+    }
+    .hero-center h2 {
+      font-size: 18px !important;
+    }
+    /* Message bubbles: full width on mobile */
+    .bubble-user, .bubble-ai { max-width: 100% !important; }
+    .msg-bubble-wrap { max-width: calc(100% - 52px) !important; }
+    /* Avatars smaller */
+    .msg-avatar { width: 32px !important; height: 32px !important; }
+    /* Bottom bar padding */
+    #bottomBar { padding: 10px 10px 16px; }
+    /* Page padding */
+    #page-history, #page-about { padding: 12px 12px 40px; }
+    /* Stats: 1 column on mobile */
+    .stats-grid { grid-template-columns: 1fr !important; }
+    /* About cards: 1 column on mobile */
+    .about-grid { grid-template-columns: 1fr !important; }
+    /* Tech pills: 2 columns on mobile */
+    .tech-grid { grid-template-columns: 1fr 1fr !important; }
+    /* Hide table columns that don't fit */
+    .tbl-col-time { display: none; }
+    /* Smaller new-chat button */
+    #newChatTopBtn span.new-chat-label { display: none; }
+    #newChatTopBtn { padding: 6px 8px !important; }
+  }
+
+  /* Mobile overlay */
+  #sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--overlay);
+    z-index: 49;
+  }
+  #sidebar-overlay.active { display: block; }
 
   /* ── Typing dots ── */
   @keyframes tdot {
@@ -360,8 +427,12 @@ tailwind.config = {
   .page.active { display:flex; flex-direction:column; }
 
   /* ── Chat page layout ── */
-  #page-chat { height:calc(100vh - 4rem); }
-  #chatArea  { flex:1; overflow-y:auto; }
+  #page-chat {
+    height: calc(100vh - 64px);
+    display: flex;
+    flex-direction: column;
+  }
+  #chatArea { flex:1; overflow-y:auto; }
 
   /* ── Hero layout ── */
   #heroArea {
@@ -388,43 +459,43 @@ tailwind.config = {
     max-width: 640px;
   }
 
-  /* ── Sidebar fully hidden when collapsed ── */
-  #sidebar.collapsed {
-    width: 0 !important;
-    padding: 0 !important;
-    border-right: none !important;
-    overflow: hidden;
-  }
+  /* ── Responsive table ── */
+  .tbl-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* ── Nav text hides when sidebar narrow ── */
+  #sidebar.collapsed .nav-text { display: none !important; }
 </style>
 </head>
 
 <body>
 
+<!-- Mobile overlay -->
+<div id="sidebar-overlay" onclick="closeMobileSidebar()"></div>
+
 <!-- ══════════════════════════════
      SIDEBAR
 ══════════════════════════════ -->
-<aside id="sidebar"
-  class="sidebar-transition h-screen w-64 fixed left-0 top-0 z-50 flex flex-col pt-md px-md pb-md overflow-hidden border-r">
+<aside id="sidebar">
 
   <div style="height:48px;"></div>
 
-  <nav class="flex-1 space-y-xs overflow-y-auto">
+  <nav style="flex:1; overflow-y:auto;" class="space-y-1">
     <button id="nav-chat"
-      class="nav-item active w-full flex items-center gap-md p-md rounded-lg transition-all active:scale-95"
-      onclick="showPage('chat')">
-      <span class="material-symbols-outlined">chat</span>
+      class="nav-item active w-full flex items-center gap-4 p-4 rounded-lg transition-all active:scale-95"
+      onclick="showPage('chat');closeMobileSidebar()">
+      <span class="material-symbols-outlined shrink-0">chat</span>
       <span class="nav-text whitespace-nowrap">New Chat</span>
     </button>
     <button id="nav-history"
-      class="nav-item w-full flex items-center gap-md p-md rounded-lg transition-all active:scale-95"
-      onclick="showPage('history')">
-      <span class="material-symbols-outlined">history</span>
+      class="nav-item w-full flex items-center gap-4 p-4 rounded-lg transition-all active:scale-95"
+      onclick="showPage('history');closeMobileSidebar()">
+      <span class="material-symbols-outlined shrink-0">history</span>
       <span class="nav-text whitespace-nowrap">Chat History</span>
     </button>
     <button id="nav-about"
-      class="nav-item w-full flex items-center gap-md p-md rounded-lg transition-all active:scale-95"
-      onclick="showPage('about')">
-      <span class="material-symbols-outlined">info</span>
+      class="nav-item w-full flex items-center gap-4 p-4 rounded-lg transition-all active:scale-95"
+      onclick="showPage('about');closeMobileSidebar()">
+      <span class="material-symbols-outlined shrink-0">info</span>
       <span class="nav-text whitespace-nowrap">About</span>
     </button>
   </nav>
@@ -435,44 +506,42 @@ tailwind.config = {
 <!-- ══════════════════════════════
      TOP APP BAR
 ══════════════════════════════ -->
-<header id="top-bar"
-  class="content-transition fixed top-0 right-0 h-16 flex items-center justify-between px-md z-40 border-b"
-  style="width:calc(100% - 16rem);">
+<header id="top-bar">
 
-  <div class="flex items-center gap-sm">
+  <div class="flex items-center gap-2">
     <button id="sidebar-toggle-btn"
       onclick="toggleSidebar()"
       title="Toggle sidebar"
-      class="flex items-center justify-center w-9 h-9 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95"
+      class="flex items-center justify-center w-9 h-9 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95 shrink-0"
       style="background:var(--surface-hi);border:1px solid var(--border);">
       <span id="toggle-icon" class="material-symbols-outlined" style="font-size:20px;color:var(--text-sub);">left_panel_close</span>
     </button>
-    <div class="flex items-center gap-sm">
-      <span class="material-symbols-outlined primary-text" style="font-size:22px;font-variation-settings:'FILL' 1;">balance</span>
-      <span class="font-bold primary-text" style="font-size:17px;letter-spacing:-.01em;">Pakistan Legal Advisor Chatbot</span>
+    <div class="flex items-center gap-2">
+      <span class="material-symbols-outlined primary-text shrink-0" style="font-size:22px;font-variation-settings:'FILL' 1;">balance</span>
+      <span id="brand-name" class="font-bold primary-text" style="font-size:17px;letter-spacing:-.01em;">Pakistan Legal Advisor</span>
     </div>
   </div>
 
-  <div class="flex items-center gap-sm">
-    <span id="page-title" class="sec-text text-[13px] font-semibold mr-sm"></span>
+  <div class="flex items-center gap-2">
+    <span id="page-title" class="sec-text text-[13px] font-semibold" style="margin-right:4px;"></span>
 
     <button id="newChatTopBtn"
       onclick="startNewChat()"
       title="New Chat"
-      class="flex items-center gap-xs px-sm py-1.5 rounded-xl text-[13px] font-bold transition-all duration-150 hover:opacity-90 active:scale-95 shadow-sm"
+      class="flex items-center gap-1 px-3 py-1.5 rounded-xl text-[13px] font-bold transition-all duration-150 hover:opacity-90 active:scale-95 shadow-sm"
       style="background:var(--primary);color:#fff;">
       <span class="material-symbols-outlined" style="font-size:18px;">add</span>
-      <span>New Chat</span>
+      <span class="new-chat-label">New Chat</span>
     </button>
 
     <button id="themeToggle"
-      class="flex items-center justify-center w-9 h-9 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95"
+      class="flex items-center justify-center w-9 h-9 rounded-xl transition-all duration-200 hover:scale-105 active:scale-95 shrink-0"
       style="background:var(--surface-hi);border:1px solid var(--border);"
       title="Toggle theme">
       <span class="material-symbols-outlined" id="themeIcon" style="font-size:18px;color:var(--text-sub);">dark_mode</span>
     </button>
 
-    <div class="w-9 h-9 rounded-full flex items-center justify-center border"
+    <div class="w-9 h-9 rounded-full flex items-center justify-center border shrink-0"
          style="background:var(--surface-hi);border-color:var(--border);">
       <span class="material-symbols-outlined" style="font-size:20px;color:var(--text-sub);">account_circle</span>
     </div>
@@ -483,9 +552,7 @@ tailwind.config = {
 <!-- ══════════════════════════════════════════
      MAIN CONTENT
 ══════════════════════════════════════════ -->
-<main id="main-content"
-  class="content-transition ml-64 pt-16 page-content"
-  style="min-height:100vh;">
+<main id="main-content" class="page-content">
 
 
   <!-- ─────────────────────────
@@ -503,13 +570,12 @@ tailwind.config = {
 
       <div class="hero-input">
         <div id="input-wrap-hero"
-          class="flex items-center gap-xs border rounded-full px-sm py-xs shadow-sm transition-all"
-          style="background:var(--input-bg);border-color:var(--border);"
+          class="flex items-center gap-2 border rounded-full px-2 py-1 shadow-sm transition-all cursor-text"
           onclick="document.getElementById('messageInput').focus()">
-          <span class="material-symbols-outlined input-icon text-[18px] ml-xs shrink-0"
+          <span class="material-symbols-outlined input-icon text-[18px] ml-2 shrink-0"
                 style="font-variation-settings:'FILL' 1;">edit_note</span>
           <textarea id="messageInput"
-            class="flex-1 bg-transparent border-none focus:ring-0 text-[14px] input-text resize-none py-1.5 min-h-[24px] max-h-28 leading-snug"
+            class="flex-1 bg-transparent border-none focus:ring-0 text-[14px] input-text resize-none py-2 min-h-[24px] max-h-28 leading-snug"
             style="outline:none;"
             placeholder="Ask anything…" rows="1"></textarea>
           <button id="sendBtn"
@@ -522,27 +588,26 @@ tailwind.config = {
     </div>
 
     <!-- Message thread -->
-    <div id="chatArea" class="hidden px-md py-lg">
-      <div id="msgThread" class="max-w-[720px] mx-auto space-y-xl">
+    <div id="chatArea" class="hidden px-4 py-6">
+      <div id="msgThread" class="max-w-[720px] mx-auto space-y-8">
         <div class="flex justify-center">
-          <span id="dateStamp" class="date-pill px-sm py-xs rounded-full text-[10px] font-semibold uppercase tracking-widest"></span>
+          <span id="dateStamp" class="date-pill px-2 py-1 rounded-full text-[10px] font-semibold uppercase tracking-widest"></span>
         </div>
       </div>
     </div>
 
     <!-- Bottom input bar -->
     <div id="bottomBar"
-      class="hidden border-t px-md pt-md pb-lg"
+      class="hidden border-t px-4 pt-3 pb-6"
       style="background:var(--bg-topbar);border-color:var(--border);">
       <div class="max-w-[720px] mx-auto">
         <div id="input-wrap"
-          class="flex items-center gap-xs border rounded-full px-sm py-xs shadow-sm transition-all cursor-text"
-          style="background:var(--input-bg);border-color:var(--border);"
+          class="flex items-center gap-2 border rounded-full px-2 py-1 shadow-sm transition-all cursor-text"
           onclick="document.getElementById('messageInputBottom').focus()">
-          <span class="material-symbols-outlined input-icon text-[18px] ml-xs shrink-0"
+          <span class="material-symbols-outlined input-icon text-[18px] ml-2 shrink-0"
                 style="font-variation-settings:'FILL' 1;">edit_note</span>
           <textarea id="messageInputBottom"
-            class="flex-1 bg-transparent border-none focus:ring-0 text-[14px] input-text resize-none py-1.5 min-h-[24px] max-h-28 leading-snug"
+            class="flex-1 bg-transparent border-none focus:ring-0 text-[14px] input-text resize-none py-2 min-h-[24px] max-h-28 leading-snug"
             style="outline:none;"
             placeholder="Ask anything…" rows="1"></textarea>
           <button id="sendBtnBottom"
@@ -560,34 +625,34 @@ tailwind.config = {
   <!-- ─────────────────────────
        PAGE: CHAT HISTORY
   ───────────────────────────── -->
-  <div id="page-history" class="page px-lg pb-xl pt-lg overflow-y-auto" style="min-height:calc(100vh - 4rem);">
-    <div class="max-w-5xl mx-auto space-y-lg w-full">
+  <div id="page-history" class="page px-6 pb-12 pt-6 overflow-y-auto" style="min-height:calc(100vh - 64px);">
+    <div class="max-w-5xl mx-auto space-y-6 w-full">
 
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-md">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 class="font-bold on-surface-text" style="font-size:24px;">Chat History</h2>
           <p class="text-[14px] sec-text">Review and re-ask your previous legal queries.</p>
         </div>
         <button id="clearHistBtn"
-          class="flex items-center gap-xs px-md py-sm rounded-lg border transition-colors sec-text"
+          class="flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors sec-text w-fit"
           style="border-color:var(--border);">
           <span class="material-symbols-outlined text-[18px]">delete_sweep</span>
           <span class="text-[12px] font-semibold">Clear All</span>
         </button>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-md">
-        <div class="stat-card border rounded-xl p-md flex flex-col gap-xs">
+      <div class="stats-grid grid grid-cols-3 gap-4">
+        <div class="stat-card border rounded-xl p-4 flex flex-col gap-1">
           <span class="text-[11px] font-semibold stat-label uppercase">Total Queries</span>
           <span id="statTotal" class="text-[32px] font-bold leading-none stat-primary">00</span>
           <span class="text-[11px] stat-label">Questions answered</span>
         </div>
-        <div class="stat-card border rounded-xl p-md flex flex-col gap-xs">
+        <div class="stat-card border rounded-xl p-4 flex flex-col gap-1">
           <span class="text-[11px] font-semibold stat-label uppercase">Sessions</span>
           <span id="statSessions" class="text-[32px] font-bold leading-none stat-secondary">00</span>
           <span class="text-[11px] stat-label">Consultations started</span>
         </div>
-        <div class="stat-card border rounded-xl p-md flex flex-col gap-xs">
+        <div class="stat-card border rounded-xl p-4 flex flex-col gap-1">
           <span class="text-[11px] font-semibold stat-label uppercase">Errors</span>
           <span id="statErrors" class="text-[32px] font-bold leading-none stat-tertiary">00</span>
           <span class="text-[11px] stat-label">Failed responses</span>
@@ -595,25 +660,27 @@ tailwind.config = {
       </div>
 
       <div class="tbl-wrap border rounded-xl overflow-hidden">
-        <table class="w-full text-left border-collapse">
-          <thead>
-            <tr class="tbl-head border-b">
-              <th class="p-md text-[11px] font-semibold uppercase tracking-wider">Ref ID</th>
-              <th class="p-md text-[11px] font-semibold uppercase tracking-wider">Query</th>
-              <th class="p-md text-[11px] font-semibold uppercase tracking-wider">Time</th>
-              <th class="p-md text-[11px] font-semibold uppercase tracking-wider">Status</th>
-              <th class="p-md text-[11px] font-semibold uppercase tracking-wider text-right">Action</th>
-            </tr>
-          </thead>
-          <tbody id="historyTableBody" class="tbl-divider divide-y">
-            <tr>
-              <td colspan="5" class="p-xl text-center text-[13px] hist-empty">
-                No history yet — ask your first question to see it here.
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="tbl-footer p-md border-t">
+        <div class="tbl-scroll">
+          <table class="w-full text-left border-collapse" style="min-width:480px;">
+            <thead>
+              <tr class="tbl-head border-b">
+                <th class="p-4 text-[11px] font-semibold uppercase tracking-wider">Ref ID</th>
+                <th class="p-4 text-[11px] font-semibold uppercase tracking-wider">Query</th>
+                <th class="tbl-col-time p-4 text-[11px] font-semibold uppercase tracking-wider">Time</th>
+                <th class="p-4 text-[11px] font-semibold uppercase tracking-wider">Status</th>
+                <th class="p-4 text-[11px] font-semibold uppercase tracking-wider text-right">Action</th>
+              </tr>
+            </thead>
+            <tbody id="historyTableBody" class="tbl-divider divide-y">
+              <tr>
+                <td colspan="5" class="p-12 text-center text-[13px] hist-empty">
+                  No history yet — ask your first question to see it here.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tbl-footer p-4 border-t">
           <span id="histCount" class="text-[11px] hist-count">Showing 0 records</span>
         </div>
       </div>
@@ -625,98 +692,93 @@ tailwind.config = {
   <!-- ─────────────────────────
        PAGE: ABOUT
   ───────────────────────────── -->
-  <!-- ─────────────────────────
-     PAGE: ABOUT (Updated)
-──────────────────────────── -->
-<div id="page-about" class="page px-lg pb-xl pt-lg overflow-y-auto" style="min-height:calc(100vh - 4rem);">
-  <div class="max-w-3xl mx-auto space-y-xl w-full">
+  <div id="page-about" class="page px-6 pb-12 pt-6 overflow-y-auto" style="min-height:calc(100vh - 64px);">
+    <div class="max-w-3xl mx-auto space-y-8 w-full">
 
-    <div class="text-center space-y-sm py-lg">
-      <span class="material-symbols-outlined primary-text"
-            style="font-size:56px;font-variation-settings:'FILL' 1;">gavel</span>
-      <h2 class="font-bold primary-text" style="font-size:34px;line-height:42px;letter-spacing:-.02em;">
-        Pakistan Legal Advisor Chatbot
-      </h2>
-      <p class="sec-text font-semibold" style="font-size:17px;">Multilingual &amp; RAG-Powered</p>
-      <p class="text-[13px] text-gray-500">Final Year Project • BS Artificial Intelligence • 2026</p>
-    </div>
+      <div class="text-center space-y-2 py-6">
+        <span class="material-symbols-outlined primary-text"
+              style="font-size:56px;font-variation-settings:'FILL' 1;">gavel</span>
+        <h2 class="font-bold primary-text" style="font-size:34px;line-height:42px;letter-spacing:-.02em;">
+          Pakistan Legal Advisor Chatbot
+        </h2>
+        <p class="sec-text font-semibold" style="font-size:17px;">Multilingual &amp; RAG-Powered</p>
+        <p class="text-[13px] text-gray-500">Final Year Project • BS Artificial Intelligence • 2026</p>
+      </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
-      <!-- Mission -->
-      <div class="about-card border rounded-xl p-xl space-y-md">
-        <h3 class="font-bold primary-text flex items-center gap-sm text-[16px]">
-          <span class="material-symbols-outlined">rocket_launch</span> Our Mission
-        </h3>
-        <p class="font-legal-md on-surface-text text-[15px] leading-relaxed">
-          To make legal knowledge universally accessible across Pakistan by delivering 
-          precise, AI-driven guidance in English, Urdu, and Roman Urdu. This system 
-          bridges the gap between complex legal statutes and everyday citizens, students, 
-          and legal professionals through an advanced Retrieval-Augmented Generation (RAG) 
-          framework grounded entirely in verified Pakistani law.
+      <div class="about-grid grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="about-card border rounded-xl p-8 space-y-4">
+          <h3 class="font-bold primary-text flex items-center gap-2 text-[16px]">
+            <span class="material-symbols-outlined">rocket_launch</span> Our Mission
+          </h3>
+          <p class="on-surface-text text-[15px] leading-relaxed">
+            To make legal knowledge universally accessible across Pakistan by delivering
+            precise, AI-driven guidance in English, Urdu, and Roman Urdu. This system
+            bridges the gap between complex legal statutes and everyday citizens, students,
+            and legal professionals through an advanced Retrieval-Augmented Generation (RAG)
+            framework grounded entirely in verified Pakistani law.
+          </p>
+        </div>
+
+        <div class="about-card border rounded-xl p-8 space-y-4">
+          <h3 class="font-bold primary-text flex items-center gap-2 text-[16px]">
+            <span class="material-symbols-outlined">psychology</span> AI Innovation
+          </h3>
+          <p class="on-surface-text text-[15px] leading-relaxed">
+            Built on a hybrid RAG pipeline combining FAISS vector search, BM25 sparse
+            retrieval, multilingual sentence embeddings, and Cross-Encoder reranking.
+            Powered by <strong>gpt-oss-120b</strong> with strict context-grounded generation,
+            ensuring every response is traceable to authenticated Pakistani legal provisions.
+          </p>
+        </div>
+      </div>
+
+      <div class="about-blockquote border-l-4 p-8 rounded-r-xl space-y-2">
+        <h3 class="font-bold primary-text text-[16px]">Commitment to Duty</h3>
+        <p class="sec-text text-[15px] leading-relaxed">
+          Developed as a Final Year Project at Quaid-e-Awam University of Engineering,
+          Science &amp; Technology, Nawabshah. Built with a commitment to public service —
+          equipping students, citizens, and legal practitioners with reliable,
+          language-inclusive access to the Constitution of Pakistan and key legislative
+          provisions, reducing barriers to justice through intelligent technology.
         </p>
       </div>
 
-      <!-- AI Innovation -->
-      <div class="about-card border rounded-xl p-xl space-y-md">
-        <h3 class="font-bold primary-text flex items-center gap-sm text-[16px]">
-          <span class="material-symbols-outlined">psychology</span> AI Innovation
+      <div class="stat-card border rounded-xl p-8 space-y-4">
+        <h3 class="font-bold primary-text flex items-center gap-2 text-[16px]">
+          <span class="material-symbols-outlined">settings_suggest</span> Technology Stack
         </h3>
-        <p class="font-legal-md on-surface-text text-[15px] leading-relaxed">
-          Built on a hybrid RAG pipeline combining FAISS vector search, BM25 sparse 
-          retrieval, multilingual sentence embeddings, and Cross-Encoder reranking. 
-          Powered by <strong>gpt-oss-120b</strong> with strict context-grounded generation, 
-          ensuring every response is traceable to authenticated Pakistani legal provisions.
-        </p>
-      </div>
-    </div>
-
-    <!-- Commitment -->
-    <div class="about-blockquote border-l-4 p-xl rounded-r-xl space-y-sm">
-      <h3 class="font-bold primary-text text-[16px]">Commitment to Duty</h3>
-      <p class="font-legal-md sec-text text-[15px] leading-relaxed">
-        Developed as a Final Year Project at Quaid-e-Awam University of Engineering, 
-        Science &amp; Technology, Nawabshah. This system is built with a commitment to 
-        public service — equipping students, citizens, and legal practitioners with 
-        reliable, language-inclusive access to the Constitution of Pakistan and key 
-        legislative provisions, reducing barriers to justice through intelligent technology.
-      </p>
-    </div>
-
-    <!-- Technology Stack -->
-    <div class="stat-card border rounded-xl p-xl space-y-md">
-      <h3 class="font-bold primary-text flex items-center gap-sm text-[16px]">
-        <span class="material-symbols-outlined">settings_suggest</span> Technology Stack
-      </h3>
-      <div class="grid grid-cols-2 sm:grid-cols-3 gap-sm">
-        <div class="tech-pill flex items-center gap-sm p-sm border rounded-lg">
-          <span class="material-symbols-outlined primary-text text-[17px]">storage</span>
-          <span class="text-[12px] font-semibold on-surface-text">FAISS Vector DB</span>
-        </div>
-        <div class="tech-pill flex items-center gap-sm p-sm border rounded-lg">
-          <span class="material-symbols-outlined primary-text text-[17px]">hub</span>
-          <span class="text-[12px] font-semibold on-surface-text">gpt-oss-120b</span>
-        </div>
-        <div class="tech-pill flex items-center gap-sm p-sm border rounded-lg">
-          <span class="material-symbols-outlined primary-text text-[17px]">translate</span>
-          <span class="text-[12px] font-semibold on-surface-text">Multi-QA MPNet Embeddings</span>
-        </div>
-        <div class="tech-pill flex items-center gap-sm p-sm border rounded-lg">
-          <span class="material-symbols-outlined primary-text text-[17px]">code</span>
-          <span class="text-[12px] font-semibold on-surface-text">Flask Backend</span>
-        </div>
-        <div class="tech-pill flex items-center gap-sm p-sm border rounded-lg">
-          <span class="material-symbols-outlined primary-text text-[17px]">dataset</span>
-          <span class="text-[12px] font-semibold on-surface-text">Pakistan Constitution 2025</span>
-        </div>
-        <div class="tech-pill flex items-center gap-sm p-sm border rounded-lg">
-          <span class="material-symbols-outlined primary-text text-[17px]">language</span>
-          <span class="text-[12px] font-semibold on-surface-text">English + Urdu</span>
+        <div class="tech-grid grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <div class="tech-pill flex items-center gap-2 p-3 border rounded-lg">
+            <span class="material-symbols-outlined primary-text text-[17px] shrink-0">storage</span>
+            <span class="text-[12px] font-semibold on-surface-text">FAISS Vector DB</span>
+          </div>
+          <div class="tech-pill flex items-center gap-2 p-3 border rounded-lg">
+            <span class="material-symbols-outlined primary-text text-[17px] shrink-0">hub</span>
+            <span class="text-[12px] font-semibold on-surface-text">gpt-oss-120b</span>
+          </div>
+          <div class="tech-pill flex items-center gap-2 p-3 border rounded-lg">
+            <span class="material-symbols-outlined primary-text text-[17px] shrink-0">translate</span>
+            <span class="text-[12px] font-semibold on-surface-text">MPNet Embeddings</span>
+          </div>
+          <div class="tech-pill flex items-center gap-2 p-3 border rounded-lg">
+            <span class="material-symbols-outlined primary-text text-[17px] shrink-0">code</span>
+            <span class="text-[12px] font-semibold on-surface-text">Flask Backend</span>
+          </div>
+          <div class="tech-pill flex items-center gap-2 p-3 border rounded-lg">
+            <span class="material-symbols-outlined primary-text text-[17px] shrink-0">dataset</span>
+            <span class="text-[12px] font-semibold on-surface-text">Pakistan Constitution 2025</span>
+          </div>
+          <div class="tech-pill flex items-center gap-2 p-3 border rounded-lg">
+            <span class="material-symbols-outlined primary-text text-[17px] shrink-0">language</span>
+            <span class="text-[12px] font-semibold on-surface-text">English + Urdu</span>
+          </div>
         </div>
       </div>
-    </div>
 
+    </div>
   </div>
-</div>
+
+</main>
 
 
 <!-- ══════════════════════════════════════════
@@ -724,11 +786,8 @@ tailwind.config = {
 ══════════════════════════════════════════ -->
 <script>
 
-/* ── Configure marked.js for legal text ── */
-marked.setOptions({
-  breaks: true,   // single line breaks → <br>
-  gfm:    true,   // GitHub-flavoured markdown (tables, strikethrough, etc.)
-});
+/* ── Configure marked.js ── */
+marked.setOptions({ breaks: true, gfm: true });
 
 /* ── State ── */
 const state = {
@@ -741,38 +800,78 @@ const state = {
   refCounter:       9921,
   isDark:           false,
   sidebarCollapsed: false,
+  isMobile:         false,
   hasMessages:      false,
 };
 
 /* ── Elements ── */
-const htmlEl       = document.documentElement;
-const sidebarEl    = document.getElementById('sidebar');
-const topBar       = document.getElementById('top-bar');
-const mainContent  = document.getElementById('main-content');
-const navTexts     = document.querySelectorAll('.nav-text');
-const themeToggle  = document.getElementById('themeToggle');
-const themeIcon    = document.getElementById('themeIcon');
-
-const heroArea     = document.getElementById('heroArea');
-const chatArea     = document.getElementById('chatArea');
-const msgThread    = document.getElementById('msgThread');
-const bottomBar    = document.getElementById('bottomBar');
-
-const inputHero    = document.getElementById('messageInput');
-const inputBottom  = document.getElementById('messageInputBottom');
-const sendHero     = document.getElementById('sendBtn');
-const sendBottom   = document.getElementById('sendBtnBottom');
-
+const htmlEl        = document.documentElement;
+const sidebarEl     = document.getElementById('sidebar');
+const overlayEl     = document.getElementById('sidebar-overlay');
+const topBar        = document.getElementById('top-bar');
+const mainContent   = document.getElementById('main-content');
+const themeToggle   = document.getElementById('themeToggle');
+const themeIcon     = document.getElementById('themeIcon');
+const heroArea      = document.getElementById('heroArea');
+const chatArea      = document.getElementById('chatArea');
+const msgThread     = document.getElementById('msgThread');
+const bottomBar     = document.getElementById('bottomBar');
+const inputHero     = document.getElementById('messageInput');
+const inputBottom   = document.getElementById('messageInputBottom');
+const sendHero      = document.getElementById('sendBtn');
+const sendBottom    = document.getElementById('sendBtnBottom');
 const historyTableBody = document.getElementById('historyTableBody');
-const histCount    = document.getElementById('histCount');
-const statTotal    = document.getElementById('statTotal');
-const statSessions = document.getElementById('statSessions');
-const statErrors   = document.getElementById('statErrors');
-const clearHistBtn = document.getElementById('clearHistBtn');
+const histCount     = document.getElementById('histCount');
+const statTotal     = document.getElementById('statTotal');
+const statSessions  = document.getElementById('statSessions');
+const statErrors    = document.getElementById('statErrors');
+const clearHistBtn  = document.getElementById('clearHistBtn');
+
+/* ── Detect mobile ── */
+function checkMobile() {
+  state.isMobile = window.innerWidth < 768;
+}
+checkMobile();
+window.addEventListener('resize', () => {
+  const wasMobile = state.isMobile;
+  checkMobile();
+  if (wasMobile !== state.isMobile) {
+    // Reset sidebar state on breakpoint switch
+    sidebarEl.classList.remove('mobile-open', 'collapsed');
+    overlayEl.classList.remove('active');
+    document.body.style.overflow = '';
+    if (!state.isMobile) {
+      // Restore desktop state
+      if (state.sidebarCollapsed) {
+        sidebarEl.classList.add('collapsed');
+        document.body.classList.add('sidebar-collapsed');
+        topBar.style.width = '100%';
+        mainContent.style.marginLeft = '0';
+      } else {
+        topBar.style.width = 'calc(100% - 256px)';
+        mainContent.style.marginLeft = '256px';
+      }
+      document.getElementById('toggle-icon').textContent = 
+        state.sidebarCollapsed ? 'left_panel_open' : 'left_panel_close';
+    } else {
+      topBar.style.width = '100%';
+      mainContent.style.marginLeft = '0';
+      document.getElementById('toggle-icon').textContent = 'menu';
+    }
+  }
+}); 
 
 /* ── Init ── */
 document.getElementById('dateStamp').textContent =
   new Date().toLocaleDateString('en-PK',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+// Set correct icon for mobile on load
+if (state.isMobile) {
+  document.getElementById('toggle-icon').textContent = 'menu';
+  topBar.style.width = '100%';
+  mainContent.style.marginLeft = '0';
+}
+
 updateStats();
 inputHero.focus();
 
@@ -791,26 +890,47 @@ function applyDark(on) {
   themeIcon.textContent = on ? 'light_mode' : 'dark_mode';
 }
 
-/* ── Sidebar collapse ── */
+/* ── Sidebar toggle (desktop: collapse | mobile: drawer) ── */
 function toggleSidebar() {
+  if (state.isMobile) {
+    openMobileSidebar();
+  } else {
+    toggleDesktopSidebar();
+  }
+}
+
+function toggleDesktopSidebar() {
   state.sidebarCollapsed = !state.sidebarCollapsed;
   const c = state.sidebarCollapsed;
+  sidebarEl.classList.toggle('collapsed', c);
+  document.body.classList.toggle('sidebar-collapsed', c);
 
   if (c) {
-    sidebarEl.classList.add('collapsed');
-    mainContent.style.marginLeft = '0px';
     topBar.style.width           = '100%';
+    mainContent.style.marginLeft = '0';
   } else {
-    sidebarEl.classList.remove('collapsed');
+    topBar.style.width           = 'calc(100% - 256px)';
     mainContent.style.marginLeft = '256px';
-    topBar.style.width           = 'calc(100% - 16rem)';
   }
-
   document.getElementById('toggle-icon').textContent =
     c ? 'left_panel_open' : 'left_panel_close';
   document.getElementById('sidebar-toggle-btn').title =
     c ? 'Open sidebar' : 'Close sidebar';
-  navTexts.forEach(t => t.style.display = c ? 'none' : 'inline');
+}
+
+function openMobileSidebar() {
+  sidebarEl.classList.add('mobile-open');
+  overlayEl.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('toggle-icon').textContent = 'close';
+}
+
+function closeMobileSidebar() {
+  if (!state.isMobile) return;
+  sidebarEl.classList.remove('mobile-open');
+  overlayEl.classList.remove('active');
+  document.body.style.overflow = '';
+  document.getElementById('toggle-icon').textContent = 'menu';
 }
 
 /* ── Page switching ── */
@@ -842,7 +962,7 @@ function startNewChat() {
   state.isSending   = false;
 
   msgThread.innerHTML = `<div class="flex justify-center">
-    <span id="dateStamp" class="date-pill px-sm py-xs rounded-full text-[10px] font-semibold uppercase tracking-widest"></span>
+    <span id="dateStamp" class="date-pill px-2 py-1 rounded-full text-[10px] font-semibold uppercase tracking-widest"></span>
   </div>`;
   document.getElementById('dateStamp').textContent =
     new Date().toLocaleDateString('en-PK',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
@@ -882,15 +1002,10 @@ function getTime() {
 }
 function esc(s) {
   return String(s)
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;');
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 function pad2(n) { return String(n).padStart(2,'0'); }
-function scrollBottom() {
-  chatArea.scrollTo({top:chatArea.scrollHeight, behavior:'smooth'});
-}
+function scrollBottom() { chatArea.scrollTo({top:chatArea.scrollHeight, behavior:'smooth'}); }
 function setLoading(on) {
   state.isSending      = on;
   sendHero.disabled    = on;
@@ -904,7 +1019,7 @@ function updateStats() {
   statErrors.textContent   = pad2(state.totalErrors);
 }
 
-/* ── Copy button handler ── */
+/* ── Copy button ── */
 function copyMsg(btn) {
   const bubble = btn.closest('.flex.flex-col').querySelector('.bubble-ai');
   const plainText = bubble.innerText;
@@ -929,16 +1044,16 @@ function copyMsg(btn) {
 function appendUserMsg(text) {
   activateBottomBar();
   const div = document.createElement('div');
-  div.className = 'flex flex-row-reverse gap-md msg-in';
+  div.className = 'flex flex-row-reverse gap-3 msg-in';
   div.innerHTML = `
-    <div class="avatar-user w-10 h-10 rounded-lg flex items-center justify-center shrink-0">
+    <div class="avatar-user msg-avatar w-10 h-10 rounded-lg flex items-center justify-center shrink-0">
       <span class="material-symbols-outlined" style="color:var(--sec-fg);">person</span>
     </div>
-    <div class="flex flex-col items-end gap-xs max-w-[85%]">
-      <div class="bubble-user p-md shadow-sm">
+    <div class="msg-bubble-wrap flex flex-col items-end gap-1 max-w-[85%]">
+      <div class="bubble-user p-4 shadow-sm">
         <p class="text-[14px] leading-relaxed">${esc(text)}</p>
       </div>
-      <span class="msg-time text-[11px] mr-xs">${getTime()}</span>
+      <span class="msg-time text-[11px] mr-2">${getTime()}</span>
     </div>`;
   msgThread.appendChild(div);
   scrollBottom();
@@ -946,31 +1061,26 @@ function appendUserMsg(text) {
 
 function appendBotMsg(text, lang) {
   const label = lang === 'ur' ? 'The Expert Advocate · اردو' : 'The Expert Advocate';
-
-  // Parse markdown → HTML (safe: no user-controlled HTML injection here,
-  // text comes from our own Flask backend)
   const renderedHTML = marked.parse(text);
-
   const div = document.createElement('div');
-  div.className = 'flex gap-md msg-in';
+  div.className = 'flex gap-3 msg-in';
   div.innerHTML = `
-    <div class="avatar-ai w-10 h-10 rounded-lg flex items-center justify-center shrink-0 shadow-sm border">
+    <div class="avatar-ai msg-avatar w-10 h-10 rounded-lg flex items-center justify-center shrink-0 shadow-sm border">
       <span class="material-symbols-outlined text-[20px]"
             style="font-variation-settings:'FILL' 1;color:var(--primary-fg);">gavel</span>
     </div>
-    <div class="flex flex-col gap-xs max-w-[85%]">
-      <div class="flex items-center gap-sm flex-wrap">
+    <div class="msg-bubble-wrap flex flex-col gap-1 max-w-[85%]">
+      <div class="flex items-center gap-2 flex-wrap">
         <span class="font-bold msg-name text-[14px]">${esc(label)}</span>
         <span class="badge-verified flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider border">
-          <span class="material-symbols-outlined text-[11px]"
-                style="font-variation-settings:'FILL' 1;">verified</span> Verified Law
+          <span class="material-symbols-outlined text-[11px]" style="font-variation-settings:'FILL' 1;">verified</span> Verified Law
         </span>
       </div>
-      <div class="bubble-ai p-md shadow-sm prose-legal">
+      <div class="bubble-ai p-4 shadow-sm prose-legal">
         ${renderedHTML}
       </div>
-      <div class="flex items-center gap-sm mt-xs">
-        <span class="msg-time text-[11px] ml-xs">${getTime()}</span>
+      <div class="flex items-center gap-2 mt-1">
+        <span class="msg-time text-[11px] ml-2">${getTime()}</span>
         <button class="copy-btn" onclick="copyMsg(this)" title="Copy response">
           <span class="material-symbols-outlined" style="font-size:13px;">content_copy</span>
           Copy
@@ -985,13 +1095,13 @@ function showTyping() {
   removeTyping();
   const div = document.createElement('div');
   div.id        = 'typingRow';
-  div.className = 'flex gap-md';
+  div.className = 'flex gap-3';
   div.innerHTML = `
-    <div class="avatar-ai w-10 h-10 rounded-lg flex items-center justify-center shrink-0 border">
+    <div class="avatar-ai msg-avatar w-10 h-10 rounded-lg flex items-center justify-center shrink-0 border">
       <span class="material-symbols-outlined text-[20px]"
             style="font-variation-settings:'FILL' 1;color:var(--primary-fg);">gavel</span>
     </div>
-    <div class="bubble-ai p-md shadow-sm flex items-center gap-xs">
+    <div class="bubble-ai p-4 shadow-sm flex items-center gap-1">
       <span class="tdot"></span><span class="tdot"></span><span class="tdot"></span>
     </div>`;
   msgThread.appendChild(div);
@@ -1003,7 +1113,7 @@ function removeTyping() { document.getElementById('typingRow')?.remove(); }
 function renderHistoryTable() {
   if (state.history.length === 0) {
     historyTableBody.innerHTML = `
-      <tr><td colspan="5" class="p-xl text-center text-[13px] hist-empty">
+      <tr><td colspan="5" class="p-12 text-center text-[13px] hist-empty">
         No history yet — ask your first question to see it here.
       </td></tr>`;
     histCount.textContent = 'Showing 0 records';
@@ -1011,18 +1121,18 @@ function renderHistoryTable() {
   }
   historyTableBody.innerHTML = state.history.slice().reverse().map(item => {
     const badge = item.status === 'Resolved'
-      ? 'badge-ok px-md py-1 rounded-full text-[11px] font-bold'
-      : 'badge-err px-md py-1 rounded-full text-[11px] font-bold';
+      ? 'badge-ok px-4 py-1 rounded-full text-[11px] font-bold'
+      : 'badge-err px-4 py-1 rounded-full text-[11px] font-bold';
     return `
       <tr class="tbl-row transition-colors">
-        <td class="p-md tbl-id">${esc(item.id)}</td>
-        <td class="p-md" style="max-width:260px;">
+        <td class="p-4 tbl-id">${esc(item.id)}</td>
+        <td class="p-4" style="max-width:200px;">
           <span class="on-surface-text text-[13px] block truncate font-semibold">${esc(item.query)}</span>
         </td>
-        <td class="p-md sec-text text-[13px]">${esc(item.time)}</td>
-        <td class="p-md"><span class="${badge}">${esc(item.status)}</span></td>
-        <td class="p-md text-right">
-          <button class="re-ask-btn p-sm rounded-lg transition-all"
+        <td class="tbl-col-time p-4 sec-text text-[13px]">${esc(item.time)}</td>
+        <td class="p-4"><span class="${badge}">${esc(item.status)}</span></td>
+        <td class="p-4 text-right">
+          <button class="re-ask-btn p-2 rounded-lg transition-all"
                   data-q="${esc(item.query)}" title="Re-ask">
             <span class="material-symbols-outlined text-[18px] primary-text">replay</span>
           </button>
@@ -1115,7 +1225,7 @@ async function sendMessage() {
   state.controller = null;
 }
 
-/* ── Input events: hero textarea ── */
+/* ── Input events ── */
 sendHero.addEventListener('click', sendMessage);
 inputHero.addEventListener('keydown', e => {
   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
@@ -1125,7 +1235,6 @@ inputHero.addEventListener('input', function() {
   this.style.height = Math.min(this.scrollHeight, 128) + 'px';
 });
 
-/* ── Input events: bottom textarea ── */
 sendBottom.addEventListener('click', sendMessage);
 inputBottom.addEventListener('keydown', e => {
   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
