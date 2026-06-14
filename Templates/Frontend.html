@@ -423,8 +423,9 @@ tailwind.config = {
   .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
 
   /* ── Page switching ── */
-  .page { display:none; }
-  .page.active { display:flex; flex-direction:column; }
+.page { display:none; }
+.page.active { display:block; }
+#page-chat.active { display:flex; flex-direction:column; }
 
   /* ── Chat page layout ── */
   #page-chat {
