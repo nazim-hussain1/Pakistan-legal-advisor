@@ -422,10 +422,21 @@ tailwind.config = {
   .no-scrollbar::-webkit-scrollbar { display:none; }
   .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
 
-  /* ── Page switching ── */
-.page { display:none; }
-.page.active { display:block; }
-#page-chat.active { display:flex; flex-direction:column; }
+ /* ── Page switching ── */
+.page {
+  display: none;
+  width: 100%;
+}
+
+#page-chat.active {
+  display: flex;
+  flex-direction: column;
+}
+
+#page-history.active,
+#page-about.active {
+  display: block;
+}
 
   /* ── Chat page layout ── */
   #page-chat {
@@ -433,6 +444,11 @@ tailwind.config = {
     display: flex;
     flex-direction: column;
   }
+  #page-history,
+#page-about {
+  position: relative;
+  z-index: 1;
+}
   #chatArea { flex:1; overflow-y:auto; }
 
   /* ── Hero layout ── */
@@ -863,7 +879,17 @@ window.addEventListener('resize', () => {
 }); 
 
 /* ── Init ── */
-document.getElementById('dateStamp').textContent =
+const ds = document.getElementById('dateStamp');
+
+if (ds) {
+  ds.textContent =
+    new Date().toLocaleDateString('en-PK', {
+      weekday:'long',
+      year:'numeric',
+      month:'long',
+      day:'numeric'
+    });
+}
   new Date().toLocaleDateString('en-PK',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 
 // Set correct icon for mobile on load
@@ -940,12 +966,35 @@ const navIds     = { chat:'nav-chat',  history:'nav-history',  about:'nav-about'
 const pageTitles = { chat:'', history:'Chat History', about:'About' };
 
 function showPage(name) {
-  Object.keys(pageIds).forEach(k => {
-    document.getElementById(pageIds[k]).classList.toggle('active', k === name);
-    document.getElementById(navIds[k]).classList.toggle('active', k === name);
+
+  document.querySelectorAll('.page').forEach(page => {
+    page.style.display = 'none';
+    page.classList.remove('active');
   });
-  document.getElementById('page-title').textContent = pageTitles[name];
-  if (name === 'history') renderHistoryTable();
+
+  document.querySelectorAll('.nav-item').forEach(btn => {
+    btn.classList.remove('active');
+  });
+
+  const targetPage = document.getElementById(pageIds[name]);
+
+  if (name === 'chat') {
+    targetPage.style.display = 'flex';
+    targetPage.style.flexDirection = 'column';
+  } else {
+    targetPage.style.display = 'block';
+  }
+
+  targetPage.classList.add('active');
+  document.getElementById(navIds[name]).classList.add('active');
+
+  document.getElementById('page-title').textContent =
+    pageTitles[name];
+
+  if (name === 'history') {
+    renderHistoryTable();
+  }
+
   if (name === 'chat') {
     if (state.hasMessages) {
       chatArea.scrollTop = chatArea.scrollHeight;
