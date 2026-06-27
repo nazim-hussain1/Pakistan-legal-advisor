@@ -351,51 +351,51 @@ FAREWELL_PATTERNS = re.compile(
 # ── Canned responses (identical to original) ─────────────
 
 GREETING_RESPONSES_EN = [
-    "Hello! 👋 Welcome to the **Pakistan Legal Advisor**. I'm here to help you navigate Pakistani law — the Constitution, criminal law, property rights, family law, and more. What legal question can I assist you with today?",
+    "Hello! 👋 Welcome to the **Pakistan Legal Advisor**. I'm here to help you navigate Pakistani law, including the Constitution, criminal law, property rights, family law, and more. What legal question can I assist you with today?",
     "Hi there! Great to have you here. I'm your AI-powered legal assistant specializing in Pakistani law. Ask me anything about the Constitution of Pakistan, your fundamental rights, legal procedures, or any statute. How can I help?",
-    "Hello and welcome! ⚖️ I'm the Pakistan Legal Advisor — an intelligent chatbot trained on verified Pakistani legal provisions. Feel free to ask in **English, Urdu, or Roman Urdu**. What would you like to know?",
-    "Hey! Good to see you. I'm here to make Pakistani law accessible to everyone. Whether it's about fundamental rights, court procedures, property, family law, or the Constitution — just ask away. What's on your mind?",
+    "Hello and welcome! ⚖️ I'm the Pakistan Legal Advisor, an intelligent chatbot trained on verified Pakistani legal provisions. Feel free to ask in **English, Urdu, or Roman Urdu**. What would you like to know?",
+    "Hey! Good to see you. I'm here to make Pakistani law accessible to everyone. Whether it's about fundamental rights, court procedures, property, family law, or the Constitution, just ask away. What's on your mind?",
 ]
 
 GREETING_RESPONSES_RU = [
-    "Salam! 👋 Pakistan Legal Advisor mein aapka khair maqdam hai. Main aapko Pakistani qanoon ke baare mein madad karne ke liye yahan hoon — Constitution, criminal law, family law, property rights, aur bohat kuch. Aaj kya jaanna chahte hain?",
+    "Salam! 👋 Pakistan Legal Advisor mein aapka khair maqdam hai. Main aapko Pakistani qanoon ke baare mein madad karne ke liye yahan hoon, Constitution, criminal law, family law, property rights, aur bohat kuch. Aaj kya jaanna chahte hain?",
     "Assalam u Alaikum! Khoosh amdeed. Main ek AI-powered legal chatbot hoon jo Pakistani qanoon mein mahir hai. Aap mujhse **English, Urdu, ya Roman Urdu** mein pooch sakte hain. Kya sawal hai aapka?",
-    "Hello ji! ⚖️ Pakistan Legal Advisor mein aapka swagat hai. Fundamental rights, court procedures, property, ya Constitution — kuch bhi poochhiye, main haazir hoon. Kaise madad kar sakta hoon?",
-    "Salam ji! Mujhe khushi hai ke aap aaye. Pakistani qanoon ke baare mein koi bhi sawaal poochhiye — main verified qanooni malumaat se jawab doonga. Batayein, kya jaanna chahte hain?",
+    "Hello ji! ⚖️ Pakistan Legal Advisor mein aapka swagat hai. Fundamental rights, court procedures, property, ya Constitution, kuch bhi poochhiye, main haazir hoon. Kaise madad kar sakta hoon?",
+    "Salam ji! Mujhe khushi hai ke aap aaye. Pakistani qanoon ke baare mein koi bhi sawaal poochhiye, main verified qanooni malumaat se jawab doonga. Batayein, kya jaanna chahte hain?",
 ]
 
 GREETING_RESPONSES_UR = [
     "السلام علیکم! 👋 پاکستان لیگل ایڈوائزر میں خوش آمدید۔ میں پاکستانی قانون کے بارے میں آپ کی مدد کے لیے حاضر ہوں۔ آج کیا جاننا چاہتے ہیں؟",
-    "ہیلو! ⚖️ میں ایک AI قانونی معاون ہوں جو پاکستانی قانون میں ماہر ہے۔ آئین، بنیادی حقوق، عدالتی طریقہ کار — کچھ بھی پوچھیں۔",
+    "ہیلو! ⚖️ میں ایک AI قانونی معاون ہوں جو پاکستانی قانون میں ماہر ہے۔ آئین، بنیادی حقوق، عدالتی طریقہ کار، کچھ بھی پوچھیں۔",
 ]
 
-CREATOR_RESPONSE_EN = """I'm the **Pakistan Legal Advisor** — an AI-powered legal chatbot built to make Pakistani law accessible to everyone.
+CREATOR_RESPONSE_EN = """I'm the **Pakistan Legal Advisor**, an AI-powered legal chatbot built to make Pakistani law accessible to everyone.
 
 **Developer:** Nazim Hussain
 **Institution:** Quaid-e-Awam University of Engineering, Science & Technology (QUEST), Nawabshah
-**Program:** BS Artificial Intelligence, Final Year Project — 2026
+**Program:** BS Artificial Intelligence, Final Year Project, 2026
 
-Nazim built me with a clear mission: to bridge the gap between complex legal statutes and everyday citizens, students, and legal professionals across Pakistan. I leverage a hybrid Retrieval-Augmented Generation (RAG) system — combining FAISS vector search, BM25 sparse retrieval, multilingual sentence embeddings, and Cross-Encoder reranking — powered by a large language model via OpenRouter.
+Nazim built me with a clear mission: to bridge the gap between complex legal statutes and everyday citizens, students, and legal professionals across Pakistan. I leverage a hybrid Retrieval-Augmented Generation (RAG) system, combining FAISS vector search, BM25 sparse retrieval, multilingual sentence embeddings, and Cross-Encoder reranking, powered by a large language model via OpenRouter.
 
 Every answer I give is grounded in verified Pakistani legal provisions, including the **Constitution of Pakistan (2025 Edition)** and key legislative documents.
 
 ⚖️ **How can I assist you today?**"""
 
-CREATOR_RESPONSE_RU = """Main **Pakistan Legal Advisor** hoon — ek AI-powered legal chatbot jo Pakistani qanoon ko sab ke liye asaan banana ke liye banaya gaya hai.
+CREATOR_RESPONSE_RU = """Main **Pakistan Legal Advisor** hoon, ek AI-powered legal chatbot jo Pakistani qanoon ko sab ke liye asaan banana ke liye banaya gaya hai.
 
 **Developer:** Nazim Hussain
 **University:** Quaid-e-Awam University of Engineering, Science & Technology (QUEST), Nawabshah
-**Degree:** BS Artificial Intelligence, Final Year Project — 2026
+**Degree:** BS Artificial Intelligence, Final Year Project, 2026
 
-Nazim ne mujhe ek maqsad ke saath banaya: Pakistani qanoon ko aam logon, students, aur legal professionals ke liye qabil-e-faham banana. Main verified Pakistani qanooni documents — khaas tor par **Pakistan ka Aain (2025 Edition)** — se jawab deta hoon.
+Nazim ne mujhe ek maqsad ke saath banaya: Pakistani qanoon ko aam logon, students, aur legal professionals ke liye qabil-e-faham banana. Main verified Pakistani qanooni documents se jawab deta hoon, khaas tor par **Pakistan ka Aain (2025 Edition)**.
 
 ⚖️ **Aaj kaise madad kar sakta hoon aapki?**"""
 
-CREATOR_RESPONSE_UR = """میں **پاکستان لیگل ایڈوائزر** ہوں — ایک AI قانونی چیٹ بوٹ جو پاکستانی قانون کو سب کے لیے قابلِ رسائی بنانے کے لیے بنایا گیا ہے۔
+CREATOR_RESPONSE_UR = """میں **پاکستان لیگل ایڈوائزر** ہوں، ایک AI قانونی چیٹ بوٹ جو پاکستانی قانون کو سب کے لیے قابلِ رسائی بنانے کے لیے بنایا گیا ہے۔
 
 **ڈویلپر:** نظیم حسین
 **یونیورسٹی:** قائد عوام یونیورسٹی آف انجینئرنگ، سائنس اینڈ ٹیکنالوجی (QUEST)، نوابشاہ
-**پروگرام:** بی ایس آرٹیفیشل انٹیلیجنس، فائنل ایئر پروجیکٹ — 2026
+**پروگرام:** بی ایس آرٹیفیشل انٹیلیجنس، فائنل ایئر پروجیکٹ، 2026
 
 ⚖️ **آج میں آپ کی کیا مدد کر سکتا ہوں؟**"""
 
@@ -1139,7 +1139,7 @@ def me():
 def google_login():
     if not GOOGLE_OAUTH_ENABLED:
         return jsonify({"error": "Google OAuth is not configured on this server"}), 503
-    redirect_uri = "https://nazhussain-pakistan-legal-advisor.hf.space/auth/google/callback"
+    redirect_uri = url_for("google_callback", _external=True)
     return google.authorize_redirect(redirect_uri)
 
 
