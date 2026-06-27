@@ -59,6 +59,11 @@ load_dotenv()
 
 app = Flask(__name__, template_folder='Templates')
 
+app.config['PREFERRED_URL_SCHEME'] = 'https'
+
+from werkzeug.middleware.proxy_fix import ProxyFix
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+
 # Secret key — generate a strong one or set via env
 app.secret_key = os.getenv("FLASK_SECRET_KEY", secrets.token_hex(32))
 app.permanent_session_lifetime = timedelta(days=30)
