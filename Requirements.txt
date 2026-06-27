@@ -6,6 +6,11 @@
 
 # Web Framework
 flask                    # Web server & REST API routing
+flask-sqlalchemy         # ORM for User/ChatSession/ChatMessage/UserSettings models
+
+# Authentication
+authlib                  # Google OAuth (authlib.integrations.flask_client)
+httpx                    # Fallback userinfo fetch in Google OAuth callback
 
 # Environment & Configuration 
 python-dotenv            # Load secrets from .env (OPENROUTER_API_KEY)
