@@ -1139,7 +1139,7 @@ def me():
 def google_login():
     if not GOOGLE_OAUTH_ENABLED:
         return jsonify({"error": "Google OAuth is not configured on this server"}), 503
-    redirect_uri = url_for("google_callback", _external=True)
+    redirect_uri = "https://nazhussain-pakistan-legal-advisor.hf.space/auth/google/callback"
     return google.authorize_redirect(redirect_uri)
 
 
