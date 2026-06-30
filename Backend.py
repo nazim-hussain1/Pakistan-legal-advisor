@@ -42,6 +42,17 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from openai import OpenAI
 from dotenv import load_dotenv
 
+# ── Google OAuth ──────────────────────────────────────────
+try:
+    from authlib.integrations.flask_client import OAuth
+    OAUTH_AVAILABLE = True
+    print("[OK] authlib loaded")
+except ImportError:
+    OAUTH_AVAILABLE = False
+    print("[WARN] authlib not installed — Google OAuth disabled. Run: pip install authlib")
+
+load_dotenv()
+
 # ═══════════════════════════════════════════════════════════
 # APP & DB SETUP
 # ═══════════════════════════════════════════════════════════
@@ -76,6 +87,7 @@ class User(db.Model):
     name          = db.Column(db.String(120), nullable=False)
     email         = db.Column(db.String(200), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=True)   # NULL for OAuth users
+    google_id     = db.Column(db.String(200), unique=True, nullable=True)
     avatar_url    = db.Column(db.String(500), nullable=True)
     created_at    = db.Column(db.DateTime, default=datetime.utcnow)
     last_login    = db.Column(db.DateTime, default=datetime.utcnow)
@@ -181,6 +193,29 @@ class UserSettings(db.Model):
             "save_history":    self.save_history,
             "analytics":       self.analytics,
         }
+
+
+# ═══════════════════════════════════════════════════════════
+# GOOGLE OAUTH SETUP
+# ═══════════════════════════════════════════════════════════
+
+GOOGLE_CLIENT_ID     = os.getenv("GOOGLE_CLIENT_ID", "")
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET", "")
+
+if OAUTH_AVAILABLE and GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET:
+    oauth = OAuth(app)
+    google = oauth.register(
+        name="google",
+        client_id=GOOGLE_CLIENT_ID,
+        client_secret=GOOGLE_CLIENT_SECRET,
+        server_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
+        client_kwargs={"scope": "openid email profile"},
+    )
+    GOOGLE_OAUTH_ENABLED = True
+    print("[OK] Google OAuth configured")
+else:
+    GOOGLE_OAUTH_ENABLED = False
+    print("[WARN] Google OAuth not configured — set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in .env")
 
 
 # ═══════════════════════════════════════════════════════════
@@ -1098,6 +1133,59 @@ def me():
     })
 
 
+# ── Auth — Google OAuth ───────────────────────────────────
+
+@app.route("/auth/google")
+def google_login():
+    if not GOOGLE_OAUTH_ENABLED:
+        return jsonify({"error": "Google OAuth is not configured on this server"}), 503
+    redirect_uri = url_for("google_callback", _external=True)
+    return google.authorize_redirect(redirect_uri)
+
+
+@app.route("/auth/google/callback")
+def google_callback():
+    if not GOOGLE_OAUTH_ENABLED:
+        return redirect("/?error=oauth_not_configured")
+    try:
+        token     = google.authorize_access_token()
+        user_info = token.get("userinfo")
+        if not user_info:
+            import httpx
+            resp      = httpx.get("https://openidconnect.googleapis.com/v1/userinfo",
+                                  headers={"Authorization": f"Bearer {token['access_token']}"})
+            user_info = resp.json()
+
+        google_id  = user_info["sub"]
+        email      = user_info.get("email", "").lower()
+        name       = user_info.get("name", email.split("@")[0])
+        avatar_url = user_info.get("picture", "")
+
+        # Look up or create the user
+        user = User.query.filter_by(google_id=google_id).first()
+        if not user:
+            user = User.query.filter_by(email=email).first()
+        if not user:
+            user = User(name=name, email=email, google_id=google_id, avatar_url=avatar_url)
+            db.session.add(user)
+            db.session.flush()
+            db.session.add(UserSettings(user_id=user.id))
+        else:
+            user.google_id  = google_id
+            user.avatar_url = avatar_url
+            if not user.settings:
+                db.session.add(UserSettings(user_id=user.id))
+        db.session.commit()
+
+        _login_user(user)
+        return redirect("/?login=success")
+
+    except Exception as e:
+        import traceback
+        print(f"[ERROR] Google OAuth callback:\n{traceback.format_exc()}")
+        return redirect(f"/?error=oauth_failed&msg={str(e)[:80]}")
+
+
 # ── Chat history ─────────────────────────────────────────
 
 @app.route("/history", methods=["GET"])
@@ -1225,6 +1313,7 @@ def health():
         "bm25":            USE_BM25,
         "reranker":        USE_RERANKER,
         "index_type":      type(index).__name__,
+        "google_oauth":    GOOGLE_OAUTH_ENABLED,
         "db":              "sqlite",
     })
 
@@ -1246,6 +1335,7 @@ if __name__ == "__main__":
     print(f"  BM25          : {USE_BM25}")
     print(f"  Reranker      : {USE_RERANKER}")
     print(f"  Model         : {MODEL_NAME}")
+    print(f"  Google OAuth  : {GOOGLE_OAUTH_ENABLED}")
     print(f"  Auth DB       : pla_users.db (SQLite)")
     print("="*60 + "\n")
     print("[READY] Flask is starting on port 7860...")
