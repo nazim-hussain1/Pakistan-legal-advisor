@@ -6,10 +6,10 @@
 
 # Web Framework
 flask                    # Web server & REST API routing
-flask-sqlalchemy         # ORM for User/ChatSession/ChatMessage/UserSettings models
+flask-sqlalchemy          # ORM for User / ChatSession / ChatMessage / UserSettings models
 
 # Authentication
-authlib                  # Google OAuth (authlib.integrations.flask_client)
+authlib                  # Google OAuth integration (Authlib Flask client)
 httpx                    # Fallback userinfo fetch in Google OAuth callback
 
 # Environment & Configuration 
