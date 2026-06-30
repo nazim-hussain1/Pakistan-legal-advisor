@@ -867,7 +867,7 @@ tbody tr:hover{background:var(--surface)}
       New Chat
     </button>
 
-    <button id="nav-chat" class="nav-item active" onclick="showPage('chat');closeMobileSidebar()">
+    <button id="nav-chat" class="nav-item" onclick="showPage('chat');closeMobileSidebar()">
       <span class="material-symbols-outlined">chat</span>
       Chat
     </button>
@@ -886,9 +886,9 @@ tbody tr:hover{background:var(--surface)}
       <span class="material-symbols-outlined">settings</span>
       Settings
     </button>
-    <button id="nav-login" class="nav-item" onclick="handleAuthNavClick();closeMobileSidebar()">
-      <span class="material-symbols-outlined" id="nav-login-icon">login</span>
-      <span id="nav-login-label">Login</span>
+    <button id="nav-login" class="nav-item active" onclick="showPage('login');closeMobileSidebar()">
+      <span class="material-symbols-outlined">login</span>
+      Login 
     </button>
   </nav>
 
@@ -919,9 +919,6 @@ tbody tr:hover{background:var(--surface)}
     <button class="icon-btn" onclick="showPage('settings');closeMobileSidebar()" title="Settings">
       <span class="material-symbols-outlined">settings</span>
     </button>
-    <div class="icon-btn" style="cursor:default;">
-      <span class="material-symbols-outlined">account_circle</span>
-    </div>
   </div>
 </header>
 
@@ -929,7 +926,7 @@ tbody tr:hover{background:var(--surface)}
 <main id="main-content">
 
 <!-- ── CHAT PAGE ── -->
-<div id="page-chat" class="page active">
+<div id="page-chat" class="page">
 
   <div id="heroArea">
     <div class="hero-icon">
@@ -1121,7 +1118,7 @@ tbody tr:hover{background:var(--surface)}
 </div>
 
 <!-- ── LOGIN PAGE ── -->
-<div id="page-login" class="page">
+<div id="page-login" class="page active">
   <div class="login-card">
     <div class="login-logo">
       <div class="login-logo-icon"><span class="material-symbols-outlined">balance</span></div>
@@ -1165,7 +1162,7 @@ tbody tr:hover{background:var(--surface)}
         <span class="material-symbols-outlined">login</span>Sign In
       </button>
       <div class="login-divider"><span>or continue with</span></div>
-      <button class="btn-ghost" onclick="window.location.href='/auth/google'">
+      <button class="btn-ghost" onclick="showToast('Google Sign-In not configured yet.')">
         <span class="material-symbols-outlined">account_circle</span>Continue with Google
       </button>
     </div>
@@ -1374,7 +1371,7 @@ const S={
   totalQueries:0,totalErrors:0,totalSessions:1,
   history:[],refCounter:9921,
   isDark:true,sidebarCollapsed:false,isMobile:false,hasMessages:false,
-  currentUser:null,
+  isAuthenticated:false,
 };
 
 /* ── Elements ── */
@@ -1420,7 +1417,7 @@ if(S.isMobile){document.getElementById('toggle-icon').textContent='menu';topBar.
 const ds=document.getElementById('dateStamp');
 if(ds)ds.textContent=new Date().toLocaleDateString('en-PK',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 updateStats();
-inputH.focus();
+checkSession();
 
 /* ── Theme ── */
 function applyTheme(dark){
@@ -1463,6 +1460,7 @@ const pgMap={chat:'page-chat',history:'page-history',about:'page-about',login:'p
 const nvMap={chat:'nav-chat',history:'nav-history',about:'nav-about',login:'nav-login',settings:'nav-settings'};
 
 function showPage(name){
+  if(name!=='login' && !S.isAuthenticated){name='login'}
   document.querySelectorAll('.page').forEach(p=>{p.style.display='none';p.classList.remove('active')});
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
   const target=document.getElementById(pgMap[name]);
@@ -1474,6 +1472,28 @@ function showPage(name){
   if(nb)nb.classList.add('active');
   if(name==='history')renderHistory();
   if(name==='chat'){if(S.hasMessages){chatArea.scrollTop=chatArea.scrollHeight;inputB.focus()}else inputH.focus()}
+}
+
+/* ── Session / Auth gating ── */
+async function checkSession(){
+  try{
+    const r=await fetch('/auth/me');
+    if(r.ok){
+      unlockApp();
+    }else{
+      lockApp();
+    }
+  }catch{
+    lockApp();
+  }
+}
+function unlockApp(){
+  S.isAuthenticated=true;
+  showPage('chat');
+}
+function lockApp(){
+  S.isAuthenticated=false;
+  showPage('login');
 }
 
 /* ── New Chat ── */
@@ -1639,71 +1659,7 @@ async function checkHealth(){
   catch{const badge=document.getElementById('flaskStatusBadge');if(badge){badge.textContent='Offline';badge.className='s-badge s-badge-warn'};activateBottomBar();appendBotMsg('⚠️ **Flask backend is not responding.**\n\nEnsure `App.py` is running on port 7860.','en')}
 })();
 
-/* ── Real Auth: session state, login/logout UI sync ── */
-function applyLoggedInUI(user){
-  S.currentUser=user;
-  const av=document.querySelector('.sb-avatar');
-  const nm=document.querySelector('.sb-user-name');
-  const rl=document.querySelector('.sb-user-role');
-  if(av)av.textContent=(user.name||'?').trim().charAt(0).toUpperCase();
-  if(nm)nm.textContent=user.name;
-  if(rl)rl.textContent=user.email;
-  const icon=document.getElementById('nav-login-icon');
-  const label=document.getElementById('nav-login-label');
-  if(icon)icon.textContent='logout';
-  if(label)label.textContent='Logout';
-}
-
-function applyLoggedOutUI(){
-  S.currentUser=null;
-  const av=document.querySelector('.sb-avatar');
-  const nm=document.querySelector('.sb-user-name');
-  const rl=document.querySelector('.sb-user-role');
-  if(av)av.textContent='?';
-  if(nm)nm.textContent='Guest';
-  if(rl)rl.textContent='Not signed in';
-  const icon=document.getElementById('nav-login-icon');
-  const label=document.getElementById('nav-login-label');
-  if(icon)icon.textContent='login';
-  if(label)label.textContent='Login';
-}
-
-function handleAuthNavClick(){
-  if(S.currentUser){doLogout()}
-  else{showPage('login')}
-}
-
-async function doLogout(){
-  try{await fetch('/auth/logout',{method:'POST'})}catch(e){}
-  applyLoggedOutUI();
-  showToast('Logged out successfully.');
-  showPage('chat');
-}
-
-async function checkAuthOnLoad(){
-  try{
-    const res=await fetch('/auth/me');
-    if(res.ok){
-      const data=await res.json();
-      applyLoggedInUI(data.user);
-    }else{
-      applyLoggedOutUI();
-    }
-  }catch(e){
-    applyLoggedOutUI();
-  }
-  // Handle Google OAuth redirect query params
-  const params=new URLSearchParams(window.location.search);
-  if(params.get('login')==='success'){
-    showToast('Signed in with Google.');
-    history.replaceState({},'',window.location.pathname);
-  }else if(params.get('error')){
-    showToast('Sign-in failed: '+(params.get('msg')||params.get('error')));
-    history.replaceState({},'',window.location.pathname);
-  }
-}
-checkAuthOnLoad();
-
+/* ── Login ── */
 function switchLoginTab(tab){
   document.getElementById('formSignin').style.display=tab==='signin'?'block':'none';
   document.getElementById('formRegister').style.display=tab==='register'?'block':'none';
@@ -1732,30 +1688,14 @@ async function doLogin(){
   if(!email||!pw){showLoginAlert('Please enter email and password.');return}
   if(!email.includes('@')){showLoginAlert('Please enter a valid email address.');return}
   if(pw.length<6){showLoginAlert('Password must be at least 6 characters.');return}
-
-  const btn=document.querySelector('#formSignin .btn-primary');
-  const origHtml=btn.innerHTML;
-  btn.disabled=true;btn.innerHTML='<span class="material-symbols-outlined">progress_activity</span>Signing in…';
-
   try{
-    const res=await fetch('/auth/login',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({email,password:pw})
-    });
+    const res=await fetch('/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,password:pw})});
     const data=await res.json();
-    if(!res.ok){
-      showLoginAlert(data.error||'Invalid email or password.');
-      return;
-    }
-    S.currentUser=data.user;
-    applyLoggedInUI(data.user);
+    if(!res.ok){showLoginAlert(data.error||'Login failed.');return}
     showLoginAlert('Login successful! Redirecting…','success');
-    setTimeout(()=>{showPage('chat');document.getElementById('loginAlert').classList.remove('show')},1200);
-  }catch(e){
-    showLoginAlert('Unable to reach the server. Please ensure the backend is running.');
-  }finally{
-    btn.disabled=false;btn.innerHTML=origHtml;
+    setTimeout(()=>{document.getElementById('loginAlert').classList.remove('show');unlockApp()},1000);
+  }catch{
+    showLoginAlert('Unable to connect to server. Please try again.');
   }
 }
 
@@ -1768,30 +1708,14 @@ async function doRegister(){
   if(!email.includes('@')){showLoginAlert('Please enter a valid email address.');return}
   if(pw.length<8){showLoginAlert('Password must be at least 8 characters.');return}
   if(pw!==pw2){showLoginAlert('Passwords do not match.');return}
-
-  const btn=document.querySelector('#formRegister .btn-primary');
-  const origHtml=btn.innerHTML;
-  btn.disabled=true;btn.innerHTML='<span class="material-symbols-outlined">progress_activity</span>Creating account…';
-
   try{
-    const res=await fetch('/auth/register',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name,email,password:pw})
-    });
+    const res=await fetch('/auth/register',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,password:pw})});
     const data=await res.json();
-    if(!res.ok){
-      showLoginAlert(data.error||'Could not create account.');
-      return;
-    }
-    S.currentUser=data.user;
-    applyLoggedInUI(data.user);
+    if(!res.ok){showLoginAlert(data.error||'Registration failed.');return}
     showLoginAlert('Account created! Redirecting…','success');
-    setTimeout(()=>{showPage('chat');document.getElementById('loginAlert').classList.remove('show')},1200);
-  }catch(e){
-    showLoginAlert('Unable to reach the server. Please ensure the backend is running.');
-  }finally{
-    btn.disabled=false;btn.innerHTML=origHtml;
+    setTimeout(()=>{document.getElementById('loginAlert').classList.remove('show');unlockApp()},1000);
+  }catch{
+    showLoginAlert('Unable to connect to server. Please try again.');
   }
 }
 
