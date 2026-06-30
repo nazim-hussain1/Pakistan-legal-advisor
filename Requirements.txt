@@ -6,11 +6,6 @@
 
 # Web Framework
 flask                    # Web server & REST API routing
-flask-sqlalchemy          # ORM for User / ChatSession / ChatMessage / UserSettings models
-
-# Authentication
-authlib                  # Google OAuth integration (Authlib Flask client)
-httpx                    # Fallback userinfo fetch in Google OAuth callback
 
 # Environment & Configuration 
 python-dotenv            # Load secrets from .env (OPENROUTER_API_KEY)
@@ -35,3 +30,4 @@ rank-bm25               # BM25Okapi sparse retrieval (hybrid RAG)
 # LLM API Client
 openai                  # OpenAI-compatible client for OpenRouter API
                         # Model used: gpt-oss-120b via OpenRouter
+ 
