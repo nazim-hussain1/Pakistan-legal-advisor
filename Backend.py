@@ -4,6 +4,7 @@ import random
 import warnings
 import hashlib
 import secrets
+import time
 import json
 from datetime import datetime, timedelta
 from functools import wraps
@@ -36,7 +37,7 @@ from flask import (
     Flask, jsonify, render_template, request,
     session, redirect, url_for, abort
 )
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy, query
 from langdetect import detect
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from openai import OpenAI
@@ -869,6 +870,37 @@ def assemble_context(top_chunks: list) -> str:
         f"[Provision {i+1}]\n{chunk}" for i, chunk in enumerate(top_chunks)
     )
 
+def call_llm_with_retry(system_msg: str, user_prompt: str, max_retries: int = 2, base_delay: float = 2.0):
+    """
+    Calls the LLM with automatic retry on rate-limit (429) errors.
+    Uses exponential backoff: 2s, 4s, 8s... up to max_retries attempts.
+    Raises the last exception if all retries are exhausted.
+    """
+    last_error = None
+    for attempt in range(max_retries + 1):
+        try:
+            response = client.chat.completions.create(
+                model=MODEL_NAME,
+                messages=[
+                    {"role": "system", "content": system_msg},
+                    {"role": "user",   "content": user_prompt}
+                ],
+                temperature=0.0,
+                max_tokens=MAX_TOKENS
+            )
+            return response.choices[0].message.content.strip()
+        except Exception as e:
+            last_error = e
+            err_str = str(e)
+            is_rate_limit = "429" in err_str or "rate-limited" in err_str.lower() or "rate_limit" in err_str.lower()
+            if is_rate_limit and attempt < max_retries:
+                delay = base_delay * (2 ** attempt)
+                print(f"[RETRY] Rate limited (attempt {attempt + 1}/{max_retries}). Retrying in {delay:.1f}s...")
+                time.sleep(delay)
+                continue
+            raise last_error
+    raise last_error
+
 
 # ═══════════════════════════════════════════════════════════
 # PROMPT BUILDER
@@ -987,18 +1019,36 @@ def rag_query(query: str) -> tuple:
         context = assemble_context(top_chunks)
         print(f"[CONTEXT] {len(context):,} chars sent to LLM | lang={lang}")
         system_msg, user_prompt = build_prompt(query, context, lang)
-        response = client.chat.completions.create(
-            model=MODEL_NAME,
-            messages=[
-                {"role": "system", "content": system_msg},
-                {"role": "user",   "content": user_prompt}
-            ],
-            temperature=0.0,
-            max_tokens=MAX_TOKENS
-        )
-        answer = response.choices[0].message.content.strip()
-        print(f"[RESPONSE] {len(answer)} chars | lang={lang}")
-        return answer, lang
+        try:
+            answer = call_llm_with_retry(system_msg, user_prompt, max_retries=2, base_delay=2.0)
+            print(f"[RESPONSE] {len(answer)} chars | lang={lang}")
+            return answer, lang
+        except Exception as llm_error:
+            import traceback
+            print(f"[ERROR] LLM call failed after retries:\n{traceback.format_exc()}")
+            err_str = str(llm_error)
+            is_rate_limit = "429" in err_str or "rate-limited" in err_str.lower() or "rate_limit" in err_str.lower()
+            friendly_messages = {
+                "roman_urdu": (
+                    "Is waqt sawaal ka jawab dene mein masla ho raha hai kyun ke AI model par "
+                    "zyada load hai. Meherbani kar ke thodi dair baad dobara koshish karein."
+                    if is_rate_limit else
+                    "Is sawaal ka jawab dete waqt kuch masla pesh aa gaya. Meherbani kar ke dobara koshish karein."
+                ),
+                "ur": (
+                    "اس وقت جواب دینے میں مسئلہ ہو رہا ہے کیونکہ AI ماڈل پر زیادہ لوڈ ہے۔ "
+                    "براہ کرم تھوڑی دیر بعد دوبارہ کوشش کریں۔"
+                    if is_rate_limit else
+                    "اس سوال کا جواب دیتے وقت کچھ مسئلہ پیش آ گیا۔ براہ کرم دوبارہ کوشش کریں۔"
+                ),
+                "en": (
+                    "The legal assistant is currently experiencing high demand. "
+                    "Please wait a moment and try again."
+                    if is_rate_limit else
+                    "Something went wrong while generating a response. Please try again."
+                ),
+            }
+            return friendly_messages.get(lang, friendly_messages["en"]), lang
     except Exception as e:
         import traceback
         print(f"[ERROR] RAG query failed:\n{traceback.format_exc()}")
