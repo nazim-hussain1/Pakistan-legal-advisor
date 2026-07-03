@@ -746,6 +746,76 @@ ROMAN_URDU_TO_ENGLISH = {
     "section": "section provision law", "qanoon ki roo se": "according to law legal provision",
 }
 
+URDU_SCRIPT_TO_ENGLISH = {
+    "گرفتاری": "arrest", "گرفتار": "arrested detained",
+    "حراست": "custody detention", "قید": "imprisonment custody",
+    "ریمانڈ": "remand detention custody", "ضمانت": "bail release surety",
+    "رہائی": "release discharge bail",
+    "گھنٹے": "hours period time", "دنوں": "days period",
+    "مدت": "period duration time limit",
+    "مجسٹریٹ": "magistrate court", "عدالت": "court tribunal judicature",
+    "سماعت": "hearing proceeding trial", "فیصلہ": "judgment order decision",
+    "اپیل": "appeal appellate review", "مقدمہ": "case proceedings lawsuit",
+    "تحقیقات": "investigation inquiry", "گواہ": "witness testimony",
+    "ثبوت": "evidence proof", "اقرار": "confession admission",
+    "بیان": "statement testimony", "وکیل": "advocate lawyer legal practitioner",
+    "جج": "judge justice court", "سپریم کورٹ": "supreme court chief justice",
+    "ہائی کورٹ": "high court justice",
+    "حق": "right entitlement fundamental right",
+    "حقوق": "rights fundamental rights", "آزادی": "freedom liberty",
+    "انصاف": "justice fair trial due process",
+    "برابری": "equality equal rights", "امتیاز": "discrimination equal protection",
+    "آزادی اظہار": "freedom of speech expression",
+    "مذہب کی آزادی": "freedom of religion",
+    "وقار انسانی": "dignity of man inviolable",
+    "زمین": "land property immovable", "جائیداد": "property assets estate",
+    "ملکیت": "ownership property right", "مکان": "house property dwelling",
+    "معاوضہ": "compensation payment indemnity",
+    "قبضہ": "possession occupation", "کرایہ": "rent tenancy lease",
+    "طلاق": "divorce dissolution marriage", "نکاح": "marriage matrimonial contract",
+    "شادی": "marriage matrimonial", "وراثت": "inheritance succession",
+    "میراث": "inheritance estate succession",
+    "نفقہ": "maintenance alimony financial support",
+    "حضانت": "child custody guardianship", "مہر": "dower mahr marriage payment",
+    "عدت": "iddah waiting period divorce",
+    "حکومت": "government federal government state",
+    "پارلیمنٹ": "parliament majlis-e-shoora national assembly",
+    "اسمبلی": "assembly legislature provincial assembly",
+    "سینیٹ": "senate upper house parliament",
+    "ووٹ": "vote election franchise", "انتخابات": "election electoral franchise",
+    "وزیراعظم": "prime minister chief executive",
+    "وزیراعلی": "chief minister province", "گورنر": "governor province",
+    "صدر": "president head of state",
+    "جرم": "offence crime criminal", "سزا": "punishment sentence penalty",
+    "الزام": "charge accusation allegation", "مجرم": "criminal accused convict",
+    "بے گناہ": "innocent not guilty acquittal",
+    "رشوت": "bribery corruption", "فراڈ": "fraud deceit",
+    "قتل": "murder homicide", "چوری": "theft larceny",
+    "ملازمت": "employment service job", "ملازم": "employee servant service",
+    "تنخواہ": "salary remuneration pay", "پنشن": "pension retirement benefit",
+    "ٹیکس": "tax levy duty",
+    "تعلیم": "education right to education",
+    "آئین": "constitution constitutional", "آرٹیکل": "article provision constitutional",
+    "دفعہ": "section provision law",
+}
+
+def translate_urdu_script_query(query: str) -> str:
+    english_expansions = []
+    matched_positions = set()
+    sorted_mappings = sorted(URDU_SCRIPT_TO_ENGLISH.items(), key=lambda x: len(x[0]), reverse=True)
+    for urdu_phrase, english_eq in sorted_mappings:
+        idx = query.find(urdu_phrase)
+        if idx != -1:
+            positions = set(range(idx, idx + len(urdu_phrase)))
+            if not positions.intersection(matched_positions):
+                matched_positions.update(positions)
+                english_expansions.append(english_eq)
+    if english_expansions:
+        expanded = query + " " + " ".join(english_expansions)
+        print(f"[TRANSLATE] Urdu script expansion: {' | '.join(english_expansions[:6])}")
+        return expanded
+    return query
+
 def translate_roman_urdu_query(query: str) -> str:
     q_lower = query.lower()
     english_expansions = []
@@ -826,6 +896,8 @@ def expand_query(query: str) -> str:
 def hybrid_retrieve(query: str, lang: str, k: int = TOP_K) -> list:
     if lang == "roman_urdu":
         retrieval_query = translate_roman_urdu_query(query)
+    elif lang == "ur":
+        retrieval_query = translate_urdu_script_query(query)
     else:
         retrieval_query = query
     expanded = expand_query(retrieval_query)
@@ -1013,7 +1085,12 @@ def rag_query(query: str) -> tuple:
                 "ur":         "اس سوال کا جواب ڈیٹاسیٹ میں نہیں ملا۔ براہ کرم مختلف الفاظ میں پوچھیں۔",
             }
             return no_result.get(lang, "No relevant legal provisions found for this query."), lang
-        rerank_query = translate_roman_urdu_query(query) if lang == "roman_urdu" else query
+        if lang == "roman_urdu":
+            rerank_query = translate_roman_urdu_query(query)
+        elif lang == "ur":
+            rerank_query = translate_urdu_script_query(query)
+        else:
+            rerank_query = query
         top_chunks = rerank(rerank_query, candidates, top_n=RERANK_TOP)
         print(f"[RERANK] {len(top_chunks)} chunks selected")
         context = assemble_context(top_chunks)
