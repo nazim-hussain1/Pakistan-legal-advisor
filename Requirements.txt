@@ -1,3 +1,6 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch
+
 # ════════════════════════════════════════════════════════════
 #  Pakistan Legal Advisor Chatbot — Python Dependencies
 #  Project  : Final Year Project, BS Artificial Intelligence
