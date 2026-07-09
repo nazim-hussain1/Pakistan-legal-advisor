@@ -161,7 +161,7 @@ body.pre-auth #sidebar-overlay{display:none!important}
   .input-wrap{max-width:920px}
   #msgThread{max-width:980px}
   #bottomBar .inner{max-width:980px}
-  .bubble-user{max-width:80%}
+  .bubble-user{max-width:90%}
 }
 
 /* page system */
@@ -380,7 +380,7 @@ body.pre-auth #sidebar-overlay{display:none!important}
   background:var(--glass-bg);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   border:1px solid var(--glass-border);
   border-radius:14px 14px 4px 14px;padding:11px 15px;
-  max-width:72%;font-size:14px;line-height:22px;color:var(--on-surface);
+  max-width:90%;font-size:14px;line-height:22px;color:var(--on-surface);
 }
 .av-user{
   width:34px;height:34px;border-radius:10px;
@@ -1009,7 +1009,7 @@ tbody tr:hover{background:var(--surface)}
       <div class="tbl-scroll">
         <table>
           <thead><tr>
-            <th>Ref ID</th><th>Query</th><th>Time</th><th>Status</th><th style="text-align:right">Action</th>
+            <th>No.</th><th>Query</th><th>Time</th><th>Status</th><th style="text-align:right">Action</th>
           </tr></thead>
           <tbody id="historyTableBody">
             <tr><td colspan="5"><div class="empty-state">
@@ -1528,7 +1528,7 @@ function appendUserMsg(text){
   const d=document.createElement('div');
   d.className='msg-user';
   d.innerHTML=`<div class="av-user"><span class="material-symbols-outlined">person</span></div>
-  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;max-width:72%">
+  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;max-width:90%">
     <div class="bubble-user">${esc(text)}</div>
     <span class="msg-time">${getTime()}</span>
   </div>`;
@@ -1546,7 +1546,6 @@ function appendBotMsg(text,lang,sourceQuery){
   <div class="msg-ai-body">
     <div class="msg-ai-head">
       <span class="ai-name">${esc(label)}</span>
-      <span class="badge-v"><span class="material-symbols-outlined">verified</span>Verified Law</span>
     </div>
     <div class="bubble-ai prose">${rendered}</div>
     <div class="msg-foot">
@@ -1573,10 +1572,10 @@ function renderHistory(){
     histBody.innerHTML=`<tr><td colspan="5"><div class="empty-state"><span class="material-symbols-outlined">history</span>No history yet ask your first question to see it here.</div></td></tr>`;
     histCnt.textContent='Showing 0 records';return;
   }
-  histBody.innerHTML=S.history.slice().reverse().map(item=>{
+  histBody.innerHTML=S.history.slice().reverse().map((item,i)=>{
     const b=item.status==='Resolved'?`<span class="badge-ok">${esc(item.status)}</span>`:`<span class="badge-err">${esc(item.status)}</span>`;
     return`<tr>
-      <td><span class="tbl-id">${esc(item.id)}</span></td>
+      <td><span class="tbl-id">${i+1}</span></td>
       <td><span class="tbl-q">${esc(item.query)}</span></td>
       <td style="font-size:11px;color:var(--on-surface-dim)">${esc(item.time)}</td>
       <td>${b}</td>
