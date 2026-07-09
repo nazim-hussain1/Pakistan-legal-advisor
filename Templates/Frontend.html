@@ -134,6 +134,12 @@ body.sb-collapsed #main-content{margin-left:0}
 }
 #sidebar-overlay.active{display:block}
 
+/* ── Pre-auth: show ONLY the login screen ── */
+body.pre-auth #sidebar{display:none}
+body.pre-auth #top-bar{display:none}
+body.pre-auth #main-content{margin-left:0!important;padding-top:0!important}
+body.pre-auth #sidebar-overlay{display:none!important}
+
 @media(max-width:767px){
   #sidebar{width:260px!important;transform:translateX(-100%);box-shadow:8px 0 32px rgba(0,0,0,.5)}
   #sidebar.mob-open{transform:translateX(0)}
@@ -148,6 +154,14 @@ body.sb-collapsed #main-content{margin-left:0}
   #page-history,#page-about,#page-settings{padding:16px 16px 60px!important}
   .login-card{margin:60px 16px!important}
   .settings-grid{grid-template-columns:1fr!important}
+}
+
+/* ── Wider chat area & bubbles on desktop ── */
+@media(min-width:1024px){
+  .input-wrap{max-width:920px}
+  #msgThread{max-width:980px}
+  #bottomBar .inner{max-width:980px}
+  .bubble-user{max-width:80%}
 }
 
 /* page system */
@@ -536,7 +550,7 @@ tbody tr:hover{background:var(--surface)}
 .login-logo{display:flex;align-items:center;gap:10px;margin-bottom:28px;justify-content:center}
 .login-logo-icon{width:40px;height:40px;border-radius:12px;background:var(--grad-primary);display:flex;align-items:center;justify-content:center;border:1px solid rgba(166,209,173,.2)}
 .login-logo-icon .material-symbols-outlined{font-size:20px;color:var(--primary);font-variation-settings:'FILL' 1}
-.login-logo-name{font-family:'Geist',sans-serif;font-size:15px;font-weight:700;color:var(--on-surface)}
+.login-logo-name{font-family:'Geist',sans-serif;font-size:22px;font-weight:800;color:var(--on-surface);letter-spacing:-.01em}
 .login-title{font-family:'Geist',sans-serif;font-size:22px;font-weight:700;color:var(--on-surface);margin-bottom:6px;text-align:center}
 .login-sub{font-size:13px;color:var(--on-surface-muted);text-align:center;margin-bottom:28px}
 .form-group{margin-bottom:16px}
@@ -844,7 +858,7 @@ tbody tr:hover{background:var(--surface)}
 
 </style>
 </head>
-<body>
+<body class="pre-auth">
 
 <div id="sidebar-overlay" onclick="closeMobileSidebar()"></div>
 <div class="s-toast" id="toast"><span class="material-symbols-outlined">check_circle</span><span id="toastMsg">Saved</span></div>
@@ -1124,7 +1138,7 @@ tbody tr:hover{background:var(--surface)}
       <div class="login-logo-icon"><span class="material-symbols-outlined">balance</span></div>
       <div class="login-logo-name">Pakistan Legal Advisor</div>
     </div>
-    <h2 class="login-title">Welcome back</h2>
+    <h2 class="login-title">Welcome</h2>
     <p class="login-sub">Sign in to access</p>
 
     <div class="login-alert" id="loginAlert">
@@ -1151,12 +1165,11 @@ tbody tr:hover{background:var(--surface)}
           <span class="pw-toggle" onclick="togglePw('loginPw',this)"><span class="material-symbols-outlined">visibility</span></span>
         </div>
       </div>
-      <div class="form-row">
+      <div class="form-row" style="justify-content:flex-start">
         <label class="form-check">
           <input type="checkbox" id="rememberMe"/>
           <span>Remember me</span>
         </label>
-        <span class="form-link">Forgot password?</span>
       </div>
       <button class="btn-primary" onclick="doLogin()">
         <span class="material-symbols-outlined">login</span>Sign In
@@ -1458,10 +1471,12 @@ async function checkSession(){
 }
 function unlockApp(){
   S.isAuthenticated=true;
+  document.body.classList.remove('pre-auth');
   showPage('chat');
 }
 function lockApp(){
   S.isAuthenticated=false;
+  document.body.classList.add('pre-auth');
   showPage('login');
 }
 
@@ -1520,12 +1535,13 @@ function appendUserMsg(text){
   msgThread.appendChild(d);scrollBot();
 }
 
-function appendBotMsg(text,lang){
+function appendBotMsg(text,lang,sourceQuery){
   const label=lang==='ur'?'Pakistan Legal Advisor · اردو':'Pakistan Legal Advisor';
   const useMarkdown=document.getElementById('markdownToggle')?.checked!==false;
   const rendered=useMarkdown?marked.parse(text):esc(text).replace(/\n/g,'<br>');
   const d=document.createElement('div');
   d.className='msg-ai';
+  if(sourceQuery)d.dataset.query=sourceQuery;
   d.innerHTML=`<div class="av-ai"><span class="material-symbols-outlined">balance</span></div>
   <div class="msg-ai-body">
     <div class="msg-ai-head">
@@ -1536,6 +1552,7 @@ function appendBotMsg(text,lang){
     <div class="msg-foot">
       <span class="msg-time">${getTime()}</span>
       <button class="copy-btn" onclick="copyMsg(this)"><span class="material-symbols-outlined">content_copy</span>Copy</button>
+      ${sourceQuery?`<button class="copy-btn" onclick="retryMsg(this)"><span class="material-symbols-outlined">refresh</span>Retry</button>`:''}
     </div>
   </div>`;
   msgThread.appendChild(d);scrollBot();
@@ -1574,6 +1591,25 @@ function renderHistory(){
 clearBtn.addEventListener('click',()=>{S.history=[];S.totalQueries=0;S.totalErrors=0;updateStats();renderHistory();showToast('History cleared.')});
 
 /* ── Send → Flask /chat ── */
+async function fetchReply(text){
+  S.controller=new AbortController();
+  const timeout=setTimeout(()=>S.controller.abort(),120000);
+  let reply='',lang='en',status='Resolved';
+  try{
+    const res=await fetch('/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text}),signal:S.controller.signal});
+    clearTimeout(timeout);
+    const data=await res.json();
+    if(!res.ok){reply=data.error||'Server error.';status='Flagged'}
+    else{reply=data.reply;lang=data.language||'en'}
+  }catch(e){
+    clearTimeout(timeout);
+    reply=e.name==='AbortError'?'Request timed out. The model may be processing a large response.':'Unable to connect to Flask server. Please ensure App.py is running on port 7860.';
+    status='Flagged';
+  }
+  S.controller=null;
+  return{reply,lang,status};
+}
+
 async function sendMessage(){
   const active=S.hasMessages?inputB:inputH;
   const text=active.value.trim();
@@ -1583,26 +1619,30 @@ async function sendMessage(){
   inputH.style.height='auto';inputB.style.height='auto';
   setLoading(true);showTyping();
   S.totalQueries++;updateStats();
-  S.controller=new AbortController();
-  const timeout=setTimeout(()=>S.controller.abort(),120000);
-  let reply='',lang='en',status='Resolved';
-  try{
-    const res=await fetch('/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text}),signal:S.controller.signal});
-    clearTimeout(timeout);
-    const data=await res.json();
-    removeTyping();
-    if(!res.ok){reply=data.error||'Server error.';status='Flagged'}
-    else{reply=data.reply;lang=data.language||'en'}
-  }catch(e){
-    clearTimeout(timeout);removeTyping();
-    reply=e.name==='AbortError'?'Request timed out. The model may be processing a large response.':'Unable to connect to Flask server. Please ensure App.py is running on port 7860.';
-    status='Flagged';
-  }
+  const{reply,lang,status}=await fetchReply(text);
+  removeTyping();
   if(status==='Flagged')S.totalErrors++;
-  appendBotMsg(reply,lang);updateStats();
+  appendBotMsg(reply,lang,text);updateStats();
   S.refCounter++;
   S.history.push({id:`#PLA-${S.refCounter}`,query:text,time:getTime(),status});
-  setLoading(false);inputB.focus();S.controller=null;
+  setLoading(false);inputB.focus();
+}
+
+/* ── Retry last AI response ── */
+async function retryMsg(btn){
+  if(S.isSending)return;
+  const msgDiv=btn.closest('.msg-ai');
+  const text=msgDiv?.dataset.query;
+  if(!text)return;
+  msgDiv.remove();
+  setLoading(true);showTyping();
+  const{reply,lang,status}=await fetchReply(text);
+  removeTyping();
+  if(status==='Flagged')S.totalErrors++;
+  appendBotMsg(reply,lang,text);updateStats();
+  S.refCounter++;
+  S.history.push({id:`#PLA-${S.refCounter}`,query:text,time:getTime(),status});
+  setLoading(false);inputB.focus();
 }
 
 /* ── Input events ── */
