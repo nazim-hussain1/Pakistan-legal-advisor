@@ -7,8 +7,7 @@ from smalltalk import check_smalltalk
 from translation import translate_roman_urdu_query, translate_urdu_script_query
 from retrieval import hybrid_retrieve, rerank, assemble_context
 from prompts import build_prompt
-from llm_client import call_llm_with_retry
-
+from llm_client import call_llm_with_fallback
 
 def rag_query(query: str) -> tuple:
     """Returns (answer_string, detected_language_string). Also updates
@@ -55,8 +54,8 @@ def rag_query(query: str) -> tuple:
         system_msg, user_prompt = build_prompt(query, context, lang, history=history)
 
         try:
-            answer = call_llm_with_retry(system_msg, user_prompt, max_retries=2, base_delay=2.0)
-            print(f"[RESPONSE] {len(answer)} chars | lang={lang}")
+            answer, model_used = call_llm_with_fallback(system_msg, user_prompt)
+            print(f"[RESPONSE] {len(answer)} chars | lang={lang} | model={model_used}")
             memory.push_turn("user", query)
             memory.push_turn("assistant", answer)
             return answer, lang

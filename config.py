@@ -34,7 +34,8 @@ class Config:
     # ── LLM (OpenRouter) ──────────────────────────────────
     OPENROUTER_API_KEY  = os.getenv("OPENROUTER_API_KEY")
     OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-    MODEL_NAME           = os.getenv("MODEL_NAME", "gpt-oss-120b")
+    MODEL_NAME           = os.getenv("MODEL_NAME", "openai/gpt-oss-120b:free")
+    FALLBACK_MODEL_NAME  = os.getenv("FALLBACK_MODEL_NAME", "meta-llama/llama-3.3-70b-instruct:free")
 
     # ── Conversation memory ───────────────────────────────
     # Number of previous messages (user + assistant turns combined)

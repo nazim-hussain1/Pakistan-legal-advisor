@@ -1481,8 +1481,8 @@ function lockApp(){
 
 /* ── New Chat ── */
 function startNewChat(){
-  fetch('/chat/new', {method:'POST'}).catch(()=>{}); 
   S.controller?.abort();S.hasMessages=false;S.isSending=false;
+  fetch('/chat/new',{method:'POST'}).catch(()=>{});
   msgThread.innerHTML=`<div class="date-stamp" id="dateStamp"></div>`;
   document.getElementById('dateStamp').textContent=new Date().toLocaleDateString('en-PK',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   heroArea.classList.remove('hidden');
