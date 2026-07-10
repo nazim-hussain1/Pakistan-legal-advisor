@@ -1,9 +1,3 @@
-"""
-Builds the (system_msg, user_prompt) pair sent to the LLM, conditioned
-on the detected query language and — new — the recent conversation
-history, so follow-up questions resolve correctly.
-"""
-
 _HISTORY_HEADERS = {
     "roman_urdu": "PICHLI GUFTAGU (sirf follow-up sawaal samajhne ke liye — isay qanooni source na samjhein):",
     "ur":         "پچھلی گفتگو (صرف سیاق و سباق سمجھنے کے لیے — اسے قانونی ماخذ نہ سمجھیں):",

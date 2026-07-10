@@ -1,23 +1,3 @@
-"""
-Lightweight per-browser conversation memory.
-
-Stores the last MAX_MEMORY_MESSAGES (default 6, i.e. 3 user+assistant
-exchanges) turns in the signed Flask session cookie so multi-turn
-follow-up questions ("what about its exceptions?", "and in Urdu
-script?") can be answered with the right context — without requiring a
-database round-trip or a logged-in user.
-
-This works identically for anonymous visitors and authenticated users,
-since it rides on Flask's session cookie rather than the ChatSession /
-ChatMessage database tables (which remain unchanged and are only used
-for the persistent "Chat History" page for logged-in users).
-
-IMPORTANT: memory is for conversational continuity only. The RAG
-prompt (see prompts.py) explicitly instructs the LLM to draw all legal
-facts exclusively from the retrieved CONTEXT — never from prior
-conversation turns — so this cannot introduce hallucinated legal
-claims carried over from earlier in the chat.
-"""
 from flask import session
 
 from config import Config

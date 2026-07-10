@@ -1,9 +1,3 @@
-"""
-Central configuration for the Pakistan Legal Advisor backend.
-
-All tunable constants (RAG parameters, model names, DB URI, etc.) live
-here so the rest of the codebase never hard-codes them.
-"""
 import os
 from dotenv import load_dotenv
 

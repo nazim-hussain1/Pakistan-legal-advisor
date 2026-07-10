@@ -1,8 +1,3 @@
-"""
-Top-level RAG orchestrator. Ties together language detection,
-small-talk interception, hybrid retrieval, reranking, conversation
-memory, prompt construction, and the LLM call.
-"""
 import traceback
 
 import memory

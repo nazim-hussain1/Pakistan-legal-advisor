@@ -1,8 +1,3 @@
-"""
-Authentication: email/password registration, login, logout, and the
-current-user helper. Google OAuth has been removed entirely — this is
-the only auth path in the application now.
-"""
 from datetime import datetime
 from functools import wraps
 

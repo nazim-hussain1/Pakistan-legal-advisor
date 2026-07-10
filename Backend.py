@@ -1,16 +1,3 @@
-"""
-Pakistan Legal Advisor — Flask application entry point.
-
-This file is intentionally thin: it wires together the app factory,
-database, and blueprints. All RAG/query logic lives in dedicated
-modules (retrieval.py, rag.py, prompts.py, translation.py,
-language_detection.py, smalltalk.py, memory.py, llm_client.py) and all
-routes live in their own blueprint files (auth.py, chat_routes.py,
-user_routes.py).
-
-Google OAuth has been removed entirely — email/password is the only
-authentication method.
-"""
 import os
 import secrets
 import warnings

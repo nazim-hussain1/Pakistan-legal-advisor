@@ -1,9 +1,3 @@
-"""
-Chat endpoints: the main /chat route (RAG query + optional DB
-persistence for logged-in users), and a new /chat/new route that
-clears server-side conversation memory when the user starts a fresh
-chat.
-"""
 from datetime import datetime
 
 from flask import Blueprint, jsonify, request

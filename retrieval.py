@@ -1,14 +1,3 @@
-"""
-RAG retrieval core: dataset loading, legal-aware chunking, embedding &
-reranker model loading, FAISS + BM25 hybrid retrieval with Reciprocal
-Rank Fusion, and Cross-Encoder reranking.
-
-NOTE: This module does real work at import time (loads the dataset,
-builds/loads the FAISS index, loads the embedding + reranker models).
-That is intentional — Backend.py imports this module once at process
-startup so all heavy initialization happens before Flask starts
-accepting requests, exactly like the original monolithic script.
-"""
 import os
 import re
 

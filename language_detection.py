@@ -1,7 +1,3 @@
-"""
-Language detection: Urdu script (Unicode range), Roman Urdu (custom
-keyword classifier), and a langdetect fallback for everything else.
-"""
 import re
 from langdetect import detect
 

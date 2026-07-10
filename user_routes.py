@@ -1,7 +1,3 @@
-"""
-User data routes: persisted chat history, per-user settings, and
-account management. All routes require an authenticated session.
-"""
 from flask import Blueprint, jsonify, request
 
 from extensions import db

@@ -1,12 +1,3 @@
-"""
-OpenRouter LLM client and rate-limit-aware retry wrapper.
-
-NOTE: `call_llm_with_retry` accepts an optional `model` override. This
-is currently unused (the app always calls the default MODEL_NAME) but
-is kept as an explicit hook for the upcoming secondary-fallback-model
-step (Claude Opus 4.8 via OpenRouter), so that change won't require
-touching this function's signature again.
-"""
 import time
 
 from openai import OpenAI

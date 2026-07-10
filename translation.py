@@ -1,8 +1,3 @@
-"""
-Query-side translation layer: bridges Roman Urdu and Urdu-script queries
-to the English legal vocabulary used in the constitutional dataset, and
-expands all queries with related legal synonyms/article references.
-"""
 import re
 
 # ═══════════════════════════════════════════════════════════

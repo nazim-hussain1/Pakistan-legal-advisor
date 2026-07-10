@@ -1,8 +1,3 @@
-"""
-Small-talk fast-path: intercepts greetings, identity/creator questions,
-capability questions, thanks, and farewells across English, Roman Urdu,
-and Urdu script — before the query ever reaches the retrieval pipeline.
-"""
 import re
 import random
 

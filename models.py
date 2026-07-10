@@ -1,12 +1,3 @@
-"""
-Database models: User, ChatSession, ChatMessage, UserSettings.
-
-NOTE: Google OAuth support has been removed from this project. The User
-model previously carried `google_id` and `avatar_url` columns purely to
-support Google sign-in; both are gone now that email/password is the
-only authentication method. `password_hash` is therefore always
-required (nullable=False).
-"""
 import secrets
 import hashlib
 from datetime import datetime
