@@ -6,3 +6,5 @@ __pycache__/
 faiss_index.bin
 chunks.npy
 pla_users.db
+
+.env
