@@ -50,9 +50,12 @@ def preprocess_text(text):
 def create_legal_chunks(text):
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=1400, chunk_overlap=300,
-        separators=["\nArticle ", "\nPart ", "\nChapter ",
-                    "\n\n", "\n   (", "\n  (", "\n (",
-                    "\n", " ", ""]
+        separators=[
+            "\nArticle ",
+            "\nPart ", "\nChapter ",
+            "\n\n", "\n   (", "\n  (", "\n (",
+            "\n", " ", ""
+        ]
     )
     chunks = splitter.split_text(text)
     print(f"[OK] Created {len(chunks)} chunks")

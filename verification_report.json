@@ -1,0 +1,848 @@
+[
+  {
+    "id": "T1-EN",
+    "topic": "Arrest and Detention Safeguards",
+    "language": "en",
+    "status": "VERIFIED",
+    "expected_article": "10",
+    "matched_keywords": [
+      "arrest"
+    ],
+    "preview": " Article 10.Ã¢ÂÂRepresentatives of Member States to the Principal and subsi diary organs and conferences convened by the organization, shall while exercising their functions and du ring the journey to and from the plac..."
+  },
+  {
+    "id": "T1-RU",
+    "topic": "Arrest and Detention Safeguards",
+    "language": "roman_urdu",
+    "status": "VERIFIED",
+    "expected_article": "10",
+    "matched_keywords": [
+      "arrest"
+    ],
+    "preview": " Article 10.Ã¢ÂÂRepresentatives of Member States to the Principal and subsi diary organs and conferences convened by the organization, shall while exercising their functions and du ring the journey to and from the plac..."
+  },
+  {
+    "id": "T1-UR",
+    "topic": "Arrest and Detention Safeguards",
+    "language": "ur",
+    "status": "VERIFIED",
+    "expected_article": "10",
+    "matched_keywords": [
+      "arrest"
+    ],
+    "preview": " Article 10.Ã¢ÂÂRepresentatives of Member States to the Principal and subsi diary organs and conferences convened by the organization, shall while exercising their functions and du ring the journey to and from the plac..."
+  },
+  {
+    "id": "T2-EN",
+    "topic": "Right to Fair Trial",
+    "language": "en",
+    "status": "NOT_FOUND",
+    "expected_article": "10A",
+    "candidates": [],
+    "note": "Article 10A has no heading in the dataset. No keyword candidates found either — topic may not be covered by this dataset at all."
+  },
+  {
+    "id": "T2-RU",
+    "topic": "Right to Fair Trial",
+    "language": "roman_urdu",
+    "status": "NOT_FOUND",
+    "expected_article": "10A",
+    "candidates": [],
+    "note": "Article 10A has no heading in the dataset. No keyword candidates found either — topic may not be covered by this dataset at all."
+  },
+  {
+    "id": "T2-UR",
+    "topic": "Right to Fair Trial",
+    "language": "ur",
+    "status": "NOT_FOUND",
+    "expected_article": "10A",
+    "candidates": [],
+    "note": "Article 10A has no heading in the dataset. No keyword candidates found either — topic may not be covered by this dataset at all."
+  },
+  {
+    "id": "T3-EN",
+    "topic": "Freedom of Movement",
+    "language": "en",
+    "status": "MISMATCH",
+    "expected_article": "15",
+    "preview": " Article 15.Ã¢ÂÂThe expression Ã¢ÂÂrepresentativeÃ¢ÂÂ in this chapter shall be deemed to include all delegates of M embers States, their deputies, advisers and technical experts and secretaries of delegations....",
+    "candidates": [
+      {
+        "article": "168",
+        "hits": [
+          "reside"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "173",
+        "hits": [
+          "reside"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "3",
+        "hits": [
+          "reside"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "149",
+        "hits": [
+          "reside"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "155",
+        "hits": [
+          "reside"
+        ],
+        "hit_count": 1
+      }
+    ],
+    "note": "Article 15 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
+  },
+  {
+    "id": "T3-RU",
+    "topic": "Freedom of Movement",
+    "language": "roman_urdu",
+    "status": "MISMATCH",
+    "expected_article": "15",
+    "preview": " Article 15.Ã¢ÂÂThe expression Ã¢ÂÂrepresentativeÃ¢ÂÂ in this chapter shall be deemed to include all delegates of M embers States, their deputies, advisers and technical experts and secretaries of delegations....",
+    "candidates": [
+      {
+        "article": "168",
+        "hits": [
+          "reside"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "173",
+        "hits": [
+          "reside"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "3",
+        "hits": [
+          "reside"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "149",
+        "hits": [
+          "reside"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "155",
+        "hits": [
+          "reside"
+        ],
+        "hit_count": 1
+      }
+    ],
+    "note": "Article 15 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
+  },
+  {
+    "id": "T3-UR",
+    "topic": "Freedom of Movement",
+    "language": "ur",
+    "status": "MISMATCH",
+    "expected_article": "15",
+    "preview": " Article 15.Ã¢ÂÂThe expression Ã¢ÂÂrepresentativeÃ¢ÂÂ in this chapter shall be deemed to include all delegates of M embers States, their deputies, advisers and technical experts and secretaries of delegations....",
+    "candidates": [
+      {
+        "article": "168",
+        "hits": [
+          "reside"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "173",
+        "hits": [
+          "reside"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "3",
+        "hits": [
+          "reside"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "149",
+        "hits": [
+          "reside"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "155",
+        "hits": [
+          "reside"
+        ],
+        "hit_count": 1
+      }
+    ],
+    "note": "Article 15 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
+  },
+  {
+    "id": "T4-EN",
+    "topic": "Freedom of Assembly",
+    "language": "en",
+    "status": "MISMATCH",
+    "expected_article": "16",
+    "preview": " Article 16.Ã¢ÂÂPermanent State representatives shall enjoy, during the period of their representing t heir State in the organs of the Organization of the Islamic Conference, such immuniti es and privileges as are enjo...",
+    "candidates": [],
+    "note": "Article 16 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
+  },
+  {
+    "id": "T4-RU",
+    "topic": "Freedom of Assembly",
+    "language": "roman_urdu",
+    "status": "MISMATCH",
+    "expected_article": "16",
+    "preview": " Article 16.Ã¢ÂÂPermanent State representatives shall enjoy, during the period of their representing t heir State in the organs of the Organization of the Islamic Conference, such immuniti es and privileges as are enjo...",
+    "candidates": [],
+    "note": "Article 16 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
+  },
+  {
+    "id": "T4-UR",
+    "topic": "Freedom of Assembly",
+    "language": "ur",
+    "status": "MISMATCH",
+    "expected_article": "16",
+    "preview": " Article 16.Ã¢ÂÂPermanent State representatives shall enjoy, during the period of their representing t heir State in the organs of the Organization of the Islamic Conference, such immuniti es and privileges as are enjo...",
+    "candidates": [],
+    "note": "Article 16 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
+  },
+  {
+    "id": "T5-EN",
+    "topic": "Freedom of Speech",
+    "language": "en",
+    "status": "MISMATCH",
+    "expected_article": "19",
+    "preview": " Article 19.Ã¢ÂÂ(I) Officials of the General Secretariat of the Organization of the Islamic Conference shall, regardless of their nationality, enjoy the followi ng immuniti es and privileges :Ã¢ÂÂ (a) Immuni ty from ...",
+    "candidates": [
+      {
+        "article": "173",
+        "hits": [
+          "expression",
+          "press"
+        ],
+        "hit_count": 2
+      },
+      {
+        "article": "15",
+        "hits": [
+          "expression",
+          "press"
+        ],
+        "hit_count": 2
+      },
+      {
+        "article": "46",
+        "hits": [
+          "press"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "55",
+        "hits": [
+          "press"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "11",
+        "hits": [
+          "press"
+        ],
+        "hit_count": 1
+      }
+    ],
+    "note": "Article 19 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
+  },
+  {
+    "id": "T5-RU",
+    "topic": "Freedom of Speech",
+    "language": "roman_urdu",
+    "status": "MISMATCH",
+    "expected_article": "19",
+    "preview": " Article 19.Ã¢ÂÂ(I) Officials of the General Secretariat of the Organization of the Islamic Conference shall, regardless of their nationality, enjoy the followi ng immuniti es and privileges :Ã¢ÂÂ (a) Immuni ty from ...",
+    "candidates": [
+      {
+        "article": "173",
+        "hits": [
+          "expression",
+          "press"
+        ],
+        "hit_count": 2
+      },
+      {
+        "article": "15",
+        "hits": [
+          "expression",
+          "press"
+        ],
+        "hit_count": 2
+      },
+      {
+        "article": "46",
+        "hits": [
+          "press"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "55",
+        "hits": [
+          "press"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "11",
+        "hits": [
+          "press"
+        ],
+        "hit_count": 1
+      }
+    ],
+    "note": "Article 19 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
+  },
+  {
+    "id": "T5-UR",
+    "topic": "Freedom of Speech",
+    "language": "ur",
+    "status": "MISMATCH",
+    "expected_article": "19",
+    "preview": " Article 19.Ã¢ÂÂ(I) Officials of the General Secretariat of the Organization of the Islamic Conference shall, regardless of their nationality, enjoy the followi ng immuniti es and privileges :Ã¢ÂÂ (a) Immuni ty from ...",
+    "candidates": [
+      {
+        "article": "173",
+        "hits": [
+          "expression",
+          "press"
+        ],
+        "hit_count": 2
+      },
+      {
+        "article": "15",
+        "hits": [
+          "expression",
+          "press"
+        ],
+        "hit_count": 2
+      },
+      {
+        "article": "46",
+        "hits": [
+          "press"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "55",
+        "hits": [
+          "press"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "11",
+        "hits": [
+          "press"
+        ],
+        "hit_count": 1
+      }
+    ],
+    "note": "Article 19 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
+  },
+  {
+    "id": "T6-EN",
+    "topic": "Right to Information",
+    "language": "en",
+    "status": "NOT_FOUND",
+    "expected_article": "19A",
+    "candidates": [],
+    "note": "Article 19A has no heading in the dataset. No keyword candidates found either — topic may not be covered by this dataset at all."
+  },
+  {
+    "id": "T6-RU",
+    "topic": "Right to Information",
+    "language": "roman_urdu",
+    "status": "NOT_FOUND",
+    "expected_article": "19A",
+    "candidates": [],
+    "note": "Article 19A has no heading in the dataset. No keyword candidates found either — topic may not be covered by this dataset at all."
+  },
+  {
+    "id": "T6-UR",
+    "topic": "Right to Information",
+    "language": "ur",
+    "status": "NOT_FOUND",
+    "expected_article": "19A",
+    "candidates": [],
+    "note": "Article 19A has no heading in the dataset. No keyword candidates found either — topic may not be covered by this dataset at all."
+  },
+  {
+    "id": "T7-EN",
+    "topic": "Property Rights and Compulsory Acquisition",
+    "language": "en",
+    "status": "MISMATCH",
+    "expected_article": "24",
+    "preview": " Article 24.Ã¢ÂÂImmuniti es and privileges are granted to experts: in the interest of the Organization. The Secretary General shall have the right and the duty to waive the immuni ty in any case where, in his opinion, ...",
+    "candidates": [
+      {
+        "article": "87",
+        "hits": [
+          "property"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "218",
+        "hits": [
+          "property"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "11",
+        "hits": [
+          "property"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "173",
+        "hits": [
+          "property"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "51",
+        "hits": [
+          "property"
+        ],
+        "hit_count": 1
+      }
+    ],
+    "note": "Article 24 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
+  },
+  {
+    "id": "T7-RU",
+    "topic": "Property Rights and Compulsory Acquisition",
+    "language": "roman_urdu",
+    "status": "MISMATCH",
+    "expected_article": "24",
+    "preview": " Article 24.Ã¢ÂÂImmuniti es and privileges are granted to experts: in the interest of the Organization. The Secretary General shall have the right and the duty to waive the immuni ty in any case where, in his opinion, ...",
+    "candidates": [
+      {
+        "article": "87",
+        "hits": [
+          "property"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "218",
+        "hits": [
+          "property"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "11",
+        "hits": [
+          "property"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "173",
+        "hits": [
+          "property"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "51",
+        "hits": [
+          "property"
+        ],
+        "hit_count": 1
+      }
+    ],
+    "note": "Article 24 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
+  },
+  {
+    "id": "T7-UR",
+    "topic": "Property Rights and Compulsory Acquisition",
+    "language": "ur",
+    "status": "MISMATCH",
+    "expected_article": "24",
+    "preview": " Article 24.Ã¢ÂÂImmuniti es and privileges are granted to experts: in the interest of the Organization. The Secretary General shall have the right and the duty to waive the immuni ty in any case where, in his opinion, ...",
+    "candidates": [
+      {
+        "article": "87",
+        "hits": [
+          "property"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "218",
+        "hits": [
+          "property"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "11",
+        "hits": [
+          "property"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "173",
+        "hits": [
+          "property"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "51",
+        "hits": [
+          "property"
+        ],
+        "hit_count": 1
+      }
+    ],
+    "note": "Article 24 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
+  },
+  {
+    "id": "T8-EN",
+    "topic": "Equality and Non-Discrimination",
+    "language": "en",
+    "status": "MISMATCH",
+    "expected_article": "25",
+    "preview": " Article 25.Ã¢ÂÂThe G eneral Secretariat of the Organization of Islamic Conference may issue laissez-passers to its officials. Those laissez-passers shall be recognised and accepted as valid travel documents by Members...",
+    "candidates": [
+      {
+        "article": "253",
+        "hits": [
+          "equality",
+          "non-discrimination",
+          "women"
+        ],
+        "hit_count": 3
+      },
+      {
+        "article": "224A",
+        "hits": [
+          "women"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "225",
+        "hits": [
+          "women"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "106",
+        "hits": [
+          "women"
+        ],
+        "hit_count": 1
+      }
+    ],
+    "note": "Article 25 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
+  },
+  {
+    "id": "T8-RU",
+    "topic": "Equality and Non-Discrimination",
+    "language": "roman_urdu",
+    "status": "MISMATCH",
+    "expected_article": "25",
+    "preview": " Article 25.Ã¢ÂÂThe G eneral Secretariat of the Organization of Islamic Conference may issue laissez-passers to its officials. Those laissez-passers shall be recognised and accepted as valid travel documents by Members...",
+    "candidates": [
+      {
+        "article": "253",
+        "hits": [
+          "equality",
+          "non-discrimination",
+          "women"
+        ],
+        "hit_count": 3
+      },
+      {
+        "article": "224A",
+        "hits": [
+          "women"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "225",
+        "hits": [
+          "women"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "106",
+        "hits": [
+          "women"
+        ],
+        "hit_count": 1
+      }
+    ],
+    "note": "Article 25 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
+  },
+  {
+    "id": "T8-UR",
+    "topic": "Equality and Non-Discrimination",
+    "language": "ur",
+    "status": "MISMATCH",
+    "expected_article": "25",
+    "preview": " Article 25.Ã¢ÂÂThe G eneral Secretariat of the Organization of Islamic Conference may issue laissez-passers to its officials. Those laissez-passers shall be recognised and accepted as valid travel documents by Members...",
+    "candidates": [
+      {
+        "article": "253",
+        "hits": [
+          "equality",
+          "non-discrimination",
+          "women"
+        ],
+        "hit_count": 3
+      },
+      {
+        "article": "224A",
+        "hits": [
+          "women"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "225",
+        "hits": [
+          "women"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "106",
+        "hits": [
+          "women"
+        ],
+        "hit_count": 1
+      }
+    ],
+    "note": "Article 25 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
+  },
+  {
+    "id": "T9-EN",
+    "topic": "Right to Education",
+    "language": "en",
+    "status": "NOT_FOUND",
+    "expected_article": "25A",
+    "candidates": [
+      {
+        "article": "253",
+        "hits": [
+          "compulsory"
+        ],
+        "hit_count": 1
+      }
+    ],
+    "note": "Article 25A has no heading in the dataset. Top candidate(s) by keyword match shown below."
+  },
+  {
+    "id": "T9-RU",
+    "topic": "Right to Education",
+    "language": "roman_urdu",
+    "status": "NOT_FOUND",
+    "expected_article": "25A",
+    "candidates": [
+      {
+        "article": "253",
+        "hits": [
+          "compulsory"
+        ],
+        "hit_count": 1
+      }
+    ],
+    "note": "Article 25A has no heading in the dataset. Top candidate(s) by keyword match shown below."
+  },
+  {
+    "id": "T9-UR",
+    "topic": "Right to Education",
+    "language": "ur",
+    "status": "NOT_FOUND",
+    "expected_article": "25A",
+    "candidates": [
+      {
+        "article": "253",
+        "hits": [
+          "compulsory"
+        ],
+        "hit_count": 1
+      }
+    ],
+    "note": "Article 25A has no heading in the dataset. Top candidate(s) by keyword match shown below."
+  },
+  {
+    "id": "T10-EN",
+    "topic": "Federal Constitutional Court (27th Amendment)",
+    "language": "en",
+    "status": "REVIEW",
+    "expected_article": null,
+    "candidates": [
+      {
+        "article": "191",
+        "hits": [
+          "jurisdiction"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "52",
+        "hits": [
+          "jurisdiction"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "59",
+        "hits": [
+          "jurisdiction"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "32",
+        "hits": [
+          "jurisdiction"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "41",
+        "hits": [
+          "jurisdiction"
+        ],
+        "hit_count": 1
+      }
+    ],
+    "note": "No expected article to verify — ranked candidates shown for manual review."
+  },
+  {
+    "id": "T10-RU",
+    "topic": "Federal Constitutional Court (27th Amendment)",
+    "language": "roman_urdu",
+    "status": "REVIEW",
+    "expected_article": null,
+    "candidates": [
+      {
+        "article": "191",
+        "hits": [
+          "jurisdiction"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "52",
+        "hits": [
+          "jurisdiction"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "59",
+        "hits": [
+          "jurisdiction"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "32",
+        "hits": [
+          "jurisdiction"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "41",
+        "hits": [
+          "jurisdiction"
+        ],
+        "hit_count": 1
+      }
+    ],
+    "note": "No expected article to verify — ranked candidates shown for manual review."
+  },
+  {
+    "id": "T10-UR",
+    "topic": "Federal Constitutional Court (27th Amendment)",
+    "language": "ur",
+    "status": "REVIEW",
+    "expected_article": null,
+    "candidates": [
+      {
+        "article": "191",
+        "hits": [
+          "jurisdiction"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "52",
+        "hits": [
+          "jurisdiction"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "59",
+        "hits": [
+          "jurisdiction"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "32",
+        "hits": [
+          "jurisdiction"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "41",
+        "hits": [
+          "jurisdiction"
+        ],
+        "hit_count": 1
+      }
+    ],
+    "note": "No expected article to verify — ranked candidates shown for manual review."
+  }
+]
