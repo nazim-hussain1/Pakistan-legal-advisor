@@ -6,6 +6,26 @@ fyp_cleaned_dataset.csv — instead of trusting hand-typed article
 numbers, which risk drifting from the real numbering after the
 27th Amendment restructuring.
 
+═══════════════════════════════════════════════════════════════════
+FIX (this version): boundary pattern now matches retrieval.py
+═══════════════════════════════════════════════════════════════════
+The previous version of this script used ARTICLE_HEADING =
+r"\nArticle\s+(\d+[A-Za-z]*)\b" to find "real" article headings —
+deliberately mirroring retrieval.py's OLD "\nArticle " separator so
+the two would agree. But that pattern never matches the Constitution
+body in this dataset (rows 328676–334922), which uses bare numeric
+headings like "\n10. ", "\n10A. ", "\n25A. " — NOT "\nArticle 10".
+It only matched a different document elsewhere in the 566k-row
+corpus (the OIC Charter), which is why T3/T4/T5/T7/T8 came back
+MISMATCH against OIC Charter text in verification_report.json rather
+than the Constitution.
+
+retrieval.py has now been fixed to chunk on this numeric heading
+pattern (via a marker pre-pass, since RecursiveCharacterTextSplitter
+only matches literal strings). This script's ARTICLE_HEADING is
+updated to the same regex so verification and real chunking boundaries
+agree. If you ever change one, change the other.
+
 WHY THIS IS SEPARATE FROM evaluate_retrieval.py
 ------------------------------------------------
 This script does NOT import retrieval.py, so it does NOT load the
@@ -13,25 +33,22 @@ embedder, reranker, FAISS, or BM25 — it only needs pandas + re.
 That makes it fast (seconds, not minutes) and runnable before you've
 even built the index, purely to sanity-check the gold set itself.
 
-BOUNDARY DEFINITION (important)
---------------------------------
-retrieval.py's RecursiveCharacterTextSplitter treats "\\nArticle "
-(a literal newline immediately followed by "Article ") as a primary
-chunk boundary. This script uses the SAME boundary rule to find real
-article headings — not just any mention of "Article N" anywhere in
-the text (which would false-positive on cross-references like
-"...as provided in Article 25..." appearing inside a different
-article's body).
-
 USAGE
 -----
     python verify_gold_test_set.py
 
     python verify_gold_test_set.py --dataset fyp_cleaned_dataset.csv \\
-                                    --gold gold_test_set.json \\
+                                    --gold gold_test_set_queries.json \\
                                     --out verification_report.json
 
     python verify_gold_test_set.py --suggest-corrections
+
+NOTE ON --gold: pass the 30-QUERY evaluation file here (see
+gold_test_set_queries.json), not the 296-article gold_test_set.json.
+This script expects the {"queries": [...]} shape with expected_article
++ keywords per entry — gold_test_set.json is the flat article corpus
+used as the underlying reference, not the query format this script
+consumes.
 
 OUTPUT
 ------
@@ -68,7 +85,8 @@ import pandas as pd
 
 # Same boundary + cleaning logic as retrieval.py, duplicated here
 # deliberately so this script has zero heavy dependencies.
-ARTICLE_HEADING = re.compile(r"\nArticle\s+(\d+[A-Za-z]*)\b", re.IGNORECASE)
+# MUST match retrieval.py's NUMERIC_HEADING_PATTERN exactly.
+ARTICLE_HEADING = re.compile(r"\n(\d{1,3}[A-Z]{0,3})\.\s+")
 
 
 def read_csv_dataset(path: str) -> str:
@@ -96,19 +114,31 @@ def preprocess_text(text: str) -> str:
     return text.strip()
 
 
-def build_article_index(text: str, max_block_chars: int = 4000) -> dict:
-    """Returns {article_number: block_text} using the same '\\nArticle '
-    boundary retrieval.py's chunker relies on. First occurrence of a
-    given number wins (duplicates logged as a warning)."""
+def build_article_index(text: str, max_block_chars: int = 4000,
+                         constitution_start: int = None,
+                         constitution_end: int = None) -> dict:
+    """Returns {article_number: block_text} using the same numeric
+    heading boundary retrieval.py's chunker relies on. First occurrence
+    of a given number wins (duplicates logged as a warning).
+
+    If constitution_start/end (character offsets, not row numbers) are
+    given, only headings within that window are indexed — this avoids
+    picking up numeric list items from unrelated documents elsewhere
+    in the 566k-row corpus that happen to share the "\\nN. " shape.
+    Pass None to scan the whole corpus (slower, noisier, but requires
+    no offset bookkeeping)."""
     matches = list(ARTICLE_HEADING.finditer(text))
-    print(f"[INDEX] Found {len(matches)} article headings using '\\nArticle ' boundary")
+    if constitution_start is not None:
+        matches = [m for m in matches
+                   if constitution_start <= m.start() <= (constitution_end or len(text))]
+    print(f"[INDEX] Found {len(matches)} numeric heading matches in scanned range")
 
     index = {}
     duplicates = []
     for i, m in enumerate(matches):
         num = m.group(1).upper()
         start = m.start()
-        end = matches[i + 1].start() if i + 1 < len(matches) else len(text)
+        end = matches[i + 1].start() if i + 1 < len(matches) else min(start + max_block_chars, len(text))
         block = text[start:min(end, start + max_block_chars)]
         if num in index:
             duplicates.append(num)
@@ -159,7 +189,7 @@ def verify_entry(entry: dict, article_index: dict) -> dict:
             "status": "NOT_FOUND",
             "expected_article": art,
             "candidates": candidates,
-            "note": f"Article {art} has no heading in the dataset. "
+            "note": f"Article {art} has no heading in the scanned range. "
                     f"{'Top candidate(s) by keyword match shown below.' if candidates else 'No keyword candidates found either — topic may not be covered by this dataset at all.'}",
         }
 
@@ -216,7 +246,7 @@ def print_report(results: list):
 
 def write_suggested_corrections(gold_data: dict, results: list, out_path: str):
     """Applies a correction ONLY when there's exactly one unambiguous
-    candidate — never overwrites the original gold_test_set.json."""
+    candidate — never overwrites the original gold_test_set_queries.json."""
     by_id = {r["id"]: r for r in results}
     applied, skipped = [], []
 
@@ -245,21 +275,23 @@ def write_suggested_corrections(gold_data: dict, results: list, out_path: str):
     if skipped:
         print(f"  Left unchanged (ambiguous or no strong candidate) — review by hand: "
               f"{', '.join(skipped)}")
-    print("  This file does NOT overwrite gold_test_set.json. Review the diff, then "
+    print("  This file does NOT overwrite the original. Review the diff, then "
           "manually copy over what you accept.")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Verify gold_test_set.json against the real dataset.")
+    parser = argparse.ArgumentParser(description="Verify gold_test_set_queries.json against the real dataset.")
     parser.add_argument("--dataset", default="fyp_cleaned_dataset.csv")
-    parser.add_argument("--gold", default="gold_test_set.json")
+    parser.add_argument("--gold", default="gold_test_set_queries.json",
+                         help="The 30-query EVALUATION file (queries/expected_article/keywords shape) — "
+                              "NOT the 296-article gold_test_set.json corpus file.")
     parser.add_argument("--out", default="verification_report.json")
     parser.add_argument("--suggest-corrections", action="store_true",
-                         help="Also write gold_test_set.suggested.json with unambiguous fixes applied")
+                         help="Also write a *.suggested.json with unambiguous fixes applied")
     args = parser.parse_args()
 
     if not os.path.exists(args.gold):
-        print(f"[FATAL] Gold test set not found: {args.gold}")
+        print(f"[FATAL] Gold query file not found: {args.gold}")
         sys.exit(1)
     with open(args.gold, "r", encoding="utf-8") as f:
         gold_data = json.load(f)
@@ -275,7 +307,7 @@ def main():
     print(f"\n[SAVED] {args.out}")
 
     if args.suggest_corrections:
-        write_suggested_corrections(gold_data, results, "gold_test_set.suggested.json")
+        write_suggested_corrections(gold_data, results, args.gold.replace(".json", ".suggested.json"))
 
 
 if __name__ == "__main__":

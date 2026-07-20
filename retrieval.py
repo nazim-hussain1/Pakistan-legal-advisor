@@ -1,3 +1,52 @@
+"""
+RAG retrieval core: dataset loading, legal-aware chunking, embedding &
+reranker model loading, FAISS + BM25 hybrid retrieval with Reciprocal
+Rank Fusion, and Cross-Encoder reranking.
+
+NOTE: This module does real work at import time (loads the dataset,
+builds/loads the FAISS index, loads the embedding + reranker models).
+That is intentional — Backend.py imports this module once at process
+startup so all heavy initialization happens before Flask starts
+accepting requests, exactly like the original monolithic script.
+
+═══════════════════════════════════════════════════════════════════
+FIX (this version): Constitution-aware chunk boundaries
+═══════════════════════════════════════════════════════════════════
+The original chunker used "\nArticle " as its primary structural
+separator. That string never appears before Constitution provisions
+in fyp_cleaned_dataset.csv — the Constitution body (rows 328676–
+334922) uses bare numeric headings instead, e.g.:
+
+    "\n10. Safeguards as to arrest and detention 10. (1) No person..."
+    "\n10A. Right to fair trial 2[10A. For the determination..."
+    "\n25A. ... 2[25A. The State shall provide free and compulsory..."
+
+Meanwhile "\nArticle N" headings DO exist elsewhere in the 566k-row
+corpus (e.g. the OIC Charter document), so the old separator was
+silently chunking Article-boundaries for the WRONG document while
+never firing on the Constitution at all. This was confirmed directly
+by verification_report.json: T3/T4/T5/T7/T8 all resolved to OIC
+Charter text ("representative", "Organization of the Islamic
+Conference", etc.) instead of Constitution provisions.
+
+RecursiveCharacterTextSplitter only matches literal strings, not
+regex, so we can't just add a numeric-heading regex to `separators`.
+Instead we do a pre-pass: replace real numeric-article headings with
+a unique literal marker, split on that marker (highest priority,
+above "\nArticle "), then strip the marker back out so downstream
+context assembly and prompts still read naturally.
+
+This marker substitution runs over the WHOLE corpus (not just the
+Constitution rows), since chunks.npy has no per-row document
+boundaries at this stage. That is intentional and safe: the
+RecursiveCharacterTextSplitter's merge step still coalesces small
+splits up to chunk_size afterward, so this mainly changes WHERE cuts
+prefer to happen, not how large final chunks end up. If you find this
+over-fragments some other document's numbered lists, tighten the
+NUMERIC_HEADING_PATTERN regex below (e.g. add a required minimum
+distance from the previous heading) rather than removing the marker
+step outright, since removing it reintroduces the original bug.
+"""
 import os
 import re
 
@@ -47,17 +96,38 @@ def preprocess_text(text):
     return text.strip()
 
 
+# Matches a newline-anchored numeric statutory heading like "\n10. ",
+# "\n10A. ", "\n25A. ", "\n203CC. " — the format actually used by the
+# Constitution body in this dataset. Must stay IDENTICAL to the
+# pattern used in verify_gold_test_set.py's ARTICLE_HEADING, or
+# article-number verification and real chunking will silently
+# disagree again.
+NUMERIC_HEADING_PATTERN = re.compile(r"\n(\d{1,3}[A-Z]{0,3})\.\s+")
+ARTICLE_MARKER = "\n\u00a7ARTICLE\u00a7 "  # unique literal marker, safe to split on
+
+
+def _mark_numeric_headings(text: str) -> str:
+    """Pre-pass: turn real numeric statutory headings into a unique
+    literal marker so RecursiveCharacterTextSplitter (which only
+    matches literal strings) can treat them as a primary boundary."""
+    return NUMERIC_HEADING_PATTERN.sub(
+        lambda m: f"{ARTICLE_MARKER}{m.group(1)}. ", text
+    )
+
+
 def create_legal_chunks(text):
+    marked_text = _mark_numeric_headings(text)
+
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=1400, chunk_overlap=300,
-        separators=[
-            "\nArticle ",
-            "\nPart ", "\nChapter ",
-            "\n\n", "\n   (", "\n  (", "\n (",
-            "\n", " ", ""
-        ]
+        separators=[ARTICLE_MARKER, "\nArticle ", "\nPart ", "\nChapter ",
+                    "\n\n", "\n   (", "\n  (", "\n (",
+                    "\n", " ", ""]
     )
-    chunks = splitter.split_text(text)
+    chunks = splitter.split_text(marked_text)
+    # Strip the marker back out so context/prompt text sent to the LLM
+    # reads naturally (just a normal newline before the heading).
+    chunks = [c.replace(ARTICLE_MARKER, "\n") for c in chunks]
     print(f"[OK] Created {len(chunks)} chunks")
     return chunks
 
