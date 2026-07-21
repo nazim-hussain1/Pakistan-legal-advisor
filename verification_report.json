@@ -3,61 +3,172 @@
     "id": "T1-EN",
     "topic": "Arrest and Detention Safeguards",
     "language": "en",
-    "status": "VERIFIED",
+    "status": "MISMATCH",
     "expected_article": "10",
-    "matched_keywords": [
-      "arrest"
+    "preview": " 10. Employees of the Commission....",
+    "candidates": [
+      {
+        "article": "210",
+        "hits": [
+          "arrest",
+          "magistrate"
+        ],
+        "hit_count": 2
+      },
+      {
+        "article": "39B",
+        "hits": [
+          "arrest"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "11EEE",
+        "hits": [
+          "arrest"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "19A",
+        "hits": [
+          "arrest"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "11EE",
+        "hits": [
+          "detained"
+        ],
+        "hit_count": 1
+      }
     ],
-    "preview": " Article 10.Ã¢ÂÂRepresentatives of Member States to the Principal and subsi diary organs and conferences convened by the organization, shall while exercising their functions and du ring the journey to and from the plac..."
+    "note": "Article 10 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
   },
   {
     "id": "T1-RU",
     "topic": "Arrest and Detention Safeguards",
     "language": "roman_urdu",
-    "status": "VERIFIED",
+    "status": "MISMATCH",
     "expected_article": "10",
-    "matched_keywords": [
-      "arrest"
+    "preview": " 10. Employees of the Commission....",
+    "candidates": [
+      {
+        "article": "210",
+        "hits": [
+          "arrest",
+          "magistrate"
+        ],
+        "hit_count": 2
+      },
+      {
+        "article": "39B",
+        "hits": [
+          "arrest"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "11EEE",
+        "hits": [
+          "arrest"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "19A",
+        "hits": [
+          "arrest"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "11EE",
+        "hits": [
+          "detained"
+        ],
+        "hit_count": 1
+      }
     ],
-    "preview": " Article 10.Ã¢ÂÂRepresentatives of Member States to the Principal and subsi diary organs and conferences convened by the organization, shall while exercising their functions and du ring the journey to and from the plac..."
+    "note": "Article 10 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
   },
   {
     "id": "T1-UR",
     "topic": "Arrest and Detention Safeguards",
     "language": "ur",
-    "status": "VERIFIED",
+    "status": "MISMATCH",
     "expected_article": "10",
-    "matched_keywords": [
-      "arrest"
+    "preview": " 10. Employees of the Commission....",
+    "candidates": [
+      {
+        "article": "210",
+        "hits": [
+          "arrest",
+          "magistrate"
+        ],
+        "hit_count": 2
+      },
+      {
+        "article": "39B",
+        "hits": [
+          "arrest"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "11EEE",
+        "hits": [
+          "arrest"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "19A",
+        "hits": [
+          "arrest"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "11EE",
+        "hits": [
+          "detained"
+        ],
+        "hit_count": 1
+      }
     ],
-    "preview": " Article 10.Ã¢ÂÂRepresentatives of Member States to the Principal and subsi diary organs and conferences convened by the organization, shall while exercising their functions and du ring the journey to and from the plac..."
+    "note": "Article 10 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
   },
   {
     "id": "T2-EN",
     "topic": "Right to Fair Trial",
     "language": "en",
-    "status": "NOT_FOUND",
+    "status": "MISMATCH",
     "expected_article": "10A",
+    "preview": " 10A. Restriction on service in international organization....",
     "candidates": [],
-    "note": "Article 10A has no heading in the dataset. No keyword candidates found either — topic may not be covered by this dataset at all."
+    "note": "Article 10A exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
   },
   {
     "id": "T2-RU",
     "topic": "Right to Fair Trial",
     "language": "roman_urdu",
-    "status": "NOT_FOUND",
+    "status": "MISMATCH",
     "expected_article": "10A",
+    "preview": " 10A. Restriction on service in international organization....",
     "candidates": [],
-    "note": "Article 10A has no heading in the dataset. No keyword candidates found either — topic may not be covered by this dataset at all."
+    "note": "Article 10A exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
   },
   {
     "id": "T2-UR",
     "topic": "Right to Fair Trial",
     "language": "ur",
-    "status": "NOT_FOUND",
+    "status": "MISMATCH",
     "expected_article": "10A",
+    "preview": " 10A. Restriction on service in international organization....",
     "candidates": [],
-    "note": "Article 10A has no heading in the dataset. No keyword candidates found either — topic may not be covered by this dataset at all."
+    "note": "Article 10A exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
   },
   {
     "id": "T3-EN",
@@ -65,40 +176,40 @@
     "language": "en",
     "status": "MISMATCH",
     "expected_article": "15",
-    "preview": " Article 15.Ã¢ÂÂThe expression Ã¢ÂÂrepresentativeÃ¢ÂÂ in this chapter shall be deemed to include all delegates of M embers States, their deputies, advisers and technical experts and secretaries of delegations....",
+    "preview": " 15. Expenditure to be charged on the Commission Account....",
     "candidates": [
       {
-        "article": "168",
+        "article": "48",
         "hits": [
           "reside"
         ],
         "hit_count": 1
       },
       {
-        "article": "173",
+        "article": "166",
         "hits": [
           "reside"
         ],
         "hit_count": 1
       },
       {
-        "article": "3",
+        "article": "11EE",
         "hits": [
           "reside"
         ],
         "hit_count": 1
       },
       {
-        "article": "149",
+        "article": "2S",
         "hits": [
           "reside"
         ],
         "hit_count": 1
       },
       {
-        "article": "155",
+        "article": "169",
         "hits": [
-          "reside"
+          "settle"
         ],
         "hit_count": 1
       }
@@ -111,40 +222,40 @@
     "language": "roman_urdu",
     "status": "MISMATCH",
     "expected_article": "15",
-    "preview": " Article 15.Ã¢ÂÂThe expression Ã¢ÂÂrepresentativeÃ¢ÂÂ in this chapter shall be deemed to include all delegates of M embers States, their deputies, advisers and technical experts and secretaries of delegations....",
+    "preview": " 15. Expenditure to be charged on the Commission Account....",
     "candidates": [
       {
-        "article": "168",
+        "article": "48",
         "hits": [
           "reside"
         ],
         "hit_count": 1
       },
       {
-        "article": "173",
+        "article": "166",
         "hits": [
           "reside"
         ],
         "hit_count": 1
       },
       {
-        "article": "3",
+        "article": "11EE",
         "hits": [
           "reside"
         ],
         "hit_count": 1
       },
       {
-        "article": "149",
+        "article": "2S",
         "hits": [
           "reside"
         ],
         "hit_count": 1
       },
       {
-        "article": "155",
+        "article": "169",
         "hits": [
-          "reside"
+          "settle"
         ],
         "hit_count": 1
       }
@@ -157,40 +268,40 @@
     "language": "ur",
     "status": "MISMATCH",
     "expected_article": "15",
-    "preview": " Article 15.Ã¢ÂÂThe expression Ã¢ÂÂrepresentativeÃ¢ÂÂ in this chapter shall be deemed to include all delegates of M embers States, their deputies, advisers and technical experts and secretaries of delegations....",
+    "preview": " 15. Expenditure to be charged on the Commission Account....",
     "candidates": [
       {
-        "article": "168",
+        "article": "48",
         "hits": [
           "reside"
         ],
         "hit_count": 1
       },
       {
-        "article": "173",
+        "article": "166",
         "hits": [
           "reside"
         ],
         "hit_count": 1
       },
       {
-        "article": "3",
+        "article": "11EE",
         "hits": [
           "reside"
         ],
         "hit_count": 1
       },
       {
-        "article": "149",
+        "article": "2S",
         "hits": [
           "reside"
         ],
         "hit_count": 1
       },
       {
-        "article": "155",
+        "article": "169",
         "hits": [
-          "reside"
+          "settle"
         ],
         "hit_count": 1
       }
@@ -203,8 +314,16 @@
     "language": "en",
     "status": "MISMATCH",
     "expected_article": "16",
-    "preview": " Article 16.Ã¢ÂÂPermanent State representatives shall enjoy, during the period of their representing t heir State in the organs of the Organization of the Islamic Conference, such immuniti es and privileges as are enjo...",
-    "candidates": [],
+    "preview": " 16. Privatisation Fund....",
+    "candidates": [
+      {
+        "article": "155H",
+        "hits": [
+          "gather"
+        ],
+        "hit_count": 1
+      }
+    ],
     "note": "Article 16 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
   },
   {
@@ -213,8 +332,16 @@
     "language": "roman_urdu",
     "status": "MISMATCH",
     "expected_article": "16",
-    "preview": " Article 16.Ã¢ÂÂPermanent State representatives shall enjoy, during the period of their representing t heir State in the organs of the Organization of the Islamic Conference, such immuniti es and privileges as are enjo...",
-    "candidates": [],
+    "preview": " 16. Privatisation Fund....",
+    "candidates": [
+      {
+        "article": "155H",
+        "hits": [
+          "gather"
+        ],
+        "hit_count": 1
+      }
+    ],
     "note": "Article 16 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
   },
   {
@@ -223,8 +350,16 @@
     "language": "ur",
     "status": "MISMATCH",
     "expected_article": "16",
-    "preview": " Article 16.Ã¢ÂÂPermanent State representatives shall enjoy, during the period of their representing t heir State in the organs of the Organization of the Islamic Conference, such immuniti es and privileges as are enjo...",
-    "candidates": [],
+    "preview": " 16. Privatisation Fund....",
+    "candidates": [
+      {
+        "article": "155H",
+        "hits": [
+          "gather"
+        ],
+        "hit_count": 1
+      }
+    ],
     "note": "Article 16 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
   },
   {
@@ -233,10 +368,10 @@
     "language": "en",
     "status": "MISMATCH",
     "expected_article": "19",
-    "preview": " Article 19.Ã¢ÂÂ(I) Officials of the General Secretariat of the Organization of the Islamic Conference shall, regardless of their nationality, enjoy the followi ng immuniti es and privileges :Ã¢ÂÂ (a) Immuni ty from ...",
+    "preview": " 19. Bank accounts....",
     "candidates": [
       {
-        "article": "173",
+        "article": "22B",
         "hits": [
           "expression",
           "press"
@@ -244,7 +379,7 @@
         "hit_count": 2
       },
       {
-        "article": "15",
+        "article": "35C",
         "hits": [
           "expression",
           "press"
@@ -252,21 +387,22 @@
         "hit_count": 2
       },
       {
-        "article": "46",
+        "article": "08",
+        "hits": [
+          "expression",
+          "press"
+        ],
+        "hit_count": 2
+      },
+      {
+        "article": "167",
         "hits": [
           "press"
         ],
         "hit_count": 1
       },
       {
-        "article": "55",
-        "hits": [
-          "press"
-        ],
-        "hit_count": 1
-      },
-      {
-        "article": "11",
+        "article": "1CI",
         "hits": [
           "press"
         ],
@@ -281,10 +417,10 @@
     "language": "roman_urdu",
     "status": "MISMATCH",
     "expected_article": "19",
-    "preview": " Article 19.Ã¢ÂÂ(I) Officials of the General Secretariat of the Organization of the Islamic Conference shall, regardless of their nationality, enjoy the followi ng immuniti es and privileges :Ã¢ÂÂ (a) Immuni ty from ...",
+    "preview": " 19. Bank accounts....",
     "candidates": [
       {
-        "article": "173",
+        "article": "22B",
         "hits": [
           "expression",
           "press"
@@ -292,7 +428,7 @@
         "hit_count": 2
       },
       {
-        "article": "15",
+        "article": "35C",
         "hits": [
           "expression",
           "press"
@@ -300,21 +436,22 @@
         "hit_count": 2
       },
       {
-        "article": "46",
+        "article": "08",
+        "hits": [
+          "expression",
+          "press"
+        ],
+        "hit_count": 2
+      },
+      {
+        "article": "167",
         "hits": [
           "press"
         ],
         "hit_count": 1
       },
       {
-        "article": "55",
-        "hits": [
-          "press"
-        ],
-        "hit_count": 1
-      },
-      {
-        "article": "11",
+        "article": "1CI",
         "hits": [
           "press"
         ],
@@ -329,10 +466,10 @@
     "language": "ur",
     "status": "MISMATCH",
     "expected_article": "19",
-    "preview": " Article 19.Ã¢ÂÂ(I) Officials of the General Secretariat of the Organization of the Islamic Conference shall, regardless of their nationality, enjoy the followi ng immuniti es and privileges :Ã¢ÂÂ (a) Immuni ty from ...",
+    "preview": " 19. Bank accounts....",
     "candidates": [
       {
-        "article": "173",
+        "article": "22B",
         "hits": [
           "expression",
           "press"
@@ -340,7 +477,7 @@
         "hit_count": 2
       },
       {
-        "article": "15",
+        "article": "35C",
         "hits": [
           "expression",
           "press"
@@ -348,21 +485,22 @@
         "hit_count": 2
       },
       {
-        "article": "46",
+        "article": "08",
+        "hits": [
+          "expression",
+          "press"
+        ],
+        "hit_count": 2
+      },
+      {
+        "article": "167",
         "hits": [
           "press"
         ],
         "hit_count": 1
       },
       {
-        "article": "55",
-        "hits": [
-          "press"
-        ],
-        "hit_count": 1
-      },
-      {
-        "article": "11",
+        "article": "1CI",
         "hits": [
           "press"
         ],
@@ -375,166 +513,64 @@
     "id": "T6-EN",
     "topic": "Right to Information",
     "language": "en",
-    "status": "NOT_FOUND",
+    "status": "MISMATCH",
     "expected_article": "19A",
+    "preview": " 19A. Mode of making searches and arrest...",
     "candidates": [],
-    "note": "Article 19A has no heading in the dataset. No keyword candidates found either — topic may not be covered by this dataset at all."
+    "note": "Article 19A exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
   },
   {
     "id": "T6-RU",
     "topic": "Right to Information",
     "language": "roman_urdu",
-    "status": "NOT_FOUND",
+    "status": "MISMATCH",
     "expected_article": "19A",
+    "preview": " 19A. Mode of making searches and arrest...",
     "candidates": [],
-    "note": "Article 19A has no heading in the dataset. No keyword candidates found either — topic may not be covered by this dataset at all."
+    "note": "Article 19A exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
   },
   {
     "id": "T6-UR",
     "topic": "Right to Information",
     "language": "ur",
-    "status": "NOT_FOUND",
+    "status": "MISMATCH",
     "expected_article": "19A",
+    "preview": " 19A. Mode of making searches and arrest...",
     "candidates": [],
-    "note": "Article 19A has no heading in the dataset. No keyword candidates found either — topic may not be covered by this dataset at all."
+    "note": "Article 19A exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
   },
   {
     "id": "T7-EN",
     "topic": "Property Rights and Compulsory Acquisition",
     "language": "en",
-    "status": "MISMATCH",
+    "status": "VERIFIED",
     "expected_article": "24",
-    "preview": " Article 24.Ã¢ÂÂImmuniti es and privileges are granted to experts: in the interest of the Organization. The Secretary General shall have the right and the duty to waive the immuni ty in any case where, in his opinion, ...",
-    "candidates": [
-      {
-        "article": "87",
-        "hits": [
-          "property"
-        ],
-        "hit_count": 1
-      },
-      {
-        "article": "218",
-        "hits": [
-          "property"
-        ],
-        "hit_count": 1
-      },
-      {
-        "article": "11",
-        "hits": [
-          "property"
-        ],
-        "hit_count": 1
-      },
-      {
-        "article": "173",
-        "hits": [
-          "property"
-        ],
-        "hit_count": 1
-      },
-      {
-        "article": "51",
-        "hits": [
-          "property"
-        ],
-        "hit_count": 1
-      }
+    "matched_keywords": [
+      "property"
     ],
-    "note": "Article 24 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
+    "preview": " 24. Valuation of property...."
   },
   {
     "id": "T7-RU",
     "topic": "Property Rights and Compulsory Acquisition",
     "language": "roman_urdu",
-    "status": "MISMATCH",
+    "status": "VERIFIED",
     "expected_article": "24",
-    "preview": " Article 24.Ã¢ÂÂImmuniti es and privileges are granted to experts: in the interest of the Organization. The Secretary General shall have the right and the duty to waive the immuni ty in any case where, in his opinion, ...",
-    "candidates": [
-      {
-        "article": "87",
-        "hits": [
-          "property"
-        ],
-        "hit_count": 1
-      },
-      {
-        "article": "218",
-        "hits": [
-          "property"
-        ],
-        "hit_count": 1
-      },
-      {
-        "article": "11",
-        "hits": [
-          "property"
-        ],
-        "hit_count": 1
-      },
-      {
-        "article": "173",
-        "hits": [
-          "property"
-        ],
-        "hit_count": 1
-      },
-      {
-        "article": "51",
-        "hits": [
-          "property"
-        ],
-        "hit_count": 1
-      }
+    "matched_keywords": [
+      "property"
     ],
-    "note": "Article 24 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
+    "preview": " 24. Valuation of property...."
   },
   {
     "id": "T7-UR",
     "topic": "Property Rights and Compulsory Acquisition",
     "language": "ur",
-    "status": "MISMATCH",
+    "status": "VERIFIED",
     "expected_article": "24",
-    "preview": " Article 24.Ã¢ÂÂImmuniti es and privileges are granted to experts: in the interest of the Organization. The Secretary General shall have the right and the duty to waive the immuni ty in any case where, in his opinion, ...",
-    "candidates": [
-      {
-        "article": "87",
-        "hits": [
-          "property"
-        ],
-        "hit_count": 1
-      },
-      {
-        "article": "218",
-        "hits": [
-          "property"
-        ],
-        "hit_count": 1
-      },
-      {
-        "article": "11",
-        "hits": [
-          "property"
-        ],
-        "hit_count": 1
-      },
-      {
-        "article": "173",
-        "hits": [
-          "property"
-        ],
-        "hit_count": 1
-      },
-      {
-        "article": "51",
-        "hits": [
-          "property"
-        ],
-        "hit_count": 1
-      }
+    "matched_keywords": [
+      "property"
     ],
-    "note": "Article 24 exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
+    "preview": " 24. Valuation of property...."
   },
   {
     "id": "T8-EN",
@@ -542,33 +578,17 @@
     "language": "en",
     "status": "MISMATCH",
     "expected_article": "25",
-    "preview": " Article 25.Ã¢ÂÂThe G eneral Secretariat of the Organization of Islamic Conference may issue laissez-passers to its officials. Those laissez-passers shall be recognised and accepted as valid travel documents by Members...",
+    "preview": " 25. Modes of privatisation....",
     "candidates": [
       {
-        "article": "253",
-        "hits": [
-          "equality",
-          "non-discrimination",
-          "women"
-        ],
-        "hit_count": 3
-      },
-      {
-        "article": "224A",
+        "article": "156B",
         "hits": [
           "women"
         ],
         "hit_count": 1
       },
       {
-        "article": "225",
-        "hits": [
-          "women"
-        ],
-        "hit_count": 1
-      },
-      {
-        "article": "106",
+        "article": "498A",
         "hits": [
           "women"
         ],
@@ -583,33 +603,17 @@
     "language": "roman_urdu",
     "status": "MISMATCH",
     "expected_article": "25",
-    "preview": " Article 25.Ã¢ÂÂThe G eneral Secretariat of the Organization of Islamic Conference may issue laissez-passers to its officials. Those laissez-passers shall be recognised and accepted as valid travel documents by Members...",
+    "preview": " 25. Modes of privatisation....",
     "candidates": [
       {
-        "article": "253",
-        "hits": [
-          "equality",
-          "non-discrimination",
-          "women"
-        ],
-        "hit_count": 3
-      },
-      {
-        "article": "224A",
+        "article": "156B",
         "hits": [
           "women"
         ],
         "hit_count": 1
       },
       {
-        "article": "225",
-        "hits": [
-          "women"
-        ],
-        "hit_count": 1
-      },
-      {
-        "article": "106",
+        "article": "498A",
         "hits": [
           "women"
         ],
@@ -624,33 +628,17 @@
     "language": "ur",
     "status": "MISMATCH",
     "expected_article": "25",
-    "preview": " Article 25.Ã¢ÂÂThe G eneral Secretariat of the Organization of Islamic Conference may issue laissez-passers to its officials. Those laissez-passers shall be recognised and accepted as valid travel documents by Members...",
+    "preview": " 25. Modes of privatisation....",
     "candidates": [
       {
-        "article": "253",
-        "hits": [
-          "equality",
-          "non-discrimination",
-          "women"
-        ],
-        "hit_count": 3
-      },
-      {
-        "article": "224A",
+        "article": "156B",
         "hits": [
           "women"
         ],
         "hit_count": 1
       },
       {
-        "article": "225",
-        "hits": [
-          "women"
-        ],
-        "hit_count": 1
-      },
-      {
-        "article": "106",
+        "article": "498A",
         "hits": [
           "women"
         ],
@@ -663,52 +651,76 @@
     "id": "T9-EN",
     "topic": "Right to Education",
     "language": "en",
-    "status": "NOT_FOUND",
+    "status": "MISMATCH",
     "expected_article": "25A",
+    "preview": " 25A. Y earlyÃÂ submissionÃÂ ofÃÂ statementÃÂ ofÃÂ assestÃÂ andÃÂ liabilities....",
     "candidates": [
       {
-        "article": "253",
+        "article": "386",
+        "hits": [
+          "compulsory"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "374",
         "hits": [
           "compulsory"
         ],
         "hit_count": 1
       }
     ],
-    "note": "Article 25A has no heading in the dataset. Top candidate(s) by keyword match shown below."
+    "note": "Article 25A exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
   },
   {
     "id": "T9-RU",
     "topic": "Right to Education",
     "language": "roman_urdu",
-    "status": "NOT_FOUND",
+    "status": "MISMATCH",
     "expected_article": "25A",
+    "preview": " 25A. Y earlyÃÂ submissionÃÂ ofÃÂ statementÃÂ ofÃÂ assestÃÂ andÃÂ liabilities....",
     "candidates": [
       {
-        "article": "253",
+        "article": "386",
+        "hits": [
+          "compulsory"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "374",
         "hits": [
           "compulsory"
         ],
         "hit_count": 1
       }
     ],
-    "note": "Article 25A has no heading in the dataset. Top candidate(s) by keyword match shown below."
+    "note": "Article 25A exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
   },
   {
     "id": "T9-UR",
     "topic": "Right to Education",
     "language": "ur",
-    "status": "NOT_FOUND",
+    "status": "MISMATCH",
     "expected_article": "25A",
+    "preview": " 25A. Y earlyÃÂ submissionÃÂ ofÃÂ statementÃÂ ofÃÂ assestÃÂ andÃÂ liabilities....",
     "candidates": [
       {
-        "article": "253",
+        "article": "386",
+        "hits": [
+          "compulsory"
+        ],
+        "hit_count": 1
+      },
+      {
+        "article": "374",
         "hits": [
           "compulsory"
         ],
         "hit_count": 1
       }
     ],
-    "note": "Article 25A has no heading in the dataset. Top candidate(s) by keyword match shown below."
+    "note": "Article 25A exists but none of the topic keywords appear in its content — it may now cover a different subject after renumbering."
   },
   {
     "id": "T10-EN",
@@ -718,35 +730,35 @@
     "expected_article": null,
     "candidates": [
       {
-        "article": "191",
+        "article": "27",
         "hits": [
           "jurisdiction"
         ],
         "hit_count": 1
       },
       {
-        "article": "52",
+        "article": "28",
         "hits": [
           "jurisdiction"
         ],
         "hit_count": 1
       },
       {
-        "article": "59",
+        "article": "55",
         "hits": [
           "jurisdiction"
         ],
         "hit_count": 1
       },
       {
-        "article": "32",
+        "article": "5B",
         "hits": [
           "jurisdiction"
         ],
         "hit_count": 1
       },
       {
-        "article": "41",
+        "article": "23B",
         "hits": [
           "jurisdiction"
         ],
@@ -763,35 +775,35 @@
     "expected_article": null,
     "candidates": [
       {
-        "article": "191",
+        "article": "27",
         "hits": [
           "jurisdiction"
         ],
         "hit_count": 1
       },
       {
-        "article": "52",
+        "article": "28",
         "hits": [
           "jurisdiction"
         ],
         "hit_count": 1
       },
       {
-        "article": "59",
+        "article": "55",
         "hits": [
           "jurisdiction"
         ],
         "hit_count": 1
       },
       {
-        "article": "32",
+        "article": "5B",
         "hits": [
           "jurisdiction"
         ],
         "hit_count": 1
       },
       {
-        "article": "41",
+        "article": "23B",
         "hits": [
           "jurisdiction"
         ],
@@ -808,35 +820,35 @@
     "expected_article": null,
     "candidates": [
       {
-        "article": "191",
+        "article": "27",
         "hits": [
           "jurisdiction"
         ],
         "hit_count": 1
       },
       {
-        "article": "52",
+        "article": "28",
         "hits": [
           "jurisdiction"
         ],
         "hit_count": 1
       },
       {
-        "article": "59",
+        "article": "55",
         "hits": [
           "jurisdiction"
         ],
         "hit_count": 1
       },
       {
-        "article": "32",
+        "article": "5B",
         "hits": [
           "jurisdiction"
         ],
         "hit_count": 1
       },
       {
-        "article": "41",
+        "article": "23B",
         "hits": [
           "jurisdiction"
         ],

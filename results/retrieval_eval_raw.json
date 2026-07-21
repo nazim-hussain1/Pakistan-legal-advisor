@@ -1,0 +1,994 @@
+{
+  "faiss_only": {
+    "en": [
+      {
+        "id": "T1-EN",
+        "topic": "Arrest and Detention Safeguards",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T2-EN",
+        "topic": "Right to Fair Trial",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T3-EN",
+        "topic": "Freedom of Movement",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T4-EN",
+        "topic": "Freedom of Assembly",
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.5714285714285715,
+        "hit": 1.0
+      },
+      {
+        "id": "T5-EN",
+        "topic": "Freedom of Speech",
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "hit": 1.0
+      },
+      {
+        "id": "T6-EN",
+        "topic": "Right to Information",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T7-EN",
+        "topic": "Property Rights and Compulsory Acquisition",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T8-EN",
+        "topic": "Equality and Non-Discrimination",
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "hit": 1.0
+      },
+      {
+        "id": "T9-EN",
+        "topic": "Right to Education",
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.5714285714285715,
+        "hit": 1.0
+      },
+      {
+        "id": "T10-EN",
+        "topic": "Federal Constitutional Court (27th Amendment)",
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "hit": 1.0
+      }
+    ],
+    "roman_urdu": [
+      {
+        "id": "T1-RU",
+        "topic": "Arrest and Detention Safeguards",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T2-RU",
+        "topic": "Right to Fair Trial",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T3-RU",
+        "topic": "Freedom of Movement",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T4-RU",
+        "topic": "Freedom of Assembly",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T5-RU",
+        "topic": "Freedom of Speech",
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.5714285714285715,
+        "hit": 1.0
+      },
+      {
+        "id": "T6-RU",
+        "topic": "Right to Information",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      },
+      {
+        "id": "T7-RU",
+        "topic": "Property Rights and Compulsory Acquisition",
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "hit": 1.0
+      },
+      {
+        "id": "T8-RU",
+        "topic": "Equality and Non-Discrimination",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T9-RU",
+        "topic": "Right to Education",
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.5714285714285715,
+        "hit": 1.0
+      },
+      {
+        "id": "T10-RU",
+        "topic": "Federal Constitutional Court (27th Amendment)",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      }
+    ],
+    "ur": [
+      {
+        "id": "T1-UR",
+        "topic": "Arrest and Detention Safeguards",
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "hit": 1.0
+      },
+      {
+        "id": "T2-UR",
+        "topic": "Right to Fair Trial",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      },
+      {
+        "id": "T3-UR",
+        "topic": "Freedom of Movement",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      },
+      {
+        "id": "T4-UR",
+        "topic": "Freedom of Assembly",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      },
+      {
+        "id": "T5-UR",
+        "topic": "Freedom of Speech",
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.5714285714285715,
+        "hit": 1.0
+      },
+      {
+        "id": "T6-UR",
+        "topic": "Right to Information",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      },
+      {
+        "id": "T7-UR",
+        "topic": "Property Rights and Compulsory Acquisition",
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "hit": 1.0
+      },
+      {
+        "id": "T8-UR",
+        "topic": "Equality and Non-Discrimination",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T9-UR",
+        "topic": "Right to Education",
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.5714285714285715,
+        "hit": 1.0
+      },
+      {
+        "id": "T10-UR",
+        "topic": "Federal Constitutional Court (27th Amendment)",
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.5714285714285715,
+        "hit": 1.0
+      }
+    ]
+  },
+  "bm25_only": {
+    "en": [
+      {
+        "id": "T1-EN",
+        "topic": "Arrest and Detention Safeguards",
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "hit": 1.0
+      },
+      {
+        "id": "T2-EN",
+        "topic": "Right to Fair Trial",
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "hit": 1.0
+      },
+      {
+        "id": "T3-EN",
+        "topic": "Freedom of Movement",
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.5714285714285715,
+        "hit": 1.0
+      },
+      {
+        "id": "T4-EN",
+        "topic": "Freedom of Assembly",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T5-EN",
+        "topic": "Freedom of Speech",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T6-EN",
+        "topic": "Right to Information",
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "hit": 1.0
+      },
+      {
+        "id": "T7-EN",
+        "topic": "Property Rights and Compulsory Acquisition",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T8-EN",
+        "topic": "Equality and Non-Discrimination",
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "hit": 1.0
+      },
+      {
+        "id": "T9-EN",
+        "topic": "Right to Education",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T10-EN",
+        "topic": "Federal Constitutional Court (27th Amendment)",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      }
+    ],
+    "roman_urdu": [
+      {
+        "id": "T1-RU",
+        "topic": "Arrest and Detention Safeguards",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T2-RU",
+        "topic": "Right to Fair Trial",
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "hit": 1.0
+      },
+      {
+        "id": "T3-RU",
+        "topic": "Freedom of Movement",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T4-RU",
+        "topic": "Freedom of Assembly",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      },
+      {
+        "id": "T5-RU",
+        "topic": "Freedom of Speech",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T6-RU",
+        "topic": "Right to Information",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      },
+      {
+        "id": "T7-RU",
+        "topic": "Property Rights and Compulsory Acquisition",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T8-RU",
+        "topic": "Equality and Non-Discrimination",
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "hit": 1.0
+      },
+      {
+        "id": "T9-RU",
+        "topic": "Right to Education",
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "hit": 1.0
+      },
+      {
+        "id": "T10-RU",
+        "topic": "Federal Constitutional Court (27th Amendment)",
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.5714285714285715,
+        "hit": 1.0
+      }
+    ],
+    "ur": [
+      {
+        "id": "T1-UR",
+        "topic": "Arrest and Detention Safeguards",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T2-UR",
+        "topic": "Right to Fair Trial",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T3-UR",
+        "topic": "Freedom of Movement",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      },
+      {
+        "id": "T4-UR",
+        "topic": "Freedom of Assembly",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      },
+      {
+        "id": "T5-UR",
+        "topic": "Freedom of Speech",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T6-UR",
+        "topic": "Right to Information",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      },
+      {
+        "id": "T7-UR",
+        "topic": "Property Rights and Compulsory Acquisition",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T8-UR",
+        "topic": "Equality and Non-Discrimination",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      },
+      {
+        "id": "T9-UR",
+        "topic": "Right to Education",
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "hit": 1.0
+      },
+      {
+        "id": "T10-UR",
+        "topic": "Federal Constitutional Court (27th Amendment)",
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "hit": 1.0
+      }
+    ]
+  },
+  "hybrid_rrf": {
+    "en": [
+      {
+        "id": "T1-EN",
+        "topic": "Arrest and Detention Safeguards",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T2-EN",
+        "topic": "Right to Fair Trial",
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.5714285714285715,
+        "hit": 1.0
+      },
+      {
+        "id": "T3-EN",
+        "topic": "Freedom of Movement",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T4-EN",
+        "topic": "Freedom of Assembly",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T5-EN",
+        "topic": "Freedom of Speech",
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "hit": 1.0
+      },
+      {
+        "id": "T6-EN",
+        "topic": "Right to Information",
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.5714285714285715,
+        "hit": 1.0
+      },
+      {
+        "id": "T7-EN",
+        "topic": "Property Rights and Compulsory Acquisition",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T8-EN",
+        "topic": "Equality and Non-Discrimination",
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "hit": 1.0
+      },
+      {
+        "id": "T9-EN",
+        "topic": "Right to Education",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T10-EN",
+        "topic": "Federal Constitutional Court (27th Amendment)",
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "hit": 1.0
+      }
+    ],
+    "roman_urdu": [
+      {
+        "id": "T1-RU",
+        "topic": "Arrest and Detention Safeguards",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T2-RU",
+        "topic": "Right to Fair Trial",
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "hit": 1.0
+      },
+      {
+        "id": "T3-RU",
+        "topic": "Freedom of Movement",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T4-RU",
+        "topic": "Freedom of Assembly",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T5-RU",
+        "topic": "Freedom of Speech",
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "hit": 1.0
+      },
+      {
+        "id": "T6-RU",
+        "topic": "Right to Information",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      },
+      {
+        "id": "T7-RU",
+        "topic": "Property Rights and Compulsory Acquisition",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T8-RU",
+        "topic": "Equality and Non-Discrimination",
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "hit": 1.0
+      },
+      {
+        "id": "T9-RU",
+        "topic": "Right to Education",
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "hit": 1.0
+      },
+      {
+        "id": "T10-RU",
+        "topic": "Federal Constitutional Court (27th Amendment)",
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "hit": 1.0
+      }
+    ],
+    "ur": [
+      {
+        "id": "T1-UR",
+        "topic": "Arrest and Detention Safeguards",
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "hit": 1.0
+      },
+      {
+        "id": "T2-UR",
+        "topic": "Right to Fair Trial",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T3-UR",
+        "topic": "Freedom of Movement",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      },
+      {
+        "id": "T4-UR",
+        "topic": "Freedom of Assembly",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T5-UR",
+        "topic": "Freedom of Speech",
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "hit": 1.0
+      },
+      {
+        "id": "T6-UR",
+        "topic": "Right to Information",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      },
+      {
+        "id": "T7-UR",
+        "topic": "Property Rights and Compulsory Acquisition",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T8-UR",
+        "topic": "Equality and Non-Discrimination",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T9-UR",
+        "topic": "Right to Education",
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "hit": 1.0
+      },
+      {
+        "id": "T10-UR",
+        "topic": "Federal Constitutional Court (27th Amendment)",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      }
+    ]
+  },
+  "hybrid_reranked": {
+    "en": [
+      {
+        "id": "T1-EN",
+        "topic": "Arrest and Detention Safeguards",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T2-EN",
+        "topic": "Right to Fair Trial",
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "hit": 1.0
+      },
+      {
+        "id": "T3-EN",
+        "topic": "Freedom of Movement",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T4-EN",
+        "topic": "Freedom of Assembly",
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.5714285714285715,
+        "hit": 1.0
+      },
+      {
+        "id": "T5-EN",
+        "topic": "Freedom of Speech",
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "hit": 1.0
+      },
+      {
+        "id": "T6-EN",
+        "topic": "Right to Information",
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "hit": 1.0
+      },
+      {
+        "id": "T7-EN",
+        "topic": "Property Rights and Compulsory Acquisition",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T8-EN",
+        "topic": "Equality and Non-Discrimination",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T9-EN",
+        "topic": "Right to Education",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T10-EN",
+        "topic": "Federal Constitutional Court (27th Amendment)",
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "hit": 1.0
+      }
+    ],
+    "roman_urdu": [
+      {
+        "id": "T1-RU",
+        "topic": "Arrest and Detention Safeguards",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T2-RU",
+        "topic": "Right to Fair Trial",
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "hit": 1.0
+      },
+      {
+        "id": "T3-RU",
+        "topic": "Freedom of Movement",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T4-RU",
+        "topic": "Freedom of Assembly",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      },
+      {
+        "id": "T5-RU",
+        "topic": "Freedom of Speech",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T6-RU",
+        "topic": "Right to Information",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      },
+      {
+        "id": "T7-RU",
+        "topic": "Property Rights and Compulsory Acquisition",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T8-RU",
+        "topic": "Equality and Non-Discrimination",
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "hit": 1.0
+      },
+      {
+        "id": "T9-RU",
+        "topic": "Right to Education",
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "hit": 1.0
+      },
+      {
+        "id": "T10-RU",
+        "topic": "Federal Constitutional Court (27th Amendment)",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      }
+    ],
+    "ur": [
+      {
+        "id": "T1-UR",
+        "topic": "Arrest and Detention Safeguards",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T2-UR",
+        "topic": "Right to Fair Trial",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      },
+      {
+        "id": "T3-UR",
+        "topic": "Freedom of Movement",
+        "precision": 0.2,
+        "recall": 1.0,
+        "f1": 0.33333333333333337,
+        "hit": 1.0
+      },
+      {
+        "id": "T4-UR",
+        "topic": "Freedom of Assembly",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      },
+      {
+        "id": "T5-UR",
+        "topic": "Freedom of Speech",
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.5714285714285715,
+        "hit": 1.0
+      },
+      {
+        "id": "T6-UR",
+        "topic": "Right to Information",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      },
+      {
+        "id": "T7-UR",
+        "topic": "Property Rights and Compulsory Acquisition",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "hit": 1.0
+      },
+      {
+        "id": "T8-UR",
+        "topic": "Equality and Non-Discrimination",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "hit": 0.0
+      },
+      {
+        "id": "T9-UR",
+        "topic": "Right to Education",
+        "precision": 0.8,
+        "recall": 1.0,
+        "f1": 0.888888888888889,
+        "hit": 1.0
+      },
+      {
+        "id": "T10-UR",
+        "topic": "Federal Constitutional Court (27th Amendment)",
+        "precision": 0.4,
+        "recall": 1.0,
+        "f1": 0.5714285714285715,
+        "hit": 1.0
+      }
+    ]
+  }
+}
