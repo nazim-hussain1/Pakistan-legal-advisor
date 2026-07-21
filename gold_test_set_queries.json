@@ -1,0 +1,317 @@
+{
+  "_meta": {
+    "description": "Gold EVALUATION QUERY set for Pakistan Legal Advisor retrieval evaluation (Thesis Table 4.1). This is the file evaluate_retrieval.py and verify_gold_test_set.py consume (via gold_data['queries']) — it is NOT the same artifact as gold_test_set.json, which is the flat 296-entry extracted article corpus used as reference truth.",
+    "version": "2.0",
+    "total_queries": 30,
+    "topics": 10,
+    "languages": ["en", "roman_urdu", "ur"],
+    "cross_check_note": "expected_article values below were cross-checked against the finalized gold_test_set.json (296 verified/omitted articles). All of 10, 10A, 15, 16, 19, 19A, 24, 25, 25A exist as verified entries there, so the original hand-authored numbers were already correct — the retrieval failures reported in verification_report.json were caused by the chunker/verifier boundary mismatch (see retrieval.py and verify_gold_test_set.py fix notes), not wrong article numbers. Re-run verify_gold_test_set.py against THIS file after applying both fixes.",
+    "notes": [
+      "match_mode='article' -> scored primarily by regex match on the numeric heading '\\nN. ' / '\\nNA. ' in retrieved chunk text (see retrieval.py NUMERIC_HEADING_PATTERN).",
+      "match_mode='keyword' -> expected_article is unverified/unknown; scored by keyword presence only. Topic 10 uses this mode deliberately: no Federal Constitutional Court / Chapter 1A content was found anywhere in gold_test_set.json's 296 extracted articles, so this dataset likely predates the 27th Amendment restructuring and T10 may legitimately score 0 across all methods. Treat T10 as a documented dataset-coverage gap in the thesis discussion, not a retrieval failure.",
+      "keywords are always provided as a fallback signal even for match_mode='article', so evaluate_retrieval.py can flag numbering drift automatically."
+    ]
+  },
+  "queries": [
+    {
+      "id": "T1-EN",
+      "topic_id": 1,
+      "topic": "Arrest and Detention Safeguards",
+      "language": "en",
+      "expected_article": "10",
+      "match_mode": "article",
+      "query": "What are my rights if I am arrested by the police in Pakistan?",
+      "keywords": ["arrest", "detained", "24 hours", "magistrate", "counsel"]
+    },
+    {
+      "id": "T1-RU",
+      "topic_id": 1,
+      "topic": "Arrest and Detention Safeguards",
+      "language": "roman_urdu",
+      "expected_article": "10",
+      "match_mode": "article",
+      "query": "Agar police mujhe giraftar kare to mere kya huqooq hain?",
+      "keywords": ["arrest", "detained", "24 hours", "magistrate", "counsel"]
+    },
+    {
+      "id": "T1-UR",
+      "topic_id": 1,
+      "topic": "Arrest and Detention Safeguards",
+      "language": "ur",
+      "expected_article": "10",
+      "match_mode": "article",
+      "query": "اگر پولیس مجھے گرفتار کرے تو میرے کیا حقوق ہیں؟",
+      "keywords": ["arrest", "detained", "24 hours", "magistrate", "counsel"]
+    },
+    {
+      "id": "T2-EN",
+      "topic_id": 2,
+      "topic": "Right to Fair Trial",
+      "language": "en",
+      "expected_article": "10A",
+      "match_mode": "article",
+      "query": "Does the Constitution guarantee the right to a fair trial?",
+      "keywords": ["fair trial", "due process"]
+    },
+    {
+      "id": "T2-RU",
+      "topic_id": 2,
+      "topic": "Right to Fair Trial",
+      "language": "roman_urdu",
+      "expected_article": "10A",
+      "match_mode": "article",
+      "query": "Kya aain mein fair trial ka haq maujood hai?",
+      "keywords": ["fair trial", "due process"]
+    },
+    {
+      "id": "T2-UR",
+      "topic_id": 2,
+      "topic": "Right to Fair Trial",
+      "language": "ur",
+      "expected_article": "10A",
+      "match_mode": "article",
+      "query": "کیا آئین میں منصفانہ ٹرائل کا حق موجود ہے؟",
+      "keywords": ["fair trial", "due process"]
+    },
+    {
+      "id": "T3-EN",
+      "topic_id": 3,
+      "topic": "Freedom of Movement",
+      "language": "en",
+      "expected_article": "15",
+      "match_mode": "article",
+      "query": "Can the government restrict my freedom to move within Pakistan?",
+      "keywords": ["freedom of movement", "reside", "settle"]
+    },
+    {
+      "id": "T3-RU",
+      "topic_id": 3,
+      "topic": "Freedom of Movement",
+      "language": "roman_urdu",
+      "expected_article": "15",
+      "match_mode": "article",
+      "query": "Kya hakumat mujhe mulk ke andar aane jaane se rok sakti hai?",
+      "keywords": ["freedom of movement", "reside", "settle"]
+    },
+    {
+      "id": "T3-UR",
+      "topic_id": 3,
+      "topic": "Freedom of Movement",
+      "language": "ur",
+      "expected_article": "15",
+      "match_mode": "article",
+      "query": "کیا حکومت مجھے ملک کے اندر آنے جانے سے روک سکتی ہے؟",
+      "keywords": ["freedom of movement", "reside", "settle"]
+    },
+    {
+      "id": "T4-EN",
+      "topic_id": 4,
+      "topic": "Freedom of Assembly",
+      "language": "en",
+      "expected_article": "16",
+      "match_mode": "article",
+      "query": "Do citizens have the right to hold peaceful protests and assemblies?",
+      "keywords": ["freedom of assembly", "peaceful", "gather"]
+    },
+    {
+      "id": "T4-RU",
+      "topic_id": 4,
+      "topic": "Freedom of Assembly",
+      "language": "roman_urdu",
+      "expected_article": "16",
+      "match_mode": "article",
+      "query": "Kya shehriyon ko pur-aman ijtima ka haq hasil hai?",
+      "keywords": ["freedom of assembly", "peaceful", "gather"]
+    },
+    {
+      "id": "T4-UR",
+      "topic_id": 4,
+      "topic": "Freedom of Assembly",
+      "language": "ur",
+      "expected_article": "16",
+      "match_mode": "article",
+      "query": "کیا شہریوں کو پرامن اجتماع کا حق حاصل ہے؟",
+      "keywords": ["freedom of assembly", "peaceful", "gather"]
+    },
+    {
+      "id": "T5-EN",
+      "topic_id": 5,
+      "topic": "Freedom of Speech",
+      "language": "en",
+      "expected_article": "19",
+      "match_mode": "article",
+      "query": "What does the Constitution say about freedom of speech and expression?",
+      "keywords": ["freedom of speech", "expression", "press"]
+    },
+    {
+      "id": "T5-RU",
+      "topic_id": 5,
+      "topic": "Freedom of Speech",
+      "language": "roman_urdu",
+      "expected_article": "19",
+      "match_mode": "article",
+      "query": "Aain azadi-e-izhar ke baare mein kya kehta hai?",
+      "keywords": ["freedom of speech", "expression", "press"]
+    },
+    {
+      "id": "T5-UR",
+      "topic_id": 5,
+      "topic": "Freedom of Speech",
+      "language": "ur",
+      "expected_article": "19",
+      "match_mode": "article",
+      "query": "آئین آزادیٔ اظہار کے بارے میں کیا کہتا ہے؟",
+      "keywords": ["freedom of speech", "expression", "press"]
+    },
+    {
+      "id": "T6-EN",
+      "topic_id": 6,
+      "topic": "Right to Information",
+      "language": "en",
+      "expected_article": "19A",
+      "match_mode": "article",
+      "query": "Do I have a right to access information held by government departments?",
+      "keywords": ["right to information", "public importance"]
+    },
+    {
+      "id": "T6-RU",
+      "topic_id": 6,
+      "topic": "Right to Information",
+      "language": "roman_urdu",
+      "expected_article": "19A",
+      "match_mode": "article",
+      "query": "Kya mujhe sarkari mahikmon ki maloomat hasil karne ka haq hai?",
+      "keywords": ["right to information", "public importance"]
+    },
+    {
+      "id": "T6-UR",
+      "topic_id": 6,
+      "topic": "Right to Information",
+      "language": "ur",
+      "expected_article": "19A",
+      "match_mode": "article",
+      "query": "کیا مجھے سرکاری محکموں کی معلومات حاصل کرنے کا حق ہے؟",
+      "keywords": ["right to information", "public importance"]
+    },
+    {
+      "id": "T7-EN",
+      "topic_id": 7,
+      "topic": "Property Rights and Compulsory Acquisition",
+      "language": "en",
+      "expected_article": "24",
+      "match_mode": "article",
+      "query": "Can the government take my land without paying compensation?",
+      "keywords": ["property", "compulsory acquisition", "compensation"]
+    },
+    {
+      "id": "T7-RU",
+      "topic_id": 7,
+      "topic": "Property Rights and Compulsory Acquisition",
+      "language": "roman_urdu",
+      "expected_article": "24",
+      "match_mode": "article",
+      "query": "Kya hakumat meri zameen bagair muawze ke le sakti hai?",
+      "keywords": ["property", "compulsory acquisition", "compensation"]
+    },
+    {
+      "id": "T7-UR",
+      "topic_id": 7,
+      "topic": "Property Rights and Compulsory Acquisition",
+      "language": "ur",
+      "expected_article": "24",
+      "match_mode": "article",
+      "query": "کیا حکومت میری زمین بغیر معاوضے کے لے سکتی ہے؟",
+      "keywords": ["property", "compulsory acquisition", "compensation"]
+    },
+    {
+      "id": "T8-EN",
+      "topic_id": 8,
+      "topic": "Equality and Non-Discrimination",
+      "language": "en",
+      "expected_article": "25",
+      "match_mode": "article",
+      "query": "Does the Constitution guarantee equal treatment for all citizens regardless of gender?",
+      "keywords": ["equality", "non-discrimination", "women"]
+    },
+    {
+      "id": "T8-RU",
+      "topic_id": 8,
+      "topic": "Equality and Non-Discrimination",
+      "language": "roman_urdu",
+      "expected_article": "25",
+      "match_mode": "article",
+      "query": "Kya aain tamam shehriyon ko barabar huqooq deta hai, khawateen ke liye bhi?",
+      "keywords": ["equality", "non-discrimination", "women"]
+    },
+    {
+      "id": "T8-UR",
+      "topic_id": 8,
+      "topic": "Equality and Non-Discrimination",
+      "language": "ur",
+      "expected_article": "25",
+      "match_mode": "article",
+      "query": "کیا آئین تمام شہریوں کو مساوی حقوق دیتا ہے، خواتین کے لیے بھی؟",
+      "keywords": ["equality", "non-discrimination", "women"]
+    },
+    {
+      "id": "T9-EN",
+      "topic_id": 9,
+      "topic": "Right to Education",
+      "language": "en",
+      "expected_article": "25A",
+      "match_mode": "article",
+      "query": "Is free education a fundamental right for children in Pakistan?",
+      "keywords": ["free education", "compulsory"]
+    },
+    {
+      "id": "T9-RU",
+      "topic_id": 9,
+      "topic": "Right to Education",
+      "language": "roman_urdu",
+      "expected_article": "25A",
+      "match_mode": "article",
+      "query": "Kya bachon ke liye muft taleem ek bunyadi haq hai?",
+      "keywords": ["free education", "compulsory"]
+    },
+    {
+      "id": "T9-UR",
+      "topic_id": 9,
+      "topic": "Right to Education",
+      "language": "ur",
+      "expected_article": "25A",
+      "match_mode": "article",
+      "query": "کیا بچوں کے لیے مفت تعلیم ایک بنیادی حق ہے؟",
+      "keywords": ["free education", "compulsory"]
+    },
+    {
+      "id": "T10-EN",
+      "topic_id": 10,
+      "topic": "Federal Constitutional Court (27th Amendment)",
+      "language": "en",
+      "expected_article": null,
+      "match_mode": "keyword",
+      "query": "What is the Federal Constitutional Court and what is its jurisdiction?",
+      "keywords": ["Federal Constitutional Court", "jurisdiction", "apex court", "twenty-seventh amendment"]
+    },
+    {
+      "id": "T10-RU",
+      "topic_id": 10,
+      "topic": "Federal Constitutional Court (27th Amendment)",
+      "language": "roman_urdu",
+      "expected_article": null,
+      "match_mode": "keyword",
+      "query": "Federal Constitutional Court kya hai aur iska ikhtiyar kya hai?",
+      "keywords": ["Federal Constitutional Court", "jurisdiction", "apex court", "twenty-seventh amendment"]
+    },
+    {
+      "id": "T10-UR",
+      "topic_id": 10,
+      "topic": "Federal Constitutional Court (27th Amendment)",
+      "language": "ur",
+      "expected_article": null,
+      "match_mode": "keyword",
+      "query": "وفاقی آئینی عدالت کیا ہے اور اس کا دائرہ اختیار کیا ہے؟",
+      "keywords": ["Federal Constitutional Court", "jurisdiction", "apex court", "twenty-seventh amendment"]
+    }
+  ]
+}
