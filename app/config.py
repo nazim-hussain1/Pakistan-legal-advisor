@@ -3,7 +3,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+APP_DIR = os.path.dirname(os.path.abspath(__file__))   # app folder
+BASE_DIR = os.path.dirname(APP_DIR)                    # project root
+DATA_DIR = os.path.join(BASE_DIR, "data")
 
 
 class Config:
@@ -13,14 +15,15 @@ class Config:
 
     # ── Database ──────────────────────────────────────────
     SQLALCHEMY_DATABASE_URI = os.getenv(
-        "DATABASE_URL", f"sqlite:///{os.path.join(BASE_DIR, 'pla_users.db')}"
-    )
+    "DATABASE_URL",
+    f"sqlite:///{os.path.join(DATA_DIR, 'pla_users.db')}"
+)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # ── RAG / retrieval ───────────────────────────────────
-    DATASET_PATH = "fyp_cleaned_dataset.csv"
-    INDEX_FILE   = "faiss_index.bin"
-    CHUNKS_FILE  = "chunks.npy"
+    DATASET_PATH = os.path.join(DATA_DIR, "fyp_cleaned_dataset.csv")
+    INDEX_FILE   = os.path.join(DATA_DIR, "faiss_index.bin")
+    CHUNKS_FILE  = os.path.join(DATA_DIR, "chunks.npy")
     TOP_K        = 20      # candidates pulled from FAISS / BM25 before fusion
     RERANK_TOP   = 5       # final passages sent to the LLM
     MAX_TOKENS   = 900

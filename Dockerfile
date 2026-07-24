@@ -15,4 +15,4 @@ COPY . .
 EXPOSE 7860
 
 # Give app 300 seconds to start up
-CMD ["python", "-u", "Backend.py"]
+CMD ["python", "-u", "-m", "app.Backend"]

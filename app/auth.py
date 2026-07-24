@@ -3,8 +3,8 @@ from functools import wraps
 
 from flask import Blueprint, jsonify, request, session
 
-from extensions import db
-from models import User, UserSettings
+from app.extensions import db
+from app.models import User, UserSettings
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/auth")
 

@@ -2,11 +2,11 @@ from datetime import datetime
 
 from flask import Blueprint, jsonify, request
 
-import memory
-from extensions import db
-from models import ChatSession, ChatMessage
-from auth import get_current_user, _ensure_settings
-from rag import rag_query
+from core import memory
+from app.extensions import db
+from app.models import ChatSession, ChatMessage
+from app.auth import get_current_user, _ensure_settings
+from core.rag import rag_query
 
 chat_bp = Blueprint("chat", __name__)
 

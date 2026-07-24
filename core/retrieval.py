@@ -1,53 +1,5 @@
-"""
-RAG retrieval core: dataset loading, legal-aware chunking, embedding &
-reranker model loading, FAISS + BM25 hybrid retrieval with Reciprocal
-Rank Fusion, and Cross-Encoder reranking.
-
-NOTE: This module does real work at import time (loads the dataset,
-builds/loads the FAISS index, loads the embedding + reranker models).
-That is intentional — Backend.py imports this module once at process
-startup so all heavy initialization happens before Flask starts
-accepting requests, exactly like the original monolithic script.
-
-═══════════════════════════════════════════════════════════════════
-FIX (this version): Constitution-aware chunk boundaries
-═══════════════════════════════════════════════════════════════════
-The original chunker used "\nArticle " as its primary structural
-separator. That string never appears before Constitution provisions
-in fyp_cleaned_dataset.csv — the Constitution body (rows 328676–
-334922) uses bare numeric headings instead, e.g.:
-
-    "\n10. Safeguards as to arrest and detention 10. (1) No person..."
-    "\n10A. Right to fair trial 2[10A. For the determination..."
-    "\n25A. ... 2[25A. The State shall provide free and compulsory..."
-
-Meanwhile "\nArticle N" headings DO exist elsewhere in the 566k-row
-corpus (e.g. the OIC Charter document), so the old separator was
-silently chunking Article-boundaries for the WRONG document while
-never firing on the Constitution at all. This was confirmed directly
-by verification_report.json: T3/T4/T5/T7/T8 all resolved to OIC
-Charter text ("representative", "Organization of the Islamic
-Conference", etc.) instead of Constitution provisions.
-
-RecursiveCharacterTextSplitter only matches literal strings, not
-regex, so we can't just add a numeric-heading regex to `separators`.
-Instead we do a pre-pass: replace real numeric-article headings with
-a unique literal marker, split on that marker (highest priority,
-above "\nArticle "), then strip the marker back out so downstream
-context assembly and prompts still read naturally.
-
-This marker substitution runs over the WHOLE corpus (not just the
-Constitution rows), since chunks.npy has no per-row document
-boundaries at this stage. That is intentional and safe: the
-RecursiveCharacterTextSplitter's merge step still coalesces small
-splits up to chunk_size afterward, so this mainly changes WHERE cuts
-prefer to happen, not how large final chunks end up. If you find this
-over-fragments some other document's numbered lists, tighten the
-NUMERIC_HEADING_PATTERN regex below (e.g. add a required minimum
-distance from the previous heading) rather than removing the marker
-step outright, since removing it reintroduces the original bug.
-"""
 import os
+os.environ.setdefault("HF_HUB_OFFLINE", "1")
 import re
 
 import numpy as np
@@ -56,8 +8,8 @@ import faiss
 from sentence_transformers import SentenceTransformer, CrossEncoder
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from config import Config
-from translation import (
+from app.config import Config
+from core.translation import (
     translate_roman_urdu_query,
     translate_urdu_script_query,
     expand_query,

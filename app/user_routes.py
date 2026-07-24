@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify, request
 
-from extensions import db
-from models import ChatSession, User
-from auth import login_required, get_current_user, _ensure_settings
+from app.extensions import db
+from app.models import ChatSession, User
+from app.auth import login_required, get_current_user, _ensure_settings
 
 user_bp = Blueprint("user", __name__)
 
