@@ -1,6 +1,5 @@
 from flask import session
-
-from config import Config
+from app.config import Config
 
 
 def _trim(text: str) -> str:

@@ -2,7 +2,7 @@ import time
 
 from openai import OpenAI
 
-from config import Config
+from app.config import Config
 
 if not Config.OPENROUTER_API_KEY:
     raise ValueError("OPENROUTER_API_KEY not found in .env file")

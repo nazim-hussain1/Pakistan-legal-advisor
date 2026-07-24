@@ -1,13 +1,13 @@
 import traceback
 
-import memory
-from config import Config
-from language_detection import detect_language
-from smalltalk import check_smalltalk
-from translation import translate_roman_urdu_query, translate_urdu_script_query
-from retrieval import hybrid_retrieve, rerank, assemble_context
-from prompts import build_prompt
-from llm_client import call_llm_with_fallback
+from core import memory
+from app.config import Config
+from core.language_detection import detect_language
+from core.smalltalk import check_smalltalk
+from core.translation import translate_roman_urdu_query, translate_urdu_script_query
+from core.retrieval import hybrid_retrieve, rerank, assemble_context
+from core.prompts import build_prompt
+from core.llm_client import call_llm_with_retry
 
 def rag_query(query: str) -> tuple:
     """Returns (answer_string, detected_language_string). Also updates

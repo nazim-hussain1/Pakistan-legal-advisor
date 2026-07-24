@@ -1,69 +1,3 @@
-"""
-evaluate_retrieval.py
-══════════════════════════════════════════════════════════════════
-Retrieval evaluation harness for the Pakistan Legal Advisor.
-Reproduces Thesis Table 4.1 (Retrieval Accuracy by Query Language
-and Method) and additionally reports Precision@K, Recall@K, F1@K.
-
-USAGE
------
-Place this file in the project root (same folder as retrieval.py,
-config.py, translation.py) and run:
-
-    python evaluate_retrieval.py
-    python evaluate_retrieval.py --k 5 --candidates 20
-    python evaluate_retrieval.py --gold gold_test_set.json --out results/
-
-This script imports retrieval.py directly, so it reuses whatever
-FAISS index / BM25 index / embedder / reranker are already built
-or persisted on disk (faiss_index.bin, chunks.npy) — it does NOT
-rebuild anything and does NOT touch the Flask app.
-
-METHODOLOGY
------------
-For every gold query, four retrieval configurations are evaluated,
-each truncated to the same top-K (default K=5, matching the
-"top-5 retrieval accuracy" language used throughout the thesis):
-
-  1. faiss_only        — dense retrieval only, ranked by cosine sim
-  2. bm25_only          — sparse retrieval only, ranked by BM25 score
-  3. hybrid_rrf         — FAISS + BM25 fused via Reciprocal Rank Fusion
-  4. hybrid_reranked    — hybrid_rrf candidates re-scored by the
-                           Cross-Encoder, same as production rag.py
-
-A chunk is counted as "relevant" to a query if EITHER:
-  (a) match_mode == "article": the chunk contains a regex match for
-      "Article <expected_article>" (word-boundaried, so "10" does not
-      false-positive on "Article 10A"), OR
-  (b) match_mode == "keyword": at least one of the query's keywords
-      appears in the chunk (case-insensitive substring).
-
-For match_mode == "article" entries, keyword hits are also tracked
-separately so a numbering mismatch (see PRE-FLIGHT CHECK below) can
-be distinguished from a genuine retrieval failure.
-
-Because each query has essentially one ground-truth passage (the
-provision that answers it), Recall@K collapses to a binary "was the
-relevant passage found in the top K" — identical to Hit Rate. This
-is stated explicitly in the output so it isn't mistaken for a
-multi-relevant-document recall computation.
-
-  Precision@K = (# relevant chunks in top-K) / K
-  Recall@K    = 1 if any relevant chunk in top-K else 0
-  F1@K        = 2PR / (P+R), 0 if P+R == 0
-  Hit Rate    = mean(Recall@K) across queries  →  this is the number
-                reported in Thesis Table 4.1
-
-PRE-FLIGHT CHECK
------------------
-Before scoring, the script scans the ENTIRE loaded corpus (not just
-retrieved candidates) for each expected_article. If an article number
-from the gold set never appears anywhere in the dataset, this is
-flagged loudly — this is the exact 27th-Amendment renumbering risk
-noted in the project caveats. Fix the gold set (or the dataset) before
-trusting downstream numbers for that query.
-"""
-
 import argparse
 import json
 import os
@@ -79,9 +13,9 @@ import faiss
 #    same startup sequence as Backend.py (loads dataset, embedder,
 #    reranker, FAISS/BM25 indices) — reusing persisted index files
 #    if present, so this is fast on repeated runs.
-import retrieval
-from config import Config
-from translation import (
+import core.retrieval as retrieval
+from app.config import Config
+from core.translation import (
     translate_roman_urdu_query,
     translate_urdu_script_query,
     expand_query,

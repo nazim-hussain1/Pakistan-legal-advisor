@@ -8,23 +8,20 @@ warnings.filterwarnings("ignore")
 from flask import Flask, render_template
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-from config import Config
-from extensions import db
+from app.config import Config
+from app.extensions import db
 
-# Loads the dataset, builds/loads the FAISS + BM25 indices, and loads
-# the embedding + reranker models. Imported explicitly (and early) so
-# all heavy startup work happens once, before Flask starts accepting
-# requests — mirrors the original monolithic script's behavior.
-import retrieval
+import core.retrieval as retrieval
 
 
 def create_app() -> Flask:
-    app = Flask(__name__, template_folder="Templates")
+    template_dir = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "templates"
+    )
+    app = Flask(__name__, template_folder=template_dir)
     app.config["PREFERRED_URL_SCHEME"] = "https"
     app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
-    # Session signing key — prefers the HF Space secret APP_SECRET_KEY,
-    # falls back to FLASK_SECRET_KEY, then a random per-process key.
     app.secret_key = (
         os.getenv("APP_SECRET_KEY")
         or os.getenv("FLASK_SECRET_KEY")
@@ -36,14 +33,13 @@ def create_app() -> Flask:
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = Config.SQLALCHEMY_TRACK_MODIFICATIONS
     db.init_app(app)
 
-    # Blueprints
-    from auth import auth_bp
-    from chat_routes import chat_bp
-    from user_routes import user_bp
+    from app.auth import auth_bp
+    from app.chat_routes import chat_bp
+    from app.user_routes import user_bp
 
-    app.register_blueprint(auth_bp)   # /auth/*
-    app.register_blueprint(chat_bp)   # /chat, /chat/new
-    app.register_blueprint(user_bp)   # /history*, /settings, /account
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(chat_bp)
+    app.register_blueprint(user_bp)
 
     @app.route("/")
     def home():
