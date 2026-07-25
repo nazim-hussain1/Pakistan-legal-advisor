@@ -54,8 +54,8 @@ def rag_query(query: str) -> tuple:
         system_msg, user_prompt = build_prompt(query, context, lang, history=history)
 
         try:
-            answer, model_used = call_llm_with_fallback(system_msg, user_prompt)
-            print(f"[RESPONSE] {len(answer)} chars | lang={lang} | model={model_used}")
+            answer = call_llm_with_retry(system_msg, user_prompt, max_retries=2, base_delay=2.0)
+            print(f"[RESPONSE] {len(answer)} chars | lang={lang}")
             memory.push_turn("user", query)
             memory.push_turn("assistant", answer)
             return answer, lang
