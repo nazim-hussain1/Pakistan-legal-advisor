@@ -3,8 +3,7 @@ Pakistan-Legal-Advisor/
 venv/
 __pycache__/
 *.pyc
-faiss_index.bin
-chunks.npy
+
 pla_users.db
 
 .env
