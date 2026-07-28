@@ -12,7 +12,7 @@ flask                    # Web server & REST API routing
 flask-sqlalchemy          # ORM for User / ChatSession / ChatMessage / UserSettings models
 
 # Environment & Configuration 
-python-dotenv            # Load secrets from .env (OPENROUTER_API_KEY)
+python-dotenv            # Load secrets from .env (GEMINI_API_KEY)
 
 # Data Handling
 pandas                   # CSV dataset loading & DataFrame operations
@@ -32,5 +32,6 @@ langdetect               # Detect English / Urdu script language
 rank-bm25               # BM25Okapi sparse retrieval (hybrid RAG)
 
 # LLM API Client
-openai                  # OpenAI-compatible client for OpenRouter API
-                        # Model used: gpt-oss-120b via OpenRouter
+google-genai              # Client for Google Gemini API
+                           # Models: gemini-flash-lite-latest (primary),
+                           #         gemini-2.0-flash (fallback)

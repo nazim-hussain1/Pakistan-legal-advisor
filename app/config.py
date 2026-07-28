@@ -34,11 +34,10 @@ class Config:
     EMBEDDING_MODEL_FALLBACK = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
     RERANKER_MODEL            = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 
-    # ── LLM (OpenRouter) ──────────────────────────────────
-    OPENROUTER_API_KEY  = os.getenv("OPENROUTER_API_KEY")
-    OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
-    MODEL_NAME           = os.getenv("MODEL_NAME", "openai/gpt-oss-120b:free")
-    FALLBACK_MODEL_NAME  = os.getenv("FALLBACK_MODEL_NAME", "meta-llama/llama-3.3-70b-instruct:free")
+    # ── LLM  ──────────────────────────────────
+    GEMINI_API_KEY  = os.getenv("GEMINI_API_KEY")
+    MODEL_NAME           = os.getenv("MODEL_NAME", "gemini-flash-lite-latest")
+    FALLBACK_MODEL_NAME  = os.getenv("FALLBACK_MODEL_NAME", "gemini-2.0-flash")
 
     # ── Conversation memory ───────────────────────────────
     # Number of previous messages (user + assistant turns combined)

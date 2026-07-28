@@ -16,11 +16,11 @@ Built as a Final Year Project — BS Artificial Intelligence, 2026.
 - Flask Backend
 - FAISS Vector Search + BM25
 - Sentence Transformers (multi-qa-mpnet)
-- OpenRouter API (gpt-oss-120b)
+- Google Gemini API (gemini-flash-lite-latest, fallback: gemini-2.0-flash)
 - English + Urdu + Roman Urdu support
 
 ## Setup
 1. Clone the repo
 2. Install dependencies: `pip install -r Requirements.txt`
-3. Add your API key to Secrets: `OPENROUTER_API_KEY`
+3. Add your API key to Secrets: `GEMINI_API_KEY`
 4. Run: `python Backend.py`

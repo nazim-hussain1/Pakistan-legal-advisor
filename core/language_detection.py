@@ -2,55 +2,69 @@ import re
 from langdetect import detect
 
 # ═══════════════════════════════════════════════════════════
-# ROMAN URDU KEYWORD SET (200+ terms)
+# ROMAN URDU KEYWORD SET — detection only
+# ═══════════════════════════════════════════════════════════
+# IMPORTANT: this set must contain ONLY tokens that are NOT valid
+# standalone English words. Do NOT add English legal/domain nouns
+# here (e.g. "constitution", "article", "parliament", "election",
+# "tax", "bail", "custody", "legal") — those exist as normal words
+# in English queries too, and mixing them in here causes false
+# positives (an English sentence mentioning two legal nouns gets
+# misclassified as Roman Urdu). Domain-noun expansion belongs in
+# translation.py's ROMAN_URDU_TO_ENGLISH dict, which is a different
+# job (query expansion) and only runs *after* language is already
+# correctly detected.
 # ═══════════════════════════════════════════════════════════
 
 ROMAN_URDU_KEYWORDS = {
-    "mujhe","mujh","mein","mai","main","hum","aap","ap","tum","woh","yeh","ye",
-    "is","us","unka","unke","unki","apna","apne","apni","tera","teri","mera","meri",
-    "hamara","hamare","hamari","inki","inke","inka","unka",
-    "hai","hain","tha","thi","the","hoga","hogi","honge","hote","hoti","hota",
-    "karo","karna","karta","karti","karte","kar","kiya","ki","karo","karen",
-    "ho","hua","hui","hue","ja","jao","jana","gaya","gayi","gaye",
-    "milta","milti","milte","mile","batao","bata","puchna","puchho","pucho",
-    "chahiye","chahta","chahti","chahte","sakta","sakti","sakte","sakein",
-    "lagta","lagti","lagte","lena","dena","deta","deti","dete","lete","leti",
-    "raha","rahi","rahe","rakha","rakhi","rakhe","rakhna",
-    "aana","aao","aaye","aaya","aayi","ata","aati","aate",
-    "padhna","likhna","samajhna","samjhao","samjhiye","bataiye",
-    "poochna","poochho","maango","maangna","lena","lene",
-    "dekhna","dekho","suno","bolna","bolo","boliye","kehna","kaho",
-    "kya","kyun","kaise","kab","kahan","kaun","kon","kitna","kitne","kitni",
-    "kuch","koi","sab","sirf","hi","bhi","to","phir",
-    "qanoon","adalat","haq","huqooq","zamin","zameen","mulk","desh",
-    "sarkar","hakumat","police","arrest","giraftari","muqadma","maamla",
-    "waqil","advocate","judge","faisla","saza","jaidad","maal","milkiyat",
-    "talaq","nikah","shadi","warasat","wirasat","merath","wirsa",
-    "constitution","parliament","assembly","vote","intikhaab",
-    "ilzam","jurm","gunah","mutaghazzi","mujrim","be-gunah",
-    "bail","zamanat","remand","hirasaat","qaid","rehayi",
-    "nafaqa","alaiment","hirasat","wardship","custody",
-    "zulm","insaf","mazalim","shikayat","darkhwast","iltimas",
-    "appeal","sunwai","peshi","pesh","samaan","saboot","gawah",
-    "kharidar","bechne","kiraya","ijara","mukaan","ghar","plot",
-    "rishwat","corruption","faraib","dhoka","cheating",
-    "accident","haadsa","zakhmi","nuksan","muawza",
-    "naukri","mulazim","tankhwa","salary","pension","service",
-    "tax","mehsool","jagir","malikana","ownership",
-    "firqa","mazhab","religion","mosque","masjid","church","mandir",
-    "azadi","khawateen","bachay","bache","buzurg","beemar",
-    "election","naib","nazim","councillor","MPA","MNA","PM","CM",
-    "ghante","ghanta","minute","din","raat","waqt","muddat","arsa",
-    "baad","pehle","jald","jaldi","abhi","foran","turant","jab","jab tak",
-    "kitni","kitne","muddat","mein","tak","se",
-    "aur","ya","lekin","magar","phir","bhi","hi","to","par","pe",
-    "ke","ka","se","tak","wala","wali","wale","nahi","nahin","mat","na",
-    "bilkul","zaroor","zaruri","lazim","wajib","jaiz","najaiz",
-    "theek","sahi","galat","durust","ghair","illegal","legal",
-    "zyada","kam","bohat","thoda","kafi","poora","aadha",
-    "matlab","yani","yaani","iska","uska","matlb","yaane",
-    "batao","samjhao","bataiye","samjhaiye","bata","samjha",
-    "please","meherbani","kripya","shukria","shukriya",
+    # Pronouns / grammar particles (Urdu-only, not English words)
+    "mujhe", "mujh", "mein", "mai", "hum", "aap", "ap", "tum", "woh", "yeh", "ye",
+    "unka", "unke", "unki", "apna", "apne", "apni", "tera", "teri", "mera", "meri",
+    "hamara", "hamare", "hamari", "inki", "inke", "inka",
+
+    # Verb forms (be/do/etc.)
+    "hai", "hain", "tha", "thi", "the", "hoga", "hogi", "honge", "hote", "hoti", "hota",
+    "karo", "karna", "karta", "karti", "karte", "kar", "kiya", "karen",
+    "hua", "hui", "hue", "jao", "jana", "gaya", "gayi", "gaye",
+    "milta", "milti", "milte", "mile", "batao", "bata", "puchna", "puchho", "pucho",
+    "chahiye", "chahta", "chahti", "chahte", "sakta", "sakti", "sakte", "sakein",
+    "lagta", "lagti", "lagte", "lena", "dena", "deta", "deti", "dete", "lete", "leti",
+    "raha", "rahi", "rahe", "rakha", "rakhi", "rakhe", "rakhna",
+    "aana", "aao", "aaye", "aaya", "aayi", "ata", "aati", "aate",
+    "padhna", "likhna", "samajhna", "samjhao", "samjhiye", "bataiye",
+    "poochna", "poochho", "maango", "maangna",
+    "dekhna", "dekho", "suno", "bolna", "bolo", "boliye", "kehna", "kaho",
+
+    # Question / determiner words (Urdu-only)
+    "kya", "kyun", "kaise", "kab", "kahan", "kaun", "kon", "kitna", "kitne", "kitni",
+    "kuch", "koi", "sab", "sirf", "bhi", "phir",
+
+    # Legal/everyday Urdu-only nouns (NOT valid English words)
+    "qanoon", "adalat", "huqooq", "zamin", "zameen", "mulk",
+    "sarkar", "hakumat", "giraftari", "giraftar", "muqadma", "maamla",
+    "waqil", "faisla", "saza", "jaidad", "milkiyat",
+    "talaq", "nikah", "shadi", "warasat", "wirasat", "merath", "wirsa",
+    "intikhaab", "ilzam", "jurm", "gunah", "mutaghazzi", "mujrim",
+    "zamanat", "hirasaat", "hirasat", "qaid", "rehayi",
+    "nafaqa", "zulm", "insaf", "mazalim", "shikayat", "darkhwast", "iltimas",
+    "sunwai", "peshi", "kharidar", "bechne", "kiraya", "ijara", "mukaan",
+    "rishwat", "faraib", "dhoka", "haadsa", "zakhmi", "nuksan", "muawza",
+    "naukri", "mulazim", "tankhwa", "mehsool", "jagir", "malikana",
+    "firqa", "mazhab", "azadi", "khawateen", "bachay", "bache", "buzurg", "beemar",
+    "ghante", "ghanta", "muddat", "arsa", "jaldi", "abhi", "foran", "turant",
+
+    # Connectors / negation (Urdu-only)
+    "aur", "ya", "lekin", "magar", "wala", "wali", "wale",
+    "nahi", "nahin", "mat", "bilkul", "zaroor", "zaruri", "lazim", "wajib",
+    "jaiz", "najaiz", "theek", "sahi", "galat", "durust", "ghair",
+    "zyada", "bohat", "thoda", "kafi", "poora", "aadha",
+    "matlab", "yani", "yaani", "iska", "uska", "yaane",
+    "meherbani", "kripya", "shukria", "shukriya",
+
+    # Grammar particles that ARE ambiguous with English were removed:
+    # "is", "to", "par", "pe", "hi", "ka", "ki", "ke", "se", "tak", "na"
+    # These are either real English words ("is", "to") or too short/
+    # common to be reliable single-token signals on their own.
 }
 
 

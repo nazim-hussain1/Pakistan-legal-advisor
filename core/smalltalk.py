@@ -99,7 +99,7 @@ CREATOR_RESPONSE_EN = """I'm the **Pakistan Legal Advisor**, an AI-powered legal
 **Institution:** Quaid-e-Awam University of Engineering, Science & Technology (QUEST), Nawabshah
 **Program:** BS Artificial Intelligence, Final Year Project, 2026
 
-Nazim built me with a clear mission: to bridge the gap between complex legal statutes and everyday citizens, students, and legal professionals across Pakistan. I leverage a hybrid Retrieval-Augmented Generation (RAG) system, combining FAISS vector search, BM25 sparse retrieval, multilingual sentence embeddings, and Cross-Encoder reranking, powered by a large language model via OpenRouter.
+Nazim built me with a clear mission: to bridge the gap between complex legal statutes and everyday citizens, students, and legal professionals across Pakistan. I leverage a hybrid Retrieval-Augmented Generation (RAG) system, combining FAISS vector search, BM25 sparse retrieval, multilingual sentence embeddings, and Cross-Encoder reranking, powered by a large language model via Google Gemini.
 
 Every answer I give is grounded in verified Pakistani legal provisions, including the **Constitution of Pakistan (2025 Edition)** and key legislative documents.
 
